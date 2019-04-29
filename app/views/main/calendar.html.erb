@@ -1,2 +1,19 @@
-<h1>Main#calendar</h1>
-<p>Find me in app/views/main/calendar.html.erb</p>
+<script>
+function eventCalendar() {
+    return $('#event_calendar').fullCalendar({ plugins: [dayGridPlugin] });
+  };
+  function clearCalendar() {
+    $('#event_calendar').fullCalendar('delete'); // In case delete doesn't work.
+    $('#event_calendar').html('');
+  };
+  $(document).on('turbolinks:load', eventCalendar);
+  $(document).on('turbolinks:before-cache', clearCalendar)
+</script>
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <div id='event_calendar'></div>
+        </div>
+    </div>
+</div>

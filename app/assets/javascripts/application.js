@@ -16,3 +16,5 @@
 //= require_tree .
 //= require tabler
 //= require tabler.plugins
+//= require moment
+//= require fullcalendar
