@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_162344) do
+ActiveRecord::Schema.define(version: 2019_04_30_175340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 2019_04_30_162344) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "color"
+    t.bigint "owner_id"
+    t.index ["owner_id"], name: "index_properties_on_owner_id"
   end
 
   create_table "reservations", force: :cascade do |t|

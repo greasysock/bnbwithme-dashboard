@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.create!(email:"a@a.com", password:"password")
+puts "Created a@a.com user"
+
+the_perch = Property.create!(name:"The Perch")
+the_perch.icals.create!(service:0, link: "https://www.airbnb.com/calendar/ical/11651866.ics?s=51fe1a87d1b0a8294164d35086888b5c")
+
+puts "Created the Perch property"
+
