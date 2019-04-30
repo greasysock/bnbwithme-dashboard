@@ -3,5 +3,6 @@ class MainController < ApplicationAuthController
   end
 
   def calendar
+    set_page_subtitle("Calendar")
   end
 end

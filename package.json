@@ -15,7 +15,8 @@
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "tabler-react": "^1.29.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.3.1"
