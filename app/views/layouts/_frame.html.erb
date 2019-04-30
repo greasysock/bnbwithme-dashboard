@@ -3,8 +3,9 @@
         <div class="header py-4">
           <div class="container">
             <div class="d-flex">
-              <a class="header-brand" href="./index.html">
-                <img src="./demo/brand/tabler.svg" class="header-brand-img" alt="bnbwithme">
+              <%=link_to(root_path, class:"header-brand") do%>
+                <%= image_tag("/assets/stickyheader.png", class:"header-brand-img", alt:"bnbwithme") %>
+              <%end%>
               </a>
               <div class="d-flex order-lg-2 ml-auto">
                 <%=render "layouts/user_menu"%>
@@ -19,11 +20,9 @@
             <%=render "layouts/menu"%>
         </div>
           <div class="my-3 my-md-5">
-            <div class="container">
-            <div class="row">
+            
               <%=yield%>
-            </div>
-            </div>
+
           </div>
         <div class="my-3 my-md-5">
         </div>
