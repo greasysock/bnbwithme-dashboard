@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_152520) do
+ActiveRecord::Schema.define(version: 2019_04_30_162344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "icals", force: :cascade do |t|
+    t.integer "service"
+    t.text "link"
+    t.bigint "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_icals_on_property_id"
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.date "start"
+    t.date "end"
+    t.bigint "cleaner_id"
+    t.bigint "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cleaner_id"], name: "index_reservations_on_cleaner_id"
+    t.index ["property_id"], name: "index_reservations_on_property_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

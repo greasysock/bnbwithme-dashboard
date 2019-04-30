@@ -1,0 +1,2 @@
+class Ical < ApplicationRecord
+end
