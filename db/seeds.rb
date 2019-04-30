@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(email:"a@a.com", password:"password")
+User.create!(email:"a@a.com", password:"password", first_name: "Chris", last_name: "Gresock")
 puts "Created a@a.com user"
 
 the_perch = Property.create!(name:"The Perch")

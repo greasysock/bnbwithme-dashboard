@@ -4,4 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :cleanings, :class_name => 'Reservation', foreign_key: 'cleaner_id'
+
+  validates_presence_of :first_name, :last_name
 end
