@@ -56,5 +56,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'bootstrap', '~> 4.1.1'
 gem 'tabler-rubygem'
-gem 'momentjs-rails'
-gem 'fullcalendar.io-rails', '~> 3.10'
+gem 'webpacker', '~> 4.x'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.5'
