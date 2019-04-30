@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+    <%=render "layouts/header" %>
+    <body>
+        <div class="page">
+      <div class="page-single">
+        <div class="container">
+          <div class="row">
+            <div class="col col-login mx-auto">
+              <div class="text-center mb-6">
+                <%= image_tag("/assets/stickyheader.png", class:"h-6", alt:"bnbwithme") %>
+              </div>
+              <%=yield%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
+
+</html>

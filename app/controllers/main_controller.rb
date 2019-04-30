@@ -1,4 +1,4 @@
-class MainController < ApplicationController
+class MainController < ApplicationAuthController
   def dashboard
   end
 
