@@ -9,6 +9,7 @@
     "@fullcalendar/daygrid": "^4.1.0",
     "@fullcalendar/react": "^4.1.0",
     "@rails/webpacker": "^4.0.2",
+    "axios": "^0.18.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "fullcalendar": "^3.10.0",
     "jquery": "^3.4.0",
