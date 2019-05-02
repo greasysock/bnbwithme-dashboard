@@ -803,6 +803,11 @@
     webpack-cli "^3.2.3"
     webpack-sources "^1.3.0"
 
+"@simonwep/pickr@^0.4.11":
+  version "0.4.11"
+  resolved "https://registry.yarnpkg.com/@simonwep/pickr/-/pickr-0.4.11.tgz#c70eefa7762a912dd1218136725ae73c94c64f22"
+  integrity sha512-SBDvphx7fnu6ooAFw6hfrtSSQOUG91OpbA2Hcsr92vQrwuabpvjN8xOWOUGzp6jvm8c4gTdQ7O9HVOSah7oZJg==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"

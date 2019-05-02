@@ -1,26 +1,28 @@
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-lg-3 ml-auto">
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col-lg-3 ml-auto">
 
-              </div>
-              <div class="col-lg order-lg-first">
-                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                  <li class="nav-item">
-                    <%= link_to( root_path, class:"nav-link") do %>
-                    <i class="fe fe-grid"></i> Dashboard</a>
-                    <%end%>
-                  </li>
-                 <li class="nav-item">
-                    <%= link_to( properties_path, class:"nav-link") do %>
-                    <i class="fe fe-home"></i> Properties</a>
-                    <%end%>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to( calendar_path, class:"nav-link") do %>
-                    <i class="fe fe-calendar"></i> Calendar</a>
-                    <%end%>
-                  </li>
-                </ul>
-              </div>
-            </div>
+    </div>
+    <div class="col-lg order-lg-first">
+      <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+        <li class="nav-item">
+          <%= link_to( root_path, class:"nav-link") do %>
+          <i class="fe fe-grid"></i> Dashboard</a>
+          <%end%>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-home"></i> Properties</a>
+          <div class="dropdown-menu dropdown-menu-arrow">
+            <%= link_to( "All Properties", properties_path, class:"dropdown-item") %>
+            <%= link_to( "New Property", new_property_path, class:"dropdown-item") %>
           </div>
+          </li>
+        <li class="nav-item">
+          <%= link_to( calendar_path, class:"nav-link") do %>
+          <i class="fe fe-calendar"></i> Calendar</a>
+          <%end%>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

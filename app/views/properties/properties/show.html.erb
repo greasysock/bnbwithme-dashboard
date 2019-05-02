@@ -1,9 +1,20 @@
+<%=render "layouts/normal_wrapper" do%>
+
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="card col-12">
+      <div class="card-status" style="background-color: #<%=@property.color%>"></div>
+      <div class="card-header">
+          <h4 class="card-title"><span class="fa fa-home"></span> <%=link_to @property.name, @property%></h4>
+      </div>
+      <div class="card-body">
+        <div class="color-picker"></div>
+      </div>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @property.name %>
-</p>
-
-<%= link_to 'Edit', edit_property_path(@property) %> |
-<%= link_to 'Back', properties_path %>
+  
+  <div class="col-4">
+    <%=render "properties/icals/property_ical_show"%>
+  </div>
+</div>
+<%end%>

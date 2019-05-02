@@ -39,12 +39,13 @@ export default class ReservationList extends React.Component {
                 res.data.forEach((reservation) => {
                     let calendarApi = this.calendarRef.current.getApi()
                     calendarApi.addEvent({
-                        title : `  ${reservation.guest} - ${house.name}`,
+                        title : `  ${house.name} - `,
                         start : reservation.start,
                         end : reservation.end,
                         color : `#${house.color}`,
                         extendedProps : {
-                            service : reservation.service
+                            service : reservation.service,
+                            guest : reservation.guest
                         }
                     })
                 })
@@ -73,6 +74,9 @@ export default class ReservationList extends React.Component {
             }
     
             $(calendar.el).find(".fc-title").prepend(`<i class='${icon}'></i>`)
+        }
+        if(calendar.event.extendedProps.guest) {
+            $(calendar.el).find(".fc-title").append(`<small class=\"\"><strong> ${calendar.event.extendedProps.guest}</strong></small>`)
         }
     }
 
