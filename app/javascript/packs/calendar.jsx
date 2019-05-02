@@ -13,42 +13,9 @@ import '@fullcalendar/daygrid/main.css';
 export default class EventCalendar extends React.Component {
     
     render() {
-        let list = <ReservationList/>
         console.log(list)
         return (
-          <div>
-          <FullCalendar defaultView="dayGridMonth" 
-            plugins={[ dayGridPlugin, bootstrapPlugin ]}
-            console
-            events={[
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' },
-            { title: 'event 1', date: '2019-04-01' },
-            { title: 'event 2', date: '2019-04-02' }
-            ]}
-            themeSystem="bootstrap"
-            />
-            </div>
+            <ReservationList/>
         )
       }
   
@@ -62,7 +29,7 @@ export default class EventCalendar extends React.Component {
             <Card.Title>Reservation Calendar</Card.Title>
           </Card.Header>
           <Card.Body>
-            <EventCalendar/>
+            <ReservationList/>
           </Card.Body>
         </Card>
       )

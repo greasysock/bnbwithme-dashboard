@@ -1,11 +1,21 @@
 import React from 'react'
 import axios from 'axios'
-
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import bootstrapPlugin from '@fullcalendar/bootstrap';
+import { Card, Button } from "tabler-react"
+import "tabler-react/dist/Tabler.css"
+import '@fullcalendar/core/main.css';
+import '@fullcalendar/bootstrap/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fortawesome/fontawesome-free/css/all.css'
 export default class ReservationList extends React.Component {
     state = {
-        Properties: null,
+        Properties: [],
         ready: false
     }
+
+    calendarRef = React.createRef()
 
     componentDidMount() {
         this.getProperties()
@@ -16,18 +26,65 @@ export default class ReservationList extends React.Component {
         .then((res) => {
             this.setState({
                 Properties: res.data,
-                read : true
+                ready : true
             })
-
+            this.getEvents()
         })
     }
 
+    getEvents() {
+        this.state.Properties.forEach((house) => {
+            axios.get(`/properties/${house.id}/reservations.json`)
+            .then((res) => {
+                res.data.forEach((reservation) => {
+                    let calendarApi = this.calendarRef.current.getApi()
+                    calendarApi.addEvent({
+                        title : `  ${reservation.guest} - ${house.name}`,
+                        start : reservation.start,
+                        end : reservation.end,
+                        color : `#${house.color}`,
+                        extendedProps : {
+                            service : reservation.service
+                        }
+                    })
+                })
+            })
+        })
+    }
+
+    getServiceIcon(service) {
+        switch(service){
+            case 'airbnb':
+            return "fa fa-airbnb"
+            case 'vrbo':
+            return "fa fa-concierge-bell"
+        }
+    }
+
+    handleEventRender(calendar, element) {
+        if(calendar.event.extendedProps.service){
+            let icon = ""
+            switch(calendar.event.extendedProps.service){
+                case 'airbnb':
+                icon = "icon-airbnb"
+                break
+                case 'vrbo':
+                icon = "icon-vrbo"
+            }
+    
+            $(calendar.el).find(".fc-title").prepend(`<i class='${icon}'></i>`)
+        }
+    }
+
     render() {
-        const { Properties } = this.state
         return (
-            <div class="Helloworld">
-            <script>{Properties}</script>
-            </div>
+            <FullCalendar defaultView="dayGridMonth" 
+            plugins={[ dayGridPlugin, bootstrapPlugin ]}
+            console
+            themeSystem="bootstrap"
+            ref={this.calendarRef}
+            eventRender={this.handleEventRender}
+            />
         )
     }
 }
