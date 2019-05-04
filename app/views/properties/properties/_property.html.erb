@@ -1,17 +1,24 @@
-  <div class="col-lg-3">
+<div class="col-lg-3">
     <div class="card">
         <div class="card-status" style="background-color: #<%=property.color%>"></div>
         <div class="card-header">
             <h4 class="card-title"><span class="fa fa-home"></span> <%=link_to property.name, property%></h4>
         </div>
         <div class="card-body d-flex flex-column">
-            <div class="d-flex align-items-center pt-5 mt-auto">
-                <div class="avatar avatar-md mr-3" style="background-image: url(./demo/faces/female/18.jpg)"></div>
-                    <div>
-                        <a href="./" class="text-default"><span class="fa fa-portrait"></span> <%="#{property.owner.first_name} #{property.owner.last_name}"%></a>
-                        <small class="d-block text-muted">Owner</small>
-                    </div>
-                </div>
+            <%=render "properties/properties/owner", property: property %>
         </div>
+        <div class="card-footer">
+        <%if property.current_reservation%>
+        <%=render "properties/properties/current_guest", property: property%>
+        </div>
+        <div class="card-footer">
+        <%=render "properties/properties/assigned_cleaner", property: property%>
+        </div>
+        <%else%>
+        <div class="text-center">
+            <div class="mb-2">No Reservation</div>
+        </div>
+        </div>
+        <%end%>
     </div>
 </div>

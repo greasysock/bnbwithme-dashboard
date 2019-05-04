@@ -11,12 +11,6 @@ module Properties
         def set_reservations
             if params[:property_id]
                 @property = Property.find(params[:property_id])
-                puts '*' * 100
-                puts @property.name
-                @property.reservations.each do |reservation|
-                    puts reservation.id
-                end
-                puts '*' * 100 
                 @reservations = @property.reservations
                 return
             end

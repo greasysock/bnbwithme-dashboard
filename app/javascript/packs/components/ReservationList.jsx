@@ -3,12 +3,17 @@ import axios from 'axios'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import bootstrapPlugin from '@fullcalendar/bootstrap';
-import { Card, Button } from "tabler-react"
+import { Dimmer } from "tabler-react"
 import "tabler-react/dist/Tabler.css"
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/bootstrap/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fortawesome/fontawesome-free/css/all.css'
+
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}  
+
 export default class ReservationList extends React.Component {
     state = {
         Properties: [],
@@ -25,8 +30,7 @@ export default class ReservationList extends React.Component {
         axios.get('/properties.json')
         .then((res) => {
             this.setState({
-                Properties: res.data,
-                ready : true
+                Properties: res.data
             })
             this.getEvents()
         })
@@ -49,6 +53,11 @@ export default class ReservationList extends React.Component {
                         }
                     })
                 })
+            })
+        })
+        sleep(600).then(()=>{
+            this.setState({
+                ready: true
             })
         })
     }
@@ -81,14 +90,17 @@ export default class ReservationList extends React.Component {
     }
 
     render() {
+        console.log(this.state.ready)
         return (
-            <FullCalendar defaultView="dayGridMonth" 
-            plugins={[ dayGridPlugin, bootstrapPlugin ]}
-            console
-            themeSystem="bootstrap"
-            ref={this.calendarRef}
-            eventRender={this.handleEventRender}
-            />
+            <Dimmer active={!this.state.ready} loader>
+                <FullCalendar defaultView="dayGridMonth" 
+                plugins={[ dayGridPlugin, bootstrapPlugin ]}
+                contentHeight="auto"
+                themeSystem="bootstrap"
+                ref={this.calendarRef}
+                eventRender={this.handleEventRender}
+                />
+            </Dimmer>
         )
     }
 }

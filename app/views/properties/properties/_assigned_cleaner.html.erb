@@ -1,0 +1,14 @@
+
+<%if property.current_reservation.cleaner%>
+<div class="d-flex align-items-center mt-auto">
+    <div class="avatar avatar-md mr-3" style="background-image: url(./demo/faces/male/16.jpg)"></div>
+    <div>
+        <a href="./profile.html" class="text-default"><%="#{property.current_reservation.cleaner.first_name} #{property.current_reservation.cleaner.last_name}"%></a>
+        <small class="d-block text-muted">Cleaner</small>
+    </div>
+</div>
+<%else%>
+<div class="card-alert alert alert-warning mb-0 text-center">
+    <span class="fa fa-exclamation-circle"></span> Cleaner Not Assigned!
+</div>
+<%end%>
