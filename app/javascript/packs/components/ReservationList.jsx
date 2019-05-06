@@ -3,9 +3,6 @@ import axios from 'axios'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import bootstrapPlugin from '@fullcalendar/bootstrap';
-import '@fullcalendar/core/main.css';
-import '@fullcalendar/bootstrap/main.css';
-import '@fullcalendar/daygrid/main.css';
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
