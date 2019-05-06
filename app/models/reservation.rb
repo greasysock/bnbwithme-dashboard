@@ -4,4 +4,5 @@ class Reservation < ApplicationRecord
     belongs_to :cleaner, :class_name => 'User', foreign_key: 'cleaner_id'
 
     validates_presence_of :start, :end, :duration
+
 end

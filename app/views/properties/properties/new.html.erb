@@ -1,5 +1,7 @@
-<h1>New Property</h1>
+<%=render "layouts/normal_wrapper" do%>
+    <%=render("shared/card", header: "Create a New Property") do %>
 
-<%= render 'form', property: @property %>
+    <%= render 'form', property: @property %>
 
-<%= link_to 'Back', properties_path %>
+    <%end%>
+<%end%>
