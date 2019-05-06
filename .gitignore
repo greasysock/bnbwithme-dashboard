@@ -33,4 +33,4 @@
 yarn-debug.log*
 .yarn-integrity
 /db/seeds.rb
-/config/deploy.rb
+/config/deploy/production.rb
