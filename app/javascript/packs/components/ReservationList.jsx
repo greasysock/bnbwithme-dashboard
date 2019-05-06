@@ -8,7 +8,6 @@ import "tabler-react/dist/Tabler.css"
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/bootstrap/main.css';
 import '@fullcalendar/daygrid/main.css';
-import '@fortawesome/fontawesome-free/css/all.css'
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))

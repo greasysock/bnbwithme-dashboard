@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
-    "@fortawesome/fontawesome-free": "^5.8.1",
     "@fullcalendar/bootstrap": "^4.1.0",
     "@fullcalendar/core": "^4.1.0",
     "@fullcalendar/daygrid": "^4.1.0",
