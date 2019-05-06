@@ -14,9 +14,6 @@
  *= require_self
  *= require font-awesome
  */
-@import "tabler/variables";
 @import "bootstrap";
-@import "tabler";
 @import "./logofonts.css";
 //@import "tabler.plugins"; // optional
-@import "tabler.icons"; // optional includes [browser, flag, payments]
