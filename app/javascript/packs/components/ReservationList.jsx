@@ -3,8 +3,6 @@ import axios from 'axios'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import bootstrapPlugin from '@fullcalendar/bootstrap';
-import { Dimmer } from "tabler-react"
-import "tabler-react/dist/Tabler.css"
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/bootstrap/main.css';
 import '@fullcalendar/daygrid/main.css';
@@ -80,26 +78,22 @@ export default class ReservationList extends React.Component {
                 case 'vrbo':
                 icon = "icon-vrbo"
             }
-    
-            $(calendar.el).find(".fc-title").prepend(`<i class='${icon}'></i>`)
+            //$(calendar.el).find(".fc-title").prepend(`<i class='${icon}'></i>`)
         }
         if(calendar.event.extendedProps.guest) {
-            $(calendar.el).find(".fc-title").append(`<small class=\"\"><strong> ${calendar.event.extendedProps.guest}</strong></small>`)
+            //$(calendar.el).find(".fc-title").append(`<small class=\"\"><strong> ${calendar.event.extendedProps.guest}</strong></small>`)
         }
     }
 
     render() {
-        console.log(this.state.ready)
         return (
-            <Dimmer active={!this.state.ready} loader>
-                <FullCalendar defaultView="dayGridMonth" 
-                plugins={[ dayGridPlugin, bootstrapPlugin ]}
-                contentHeight="auto"
-                themeSystem="bootstrap"
-                ref={this.calendarRef}
-                eventRender={this.handleEventRender}
-                />
-            </Dimmer>
+            <FullCalendar defaultView="dayGridMonth" 
+            plugins={[ dayGridPlugin, bootstrapPlugin ]}
+            contentHeight="auto"
+            themeSystem="bootstrap"
+            ref={this.calendarRef}
+            eventRender={this.handleEventRender}
+            />
         )
     }
 }
