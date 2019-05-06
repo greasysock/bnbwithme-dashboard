@@ -1,4 +1,6 @@
 <div class="col-12">
+    <%=render("shared/card", header:"Reservation Calendar") do %>
     <div id="calendar"></div>
+    <%end%>
     <%= javascript_pack_tag 'calendar' %>
 </div>
