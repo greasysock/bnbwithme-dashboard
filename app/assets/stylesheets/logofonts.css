@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('bnbwithme/bnbwithme.eot?s8ktpg');
-  src:  url('bnbwithme/bnbwithme.eot?s8ktpg#iefix') format('embedded-opentype'),
-    url('bnbwithme/bnbwithme.ttf?s8ktpg') format('truetype'),
-    url('bnbwithme/bnbwithme.woff?s8ktpg') format('woff'),
-    url('bnbwithme/bnbwithme.svg?s8ktpg#icomoon') format('svg');
+  src:  url('/fonts/bnbwithme/bnbwithme.eot?s8ktpg');
+  src:  url('/fonts/bnbwithme/bnbwithme.eot?s8ktpg#iefix') format('embedded-opentype'),
+    url('/fonts/bnbwithme/bnbwithme.ttf?s8ktpg') format('truetype'),
+    url('/fonts/bnbwithme/bnbwithme.woff?s8ktpg') format('woff'),
+    url('/fonts/bnbwithme/bnbwithme.svg?s8ktpg#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
