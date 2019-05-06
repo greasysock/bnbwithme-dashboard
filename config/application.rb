@@ -20,10 +20,6 @@ Bundler.require(*Rails.groups)
 module Bnbwithme
   class Application < Rails::Application
 
-    # Initialize custom fonts
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
-    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
-
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
