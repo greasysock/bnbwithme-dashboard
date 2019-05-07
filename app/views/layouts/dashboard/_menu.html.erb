@@ -11,12 +11,10 @@
           <%end%>
         </li>
         <li class="nav-item">
-          <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-home"></i> Properties</a>
-          <div class="dropdown-menu dropdown-menu-arrow">
-            <%= link_to( "All Properties", properties_path, class:"dropdown-item") %>
-            <%= link_to( "New Property", new_property_path, class:"dropdown-item") %>
-          </div>
-          </li>
+          <%= link_to( properties_path, class:"nav-link") do %>
+          <i class="fe fe-home"></i> Properties</a>
+          <%end%>
+        </li>
         <li class="nav-item">
           <%= link_to( calendar_path, class:"nav-link") do %>
           <i class="fe fe-calendar"></i> Calendar</a>
