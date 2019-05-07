@@ -16,6 +16,7 @@ function getServiceIcon(service) {
 }
 
 function MonthEvent(target){
+    console.log(target.event)
     return (
         <div>
             <i className={getServiceIcon(target.event.service)}/>
@@ -34,17 +35,14 @@ export default class BigReservationList extends React.Component{
     getProperties() {
         bnbwithme.get('/properties.json')
         .then((res) => {
-            this.setState({
-                properties: res.data
-            })
-            this.getEvents()
+            this.getEvents(res.data)
         })
     }
 
     eventPropGetter(event, start, end, isSelected){
         var style = {
             backgroundColor: event.color,
-            borderRadius: '0px',
+            borderRadius: '5px',
             color: 'white',
             border: '0px',
             display: 'block'        };
@@ -53,27 +51,28 @@ export default class BigReservationList extends React.Component{
         }
     }
 
-    getEvents() {
-        this.state.properties.forEach((house) => {
+    getEvents(properties) {
+        properties.forEach((house) => {
             bnbwithme.get(`/properties/${house.id}/reservations.json`)
-            .then((res) => {
-                res.data.forEach((reservation) => {
-                    let e = {
+            .then(res => {
+                let events = res.data.map(reservation => {
+                    return {
                         title : `  ${house.name}`,
-                        start : new Date(reservation.start),
-                        end : new Date(reservation.end),
+                        start : moment(reservation.start),
+                        end : moment(reservation.end),
+                        allDay: true,
                         color : `#${house.color}`,
                         service : reservation.service,
                         guest : reservation.guest
                     }
-                    this.setState({
-                        events: [...this.state.events, e]
-                    })
-                    }
-                )
+                })
+                var joined = this.state.events.concat(events)
+                this.setState({events:joined})
             })
+
         })
     }
+
 
     componentDidMount(){
         this.getProperties()
