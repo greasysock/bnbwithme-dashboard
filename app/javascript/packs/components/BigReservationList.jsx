@@ -16,7 +16,6 @@ function getServiceIcon(service) {
 }
 
 function MonthEvent(target){
-    console.log(target.event)
     return (
         <div>
             <i className={getServiceIcon(target.event.service)}/>
