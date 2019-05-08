@@ -28,7 +28,7 @@ function MonthEvent(target){
     return (
         <div>
             <i className={getServiceIcon(target.event.service)}/>
-            {target.event.title} - <b>{target.event.guest}</b><GuestPhone phone={target.event.phone}/>
+            {target.event.title} - <b>{target.event.guest}</b>
         </div>
     )
 }
