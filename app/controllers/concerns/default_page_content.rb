@@ -6,7 +6,7 @@ module DefaultPageContent
     end
 
     def set_page_subtitle subtitle
-        @page_title = "bnbwithme | #{subtitle}"
+        @page_title = "#{subtitle} | bnbwithme"
     end
 
     def set_page_title
