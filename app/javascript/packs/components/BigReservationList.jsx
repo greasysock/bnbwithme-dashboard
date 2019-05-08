@@ -90,6 +90,7 @@ export default class BigReservationList extends React.Component{
     render() {
         return (
             <BigCalendar
+                style={{height: "2000px"}}
                 localizer={localizer}
                 startAccessor="start"
                 endAccessor="end"
