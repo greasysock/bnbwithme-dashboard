@@ -1,4 +1,11 @@
 <div class="dropdown d-none d-md-flex">
+      <%=link_to(edit_user_registration_path, class: "dropdown-item") do%>
+        <i class="dropdown-icon fe fe-settings"></i> Settings
+      <%end%>
+      <%=link_to(destroy_user_session_path, method: :delete, class: "dropdown-item") do%>
+        <i class="dropdown-icon fe fe-log-out"></i> Sign out
+      <%end%>
+
   <%=render "layouts/dashboard/user/notifications"%>
   <div class="dropdown">
     <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">

@@ -5,11 +5,15 @@
     </div>
     <div class="col-lg order-lg-first">
       <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-        <li class="nav-item">
+        <%
+=begin%>
+ <li class="nav-item">
           <%= link_to( root_path, class:"nav-link") do %>
           <i class="fe fe-grid"></i> Dashboard</a>
           <%end%>
-        </li>
+        </li> 
+<%
+=end%>
         <li class="nav-item">
           <%= link_to( properties_path, class:"nav-link") do %>
           <i class="fe fe-home"></i> Properties</a>

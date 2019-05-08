@@ -15,11 +15,20 @@ function getServiceIcon(service) {
     }
 }
 
+function GuestPhone(props){
+    if(!props.phone){
+        return null
+    }
+    return (
+        <div style={{display: "inline"}}> - <i className="fa fa-phone"/> {props.phone}</div>
+    )
+}
+
 function MonthEvent(target){
     return (
         <div>
             <i className={getServiceIcon(target.event.service)}/>
-            {target.event.title} - <b>{target.event.guest}</b>
+            {target.event.title} - <b>{target.event.guest}</b><GuestPhone phone={target.event.phone}/>
         </div>
     )
 }
@@ -62,7 +71,8 @@ export default class BigReservationList extends React.Component{
                         allDay: true,
                         color : `#${house.color}`,
                         service : reservation.service,
-                        guest : reservation.guest
+                        guest : reservation.guest,
+                        phone : reservation.phone
                     }
                 })
                 var joined = this.state.events.concat(events)

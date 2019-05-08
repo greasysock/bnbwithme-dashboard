@@ -11,6 +11,10 @@ class Property < ApplicationRecord
         reservations.where("\"end\" > ?", Date.today).where("start <= ?", Date.today).order(:end).last
     end
 
+    def duration
+        reservations.sum(:duration)
+    end
+
     def init
         self.color ||= "dc583c"
     end

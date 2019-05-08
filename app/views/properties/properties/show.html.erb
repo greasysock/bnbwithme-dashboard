@@ -1,15 +1,14 @@
 <%=render "layouts/normal_wrapper" do%>
 
 <p id="notice"><%= notice %></p>
-<div class="row">
-  <div class="card col-12">
-      <div class="card-status" style="background-color: #<%=@property.color%>"></div>
-      <div class="card-header">
-          <h4 class="card-title"><span class="fa fa-home"></span> <%=link_to @property.name, @property%></h4>
+<div class="row row-cards">
+  <div class="col-6 col-sm-4 col-lg-2">
+    <div class="card">
+      <div class="card-body p-3 text-center">
+        <div class="h1 m-0"><%=@property.duration%></div>
+        <div class="text-muted mb-4">Total Days</div>
       </div>
-      <div class="card-body">
-        <div class="color-picker"></div>
-      </div>
+    </div>
   </div>
 
   
