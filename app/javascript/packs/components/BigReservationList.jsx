@@ -37,12 +37,14 @@ function MonthEvent(target){
 export default class BigReservationList extends React.Component{
     state = {
         events: [],
-        properties: []
+        properties: [],
+        height: 600
     }
 
     getProperties() {
         bnbwithme.get('/properties.json')
         .then((res) => {
+            this.setHeight(res.data)
             this.getEvents(res.data)
         })
     }
@@ -57,6 +59,13 @@ export default class BigReservationList extends React.Component{
         return {
             style: style
         }
+    }
+
+    setHeight(properties) {
+        console.log(properties.length)
+        this.setState({
+            height: (properties.length * 30 * 5) + 450
+        })
     }
 
     getEvents(properties) {
@@ -88,9 +97,10 @@ export default class BigReservationList extends React.Component{
     }
 
     render() {
+        console.log(this.state.height)
         return (
             <BigCalendar
-                style={{height: "2000px"}}
+                style={{height: `${this.state.height}px`}}
                 localizer={localizer}
                 startAccessor="start"
                 endAccessor="end"
