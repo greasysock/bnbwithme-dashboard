@@ -62,7 +62,6 @@ export default class BigReservationList extends React.Component{
     }
 
     setHeight(properties) {
-        console.log(properties.length)
         this.setState({
             height: (properties.length * 30 * 5) + 450
         })
@@ -91,13 +90,11 @@ export default class BigReservationList extends React.Component{
         })
     }
 
-
     componentDidMount(){
         this.getProperties()
     }
 
     render() {
-        console.log(this.state.height)
         return (
             <BigCalendar
                 style={{height: `${this.state.height}px`}}
