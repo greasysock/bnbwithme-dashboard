@@ -1,6 +1,6 @@
 class Property < ApplicationRecord
-    has_many :icals
-    has_many :reservations
+    has_many :icals, dependent: :destroy
+    has_many :reservations, dependent: :destroy
 
     belongs_to :owner, :class_name => "User", foreign_key: "owner_id"
 
