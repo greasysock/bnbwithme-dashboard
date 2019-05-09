@@ -1,5 +1,5 @@
 class MainController < ApplicationAuthController
-  def dashboard
+  def index
   end
 
   def calendar

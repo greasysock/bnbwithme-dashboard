@@ -9,17 +9,14 @@ Rails.application.routes.draw do
     resources :icals
   end
 
-  scope 'properties' do
-    concerns :contain_reservations
-    resources(:properties, concerns: [:contain_reservations, :contain_icals], :path=>'/', module: 'properties')
+  scope 'api' do
+    scope 'properties' do
+      concerns :contain_reservations
+      resources(:properties, concerns: [:contain_reservations, :contain_icals], :path=>'/', module: 'properties')
+    end
   end
 
   # Disable devise registration
-
-  devise_scope :user do
-    get "/sign_in" => "devise/sessions#new" # custom path to login/sign_in
-    get "/sign_up" => "devise/registrations#new", as: "new_user_registration" # custom path to sign_up/registration
-  end
 
   devise_for :users, :skip => [:registrations] 
   as :user do
@@ -29,8 +26,10 @@ Rails.application.routes.draw do
 
   #devise_for :users
 
-  # root 'main#dashboard'
-  root :to => redirect('/calendar')
-  get 'calendar', to: 'main#calendar'
+  # root 'main#index' for react router
+  root 'main#index'
+  get '*path', to: 'main#index'
+
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

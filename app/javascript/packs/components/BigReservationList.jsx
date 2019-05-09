@@ -3,6 +3,7 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import bnbwithme from '../api/bnbwithme'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import '../styles/logofonts.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
@@ -55,7 +56,8 @@ export default class BigReservationList extends React.Component{
             borderRadius: '5px',
             color: 'white',
             border: '0px',
-            display: 'block'        };
+            display: 'block'    
+        }
         return {
             style: style
         }
