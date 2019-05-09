@@ -30,5 +30,8 @@ module Bnbwithme
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    
+    # Set time zone to US East
+    config.time_zone = "Eastern Time (US & Canada)"
   end
 end
