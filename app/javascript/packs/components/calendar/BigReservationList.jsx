@@ -1,9 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import bnbwithme from '../api/bnbwithme'
+import {fetchPropertiesAndReservations} from '../../actions'
+import bnbwithme from '../../api/bnbwithme'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import '../styles/logofonts.css'
+import '../../styles/logofonts.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
@@ -35,7 +37,7 @@ function MonthEvent(target){
 }
 
 
-export default class BigReservationList extends React.Component{
+class BigReservationList extends React.Component{
     state = {
         events: [],
         properties: [],
@@ -112,3 +114,12 @@ export default class BigReservationList extends React.Component{
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        properties:state.properties,
+        reservations:state.reservations
+    }
+}
+
+export default connect(mapStateToProps, {fetchPropertiesAndReservations})(BigReservationList)
