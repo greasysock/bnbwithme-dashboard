@@ -40,16 +40,12 @@ function MonthEvent(target){
 class BigReservationList extends React.Component{
     state = {
         events: [],
-        properties: [],
         height: 600
     }
 
-    getProperties() {
-        bnbwithme.get('/properties.json')
-        .then((res) => {
-            this.setHeight(res.data)
-            this.getEvents(res.data)
-        })
+    setupReservations() {
+        this.setHeight(this.props.properties)
+        this.getEvents(this.props.properties)
     }
 
     eventPropGetter(event, start, end, isSelected){
@@ -73,30 +69,28 @@ class BigReservationList extends React.Component{
 
     getEvents(properties) {
         properties.forEach((house) => {
-            bnbwithme.get(`/properties/${house.id}/reservations.json`)
-            .then(res => {
-                let events = res.data.map(reservation => {
-                    return {
-                        title : `  ${house.name}`,
-                        start : moment(reservation.start),
-                        end : moment(reservation.end),
-                        allDay: true,
-                        color : `#${house.color}`,
-                        service : reservation.service,
-                        guest : reservation.guest,
-                        phone : reservation.phone
-                    }
-                })
-                var joined = this.state.events.concat(events)
-                this.setState({events:joined})
+            const events = this.props.reservations[house.id].map(reservation => {
+                return {
+                    title : `  ${house.name}`,
+                    start : moment(reservation.start),
+                    end : moment(reservation.end),
+                    allDay: true,
+                    color : `#${house.color}`,
+                    service : reservation.service,
+                    guest : reservation.guest,
+                    phone : reservation.phone
+                }
             })
-
+            var joined = this.state.events.concat(events)
+            this.setState({events:joined})
         })
     }
 
     componentDidMount(){
-        this.getProperties()
-    }
+        this.props.fetchPropertiesAndReservations().then(()=>{
+            this.setupReservations()
+        })
+        }
 
     render() {
         return (

@@ -1,3 +1,8 @@
 export default (properties=[], action) => {
-    return properties
+    switch(action.type){
+        case 'FETCH_PROPERTIES':
+            return action.payload
+        default:
+            return properties
+    }
 }
