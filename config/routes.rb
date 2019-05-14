@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   concern :contain_reservations do
     resources(:reservations, only: [:show, :index]) do
       member do
+        put 'assign_cleaner'
       end
     end
   end

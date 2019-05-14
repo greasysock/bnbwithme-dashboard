@@ -2,9 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import {fetchPropertiesAndReservations} from '../../actions'
-import bnbwithme from '../../api/bnbwithme'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+
+import ReservationDrawer from './ReservationDrawer'
+import {fetchPropertiesAndReservations} from '../../actions'
 import '../../styles/logofonts.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
@@ -40,7 +41,9 @@ function MonthEvent(target){
 class BigReservationList extends React.Component{
     state = {
         events: [],
-        height: 600
+        height: 600,
+        selectedReservation: null,
+        showReservationDrawer: false
     }
 
     setupReservations() {
@@ -78,11 +81,20 @@ class BigReservationList extends React.Component{
                     color : `#${house.color}`,
                     service : reservation.service,
                     guest : reservation.guest,
-                    phone : reservation.phone
+                    phone : reservation.phone,
+                    id : reservation.id,
+                    propertyId : house.id
                 }
             })
             var joined = this.state.events.concat(events)
             this.setState({events:joined})
+        })
+    }
+
+    onHandleSelectEvent = (event) => {
+        this.setState({
+            showReservationDrawer: true,
+            selectedReservation: event
         })
     }
 
@@ -94,17 +106,21 @@ class BigReservationList extends React.Component{
 
     render() {
         return (
-            <BigCalendar
-                style={{height: `${this.state.height}px`}}
-                localizer={localizer}
-                startAccessor="start"
-                endAccessor="end"
-                events={this.state.events}
-                eventPropGetter={this.eventPropGetter}
-                components={{
-                    month: {event:MonthEvent}
-                }}
-            />
+            <div>
+                <BigCalendar
+                    style={{height: `${this.state.height}px`}}
+                    localizer={localizer}
+                    startAccessor="start"
+                    endAccessor="end"
+                    events={this.state.events}
+                    eventPropGetter={this.eventPropGetter}
+                    onSelectEvent={this.onHandleSelectEvent}
+                    components={{
+                        month: {event:MonthEvent}
+                    }}
+                />
+                <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false})} visible={this.state.showReservationDrawer} reservation={this.state.selectedReservation}/>
+            </div>
         )
     }
 }

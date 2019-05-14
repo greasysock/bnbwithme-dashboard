@@ -30,7 +30,7 @@ export default class Header extends React.Component{
                         style={{ lineHeight: '32px' }}
                         >
                         <Menu.Item key='home'>
-                            <Link to="/"> <Icon type="dashboard"/> Home </Link>
+                            <Link to="/"> <Icon type="dashboard"/> Dashboard </Link>
                         </Menu.Item>
                         <Menu.Item key='properties'>
                             <Link to="/properties"> <Icon type="home"/> Properties </Link>
