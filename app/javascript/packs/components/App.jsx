@@ -1,8 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Route} from 'react-router-dom'
 import { connect } from 'react-redux'
-import 'antd/dist/antd.css'
-
+import 'antd/dist/antd.less'
 import Wrapper from './layout/Wrapper'
 import Properties from './properties/Properties'
 import Calendar from './calendar/Calendar'
@@ -29,7 +28,7 @@ class App extends React.Component{
         if (this.props.currentUser.isSignedIn){
             return authView
         } else {
-            return loginView
+            return authView
         }
     }
 
