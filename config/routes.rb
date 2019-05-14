@@ -7,13 +7,13 @@ Rails.application.routes.draw do
     end
   end
   concern :contain_icals do
-    resources :icals
+    resources :icals, except: [:new, :edit]
   end
 
   scope 'api' do
     scope 'properties' do
       concerns :contain_reservations
-      resources(:properties, concerns: [:contain_reservations, :contain_icals], :path=>'/', module: 'properties')
+      resources(:properties,except: [:new, :edit] , concerns: [:contain_reservations, :contain_icals], :path=>'/', module: 'properties')
     end
   end
 
