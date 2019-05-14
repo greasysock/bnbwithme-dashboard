@@ -11,7 +11,7 @@ export default class Header extends React.Component{
     }
     render(){
         return (
-            <Layout.Header style={{background: "#fff", height: 'auto'}}>
+            <Layout.Header style={{background: "#fff", height: 'auto', paddingTop: '20px'}}>
                 <NormalLayout>
                     <div style={{marginBottom:'20px'}}>
                         <img className="logo" src={bnbwithmeLogo} style={{
