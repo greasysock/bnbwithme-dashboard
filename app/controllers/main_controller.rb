@@ -1,4 +1,4 @@
-class MainController < ApplicationAuthController
+class MainController < ReactApplicationController
   def index
   end
 end

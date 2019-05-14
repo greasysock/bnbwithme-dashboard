@@ -1,29 +1,30 @@
 Rails.application.routes.draw do
   concern :contain_reservations do
-    resources(:reservations, only: [:show, :index]) do
+    resources(:reservations, only: [:show, :index], defaults: { format: :json }) do
       member do
         put 'assign_cleaner'
       end
     end
   end
   concern :contain_icals do
-    resources :icals, except: [:new, :edit]
+    resources :icals, except: [:new, :edit], defaults: { format: :json }
   end
 
   scope 'api' do
     scope 'properties' do
       concerns :contain_reservations
-      resources(:properties,except: [:new, :edit] , concerns: [:contain_reservations, :contain_icals], :path=>'/', module: 'properties')
+      resources(:properties,except: [:new, :edit] , concerns: [:contain_reservations, :contain_icals], :path=>'/', module: 'properties', defaults: { format: :json })
     end
-  end
 
   # Disable devise registration
 
-  devise_for :users, :skip => [:registrations] 
-  as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+    devise_for :users, :skip => [:registrations], defaults: { format: :json }
+    as :user do
+      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+      put 'users' => 'devise/registrations#update', :as => 'user_registration'
+    end
   end
+
 
   #devise_for :users
 
