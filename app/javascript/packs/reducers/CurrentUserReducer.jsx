@@ -7,15 +7,15 @@ const INITIAL_STATE = {
     lastName: null,
     admin: false,
     cleaner: false,
-    jwt: '',
-    email: null
+    jwt: null,
+    email: null,
+    authToken: null
 }
 
 export default (state=INITIAL_STATE, action) => {
     switch(action.type){
         case SIGN_IN:
-            const { email, jwt } = action.payload.session
-            return { email, jwt, isSignedIn: true }
+            return { ...action.payload, isSignedIn: true }
         case SIGN_OUT:
             return {...INITIAL_STATE}
         default:

@@ -1,32 +1,45 @@
 import React from 'react'
-import {Menu, Avatar, Dropdown} from 'antd'
+import {Menu, Avatar, Dropdown, Icon} from 'antd'
 import {connect} from 'react-redux'
 import {signOut} from '../../../actions'
+import './Menu.less'
 
 class UserDropdown extends React.Component {
     menuRender() {
       return (
-        <Menu>
-          <Menu.Item>
-            <a href="#">Notifications</a>
+        <Menu className="menu" selectedKeys={[]}>
+          <Menu.Item key="userCenter">
+            <Icon type="user" />
+            Account Center
           </Menu.Item>
-          <Menu.Divider/>
-          <Menu.Item>
-            <a href="#">Settings</a>
+          <Menu.Item key="userinfo">
+            <Icon type="setting" />
+            Account Settings
           </Menu.Item>
-          <Menu.Item onClick={()=>{this.props.signOut()}}>
-            <a href="#">Sign out</a>
+          <Menu.Divider />
+          <Menu.Item key="logout" onClick={()=>{this.props.signOut()}}>
+            <Icon type="logout" />
+            Logout
           </Menu.Item>
         </Menu>
       )
     }
     render() {
         return (
-            <Dropdown overlay={this.menuRender()} placement="bottomRight">
-                <Avatar icon="user"/>
+            <Dropdown overlayClassName="dropdownContainer" overlay={this.menuRender()}>
+              <span className="action account">
+                  <Avatar icon="user" className="avatar" />
+                  <span className="name">{`${this.props.currentUser.firstName} ${this.props.currentUser.lastName}`}</span>
+              </span>
             </Dropdown>
         )
     }
 }
 
-export default connect(null, {signOut})(UserDropdown)
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(mapStateToProps, {signOut})(UserDropdown)

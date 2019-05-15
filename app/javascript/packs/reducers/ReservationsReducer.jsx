@@ -3,7 +3,7 @@ export default (reservations={}, action) => {
         case 'FETCH_PROPERTY_RESERVATIONS':
             const newReservations = {}
             Object.assign(newReservations, reservations)
-            newReservations[action.payload.propertyId] = action.payload.data
+            action.payload.forEach((reservation)=>{newReservations[reservation.id]=reservation})
             return newReservations
         default:
             return reservations

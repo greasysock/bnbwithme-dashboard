@@ -44,13 +44,13 @@ class ReservationDrawer extends React.Component{
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return ({
-//         reservation: state.reservation
-//     })
-// }
+const mapStateToProps = (state, ownProps) => {
+    return ({
+        reservation: state.reservations[ownProps.reservationId]
+    })
+}
 
-export default connect()(ReservationDrawer)
+export default connect(mapStateToProps)(ReservationDrawer)
 
 const pStyle = {
     fontSize: 16,

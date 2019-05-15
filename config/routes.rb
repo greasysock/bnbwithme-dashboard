@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resources :session, controller: 'rails_jwt_auth/sessions', only: [:create, :destroy], as: 'sessions'
     end
 
+    resources :users, except: [:new, :edit], defaults: { format: :json }
 
   end
 

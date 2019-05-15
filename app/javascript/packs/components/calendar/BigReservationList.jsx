@@ -47,8 +47,8 @@ class BigReservationList extends React.Component{
     }
 
     setupReservations() {
-        this.setHeight(this.props.properties)
-        this.getEvents(this.props.properties)
+        this.setHeight()
+        this.getEvents()
     }
 
     eventPropGetter(event, start, end, isSelected){
@@ -64,37 +64,36 @@ class BigReservationList extends React.Component{
         }
     }
 
-    setHeight(properties) {
+    setHeight = () => {
         this.setState({
-            height: (properties.length * 30 * 5) + 450
+            height: (Object.keys(this.props.properties).length * 30 * 5) + 450
         })
     }
 
-    getEvents(properties) {
-        properties.forEach((house) => {
-            const events = this.props.reservations[house.id].map(reservation => {
-                return {
-                    title : `  ${house.name}`,
-                    start : moment(reservation.start),
-                    end : moment(reservation.end),
-                    allDay: true,
-                    color : `#${house.color}`,
-                    service : reservation.service,
-                    guest : reservation.guest,
-                    phone : reservation.phone,
-                    id : reservation.id,
-                    propertyId : house.id
-                }
-            })
-            var joined = this.state.events.concat(events)
-            this.setState({events:joined})
+    getEvents = () => {
+        const events = Object.values(this.props.reservations).map((reservation) => {
+            const house = this.props.properties[reservation.propertyId]
+
+            return {
+                title : `  ${house.name}`,
+                start : moment(reservation.start),
+                end : moment(reservation.end),
+                allDay: true,
+                color : `#${house.color}`,
+                service : reservation.service,
+                guest : reservation.guest,
+                phone : reservation.phone,
+                id : reservation.id,
+                propertyId : house.id
+            }
         })
+        this.setState({events})
     }
 
     onHandleSelectEvent = (event) => {
         this.setState({
             showReservationDrawer: true,
-            selectedReservation: event
+            selectedReservation: event.id
         })
     }
 
@@ -119,7 +118,7 @@ class BigReservationList extends React.Component{
                         month: {event:MonthEvent}
                     }}
                 />
-                <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false})} visible={this.state.showReservationDrawer} reservation={this.state.selectedReservation}/>
+                <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>
             </div>
         )
     }
