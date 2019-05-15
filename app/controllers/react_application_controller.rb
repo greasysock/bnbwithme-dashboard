@@ -1,4 +1,4 @@
 class ReactApplicationController < ActionController::Base
     include DefaultPageContent
-    include DeviseWhitelist
+    include RailsJwtAuth::AuthenticableHelper
 end

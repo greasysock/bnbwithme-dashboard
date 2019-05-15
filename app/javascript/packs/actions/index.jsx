@@ -27,12 +27,12 @@ const _fetchPropertyReservations = _.memoize( async (propertyId, dispatch) => {
 })
 
 export const signIn = formProps => async dispatch => {
-    const response = await bnbwithme.post('/users/sign_in', formProps)
-    console.log(formProps)
+    const response = await bnbwithme.post('/user/session', formProps)
+    console.log(response)
     dispatch({type: SIGN_IN, payload: response.data})
 }
 
 export const signOut = () => async dispatch => {
-    const response = await bnbwithme.delete('/users/sign_out')
+    const response = await bnbwithme.delete('/user/session')
     dispatch({type: SIGN_OUT, payload: response.data})
 }

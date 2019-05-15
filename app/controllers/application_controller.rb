@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
     include DefaultPageContent
-    include DeviseWhitelist
-    respond_to :json
+    include RailsJwtAuth::AuthenticableHelper
+
 end

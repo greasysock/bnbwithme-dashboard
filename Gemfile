@@ -54,14 +54,12 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'bootstrap', '~> 4.1.1'
-gem 'tabler-rubygem'
 gem 'webpacker', '~> 4.x'
-gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.5'
+
+gem 'rack-cors', '~> 1.0', '>= 1.0.2'
 
 #Authentication Authorization
-gem 'devise', '~> 4.6', '>= 4.6.2'
-gem 'devise-jwt', '~> 0.5.9'
+gem 'rails_jwt_auth', '~> 1.3'
 
 #Capistrano
 gem 'capistrano', '~> 3.11'
