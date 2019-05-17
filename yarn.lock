@@ -4280,6 +4280,13 @@ lodash-es@^4.17.11:
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
   integrity sha512-DHb1ub+rMjjrxqlB3H56/6MXtm1lSksDp2rA2cNWjG8mlDUYFhUj3Di2Zn5IwSU87xLv8tNIQ7sSwE/YOX/D/Q==
 
+lodash-humps@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/lodash-humps/-/lodash-humps-3.1.2.tgz#08dccb76d89ba49ed74b22641084f847cc9e89e8"
+  integrity sha512-gOaZwNZk4J++Sep2KpoqnFBZe1aK8WvDUWtqyNvZIMEbjN+EUo0DdwNhoJAASeS7FESIdW0yTjtr5FwxJIUd4w==
+  dependencies:
+    lodash "^4.17.4"
+
 lodash._getnative@^3.0.0:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/lodash._getnative/-/lodash._getnative-3.9.1.tgz#570bc7dede46d61cdcde687d65d3eecbaa3aaff5"

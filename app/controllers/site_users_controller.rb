@@ -1,5 +1,6 @@
-class UsersController::Admin < ApplicationAuthController
+class SiteUsersController < ApplicationAuthController
     def index
+        @users = User.all
     end
     def show
     end

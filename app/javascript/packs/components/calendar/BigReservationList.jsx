@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
+import {Icon} from 'antd'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import ReservationDrawer from './ReservationDrawer'
@@ -28,6 +29,13 @@ function GuestPhone(props){
     )
 }
 
+function CleanerWarning(props){
+    if(!props.cleanerId){
+        return <Icon type="warning" />
+    }
+    return null
+}
+
 function MonthEvent(target){
     return (
         <div>
@@ -39,6 +47,7 @@ function MonthEvent(target){
 
 
 class BigReservationList extends React.Component{
+
     state = {
         events: [],
         height: 600,
@@ -84,7 +93,8 @@ class BigReservationList extends React.Component{
                 guest : reservation.guest,
                 phone : reservation.phone,
                 id : reservation.id,
-                propertyId : house.id
+                propertyId : house.id,
+                cleanerId : reservation.cleanerId
             }
         })
         this.setState({events})
@@ -118,7 +128,7 @@ class BigReservationList extends React.Component{
                         month: {event:MonthEvent}
                     }}
                 />
-                <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>
+                <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false, selectedReservation: null})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>
             </div>
         )
     }

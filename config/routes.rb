@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
 
   concern :contain_reservations do
-    resources(:reservations, only: [:show, :index], defaults: { format: :json }) do
+    resources(:reservations , only: [:show, :index, :update], defaults: { format: :json }) do
       member do
-        put 'assign_cleaner'
       end
     end
   end
@@ -23,7 +22,7 @@ Rails.application.routes.draw do
       resources :session, controller: 'rails_jwt_auth/sessions', only: [:create, :destroy], as: 'sessions'
     end
 
-    resources :users, except: [:new, :edit], defaults: { format: :json }
+    resources :users, controller: 'site_users', except: [:new, :edit], defaults: { format: :json }, as: 'users'
 
   end
 
