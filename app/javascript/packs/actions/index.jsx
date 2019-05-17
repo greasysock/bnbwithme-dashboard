@@ -56,10 +56,15 @@ export const fetchUsers = () => async (dispatch, getState) => {
     dispatch({type: FETCH_USERS, payload: humps(response.data)})
 }
 
-export const assignCleanerToReservation = (id, cleanerId) => async (dispatch, getState) => {
+export const assignCleanerToReservation = (id, cleanerId, callback = null) => async (dispatch, getState) => {
     const updatePayload = {reservation: {cleaner_id: cleanerId}}
     const response = await bnbwithme.put(`/properties/reservations/${id}`, updatePayload, _userHeaders(getState))
 
     dispatch({type: FETCH_RESERVATION, payload: humps(response.data)})
+
+    // Do Callback:
+    if(callback){
+        callback()
+    }
 
 }

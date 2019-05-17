@@ -1,10 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import BigCalendar from 'react-big-calendar'
+import MonthView from 'react-big-calendar/lib/Month'
 import moment from 'moment'
-import {Icon} from 'antd'
+import {Tag, Button} from 'antd'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
+import Toolbar from './BigCalendarToolbar'
 import ReservationDrawer from './ReservationDrawer'
 import {fetchPropertiesAndReservations} from '../../actions'
 import '../../styles/logofonts.css'
@@ -20,18 +22,9 @@ function getServiceIcon(service) {
     }
 }
 
-function GuestPhone(props){
-    if(!props.phone){
-        return null
-    }
-    return (
-        <div style={{display: "inline"}}> - <i className="fa fa-phone"/> {props.phone}</div>
-    )
-}
-
 function CleanerWarning(props){
     if(!props.cleanerId){
-        return <Icon type="warning" />
+        return <Tag color="red">No Cleaner</Tag>
     }
     return null
 }
@@ -40,24 +33,16 @@ function MonthEvent(target){
     return (
         <div>
             <i className={getServiceIcon(target.event.service)}/>
-            {target.event.title} - <b>{target.event.guest}</b>
+            {target.event.title} - <b>{target.event.guest}</b> <CleanerWarning cleanerId={target.event.cleanerId}/>
         </div>
     )
 }
 
-
 class BigReservationList extends React.Component{
 
     state = {
-        events: [],
-        height: 600,
         selectedReservation: null,
         showReservationDrawer: false
-    }
-
-    setupReservations() {
-        this.setHeight()
-        this.getEvents()
     }
 
     eventPropGetter(event, start, end, isSelected){
@@ -73,10 +58,8 @@ class BigReservationList extends React.Component{
         }
     }
 
-    setHeight = () => {
-        this.setState({
-            height: (Object.keys(this.props.properties).length * 30 * 5) + 450
-        })
+    getHeight = () => {
+        return (Object.keys(this.props.properties).length * 30 * 5) + 450
     }
 
     getEvents = () => {
@@ -97,7 +80,7 @@ class BigReservationList extends React.Component{
                 cleanerId : reservation.cleanerId
             }
         })
-        this.setState({events})
+        return events
     }
 
     onHandleSelectEvent = (event) => {
@@ -108,24 +91,25 @@ class BigReservationList extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchPropertiesAndReservations().then(()=>{
-            this.setupReservations()
-        })
+        this.props.fetchPropertiesAndReservations()
         }
 
     render() {
         return (
             <div>
                 <BigCalendar
-                    style={{height: `${this.state.height}px`}}
+                    style={{height: `${this.getHeight()}px`}}
                     localizer={localizer}
                     startAccessor="start"
                     endAccessor="end"
-                    events={this.state.events}
+                    tooltipAccessor={null}
+                    views={['month']}
+                    events={this.getEvents()}
                     eventPropGetter={this.eventPropGetter}
                     onSelectEvent={this.onHandleSelectEvent}
                     components={{
-                        month: {event:MonthEvent}
+                        month: {event:MonthEvent},
+                        toolbar: Toolbar
                     }}
                 />
                 <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false, selectedReservation: null})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>

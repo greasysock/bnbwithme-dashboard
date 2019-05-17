@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Drawer, Button, Row, Col, Icon, Card, Avatar } from 'antd'
+import { Drawer, Button, Row, Col, Icon, Card, Avatar, message } from 'antd'
 
 import {assignCleanerToReservation, fetchUsers} from '../../actions'
 import CleanerDrawer from './CleanerDrawer'
@@ -22,8 +22,13 @@ class ReservationDrawer extends React.Component{
         this.setState({cleanerDrawer:false, cleanerId})
     }
 
+    handleSuccessCleaner = () => {
+        this.onClose()
+        message.success('Cleaner assigned')
+    }
+
     handleSaveReservation = () => {
-        this.props.assignCleanerToReservation(this.props.reservationId, this.state.cleanerId)
+        this.props.assignCleanerToReservation(this.props.reservationId, this.state.cleanerId, this.handleSuccessCleaner)
     }
 
     renderPhone(){
