@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Drawer, Button, Row, Col, Icon, Card, Avatar, message } from 'antd'
 
-import {assignCleanerToReservation, fetchUsers} from '../../actions'
+import {assignCleanerToReservation, fetchUsers} from '../../../actions'
 import CleanerDrawer from './CleanerDrawer'
 
 class ReservationDrawer extends React.Component{

@@ -1,9 +1,8 @@
-
 import PropTypes from 'prop-types'
 import React from 'react'
 import cn from 'classnames'
 import {Button, Icon} from 'antd'
-import { navigate } from '../../utils/bigCalendarConstants'
+import { navigate } from '../../../utils/bigCalendarConstants'
 import './BigCalendarToolbar.less'
 
 class Toolbar extends React.Component {

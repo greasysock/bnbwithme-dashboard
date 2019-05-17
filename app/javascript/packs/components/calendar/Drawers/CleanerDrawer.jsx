@@ -1,7 +1,7 @@
 import React from 'react'
 import { Drawer, Radio } from 'antd'
 import { connect } from 'react-redux'
-import {fetchUsers} from '../../actions'
+import {fetchUsers} from '../../../actions'
 import {DrawerLine} from './ReservationDrawer'
 
 class CleanerDrawer extends React.Component{

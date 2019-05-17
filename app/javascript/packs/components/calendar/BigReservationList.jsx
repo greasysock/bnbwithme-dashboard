@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import BigCalendar from 'react-big-calendar'
-import MonthView from 'react-big-calendar/lib/Month'
 import moment from 'moment'
 import {Tag, Button} from 'antd'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-import Toolbar from './BigCalendarToolbar'
-import ReservationDrawer from './ReservationDrawer'
+import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
+import ReservationDrawer from './Drawers/ReservationDrawer'
 import {fetchPropertiesAndReservations} from '../../actions'
+import CalendarSettings, {CalendarSetting} from './CalendarSettings/CalendarSettings'
 import '../../styles/logofonts.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
@@ -29,40 +29,74 @@ function CleanerWarning(props){
     return null
 }
 
+function CleanerName(props){
+    if(props.cleaner){
+        return <b>{`${props.cleaner.firstName} ${props.cleaner.lastName}`}</b>
+    }
+    return <CleanerWarning/>
+}
+
 function MonthEvent(target){
+    if (!target.event.cleaning){
+        return (
+            <div>
+                <i className={getServiceIcon(target.event.service)}/>
+                {target.event.title} - <b>{target.event.guest}</b> <CleanerWarning cleanerId={target.event.cleanerId}/>
+            </div>
+        )
+    }
     return (
         <div>
-            <i className={getServiceIcon(target.event.service)}/>
-            {target.event.title} - <b>{target.event.guest}</b> <CleanerWarning cleanerId={target.event.cleanerId}/>
+                <i className={getServiceIcon(target.event.service)}/>
+                {target.event.title} - <CleanerName cleaner={target.event.cleaner}/>
         </div>
     )
+
 }
 
 class BigReservationList extends React.Component{
 
     state = {
         selectedReservation: null,
-        showReservationDrawer: false
+        showReservationDrawer: false,
+        showReservations: true,
+        showCleanings: false
     }
 
     eventPropGetter(event, start, end, isSelected){
         var style = {
-            backgroundColor: event.color,
             borderRadius: '5px',
             color: 'white',
             border: '0px',
-            display: 'block'    
+            display: 'block'
         }
+        if(!event.cleaning){
+            style.backgroundColor = event.color
+        }else{
+            if(event.cleanerId){
+                style.backgroundColor = "black"
+            }else{
+                style.backgroundColor = "white"
+                style.border = "2px solid black"
+                style.color = "black"
+        }
+
+        }
+
         return {
             style: style
         }
     }
 
     getHeight = () => {
-        return (Object.keys(this.props.properties).length * 30 * 5) + 450
+        let finalHeight = 0
+        const propsHeight = Object.keys(this.props.properties).length * 150
+        if (this.state.showReservations){finalHeight += propsHeight}
+        if (this.state.showCleanings){finalHeight += propsHeight}
+        return finalHeight + 450
     }
 
-    getEvents = () => {
+    getReservations = () => {
         const events = Object.values(this.props.reservations).map((reservation) => {
             const house = this.props.properties[reservation.propertyId]
 
@@ -83,11 +117,64 @@ class BigReservationList extends React.Component{
         return events
     }
 
+    getCleanings = () => {
+        const events = Object.values(this.props.reservations).map((reservation) => {
+            const house = this.props.properties[reservation.propertyId]
+            const cleaner = this.props.users[reservation.cleanerId]
+            return {
+                title : `  ${house.name}`,
+                start : moment(reservation.end).subtract(1, "days"),
+                end : moment(reservation.end).subtract(1, "days"),
+                allDay: true,
+                color : `#000`,
+                service : reservation.service,
+                guest : reservation.guest,
+                phone : reservation.phone,
+                id : reservation.id,
+                propertyId : house.id,
+                cleanerId : reservation.cleanerId,
+                cleaning : true,
+                cleaner
+            }
+        })
+        return events
+    }
+
+    getEvents = () => {
+        const events = []
+        if(this.state.showReservations){
+            this.getReservations().forEach((reservation)=>events.push(reservation))
+        }
+        if(this.state.showCleanings){
+            this.getCleanings().forEach((cleaning)=>{events.push(cleaning)})
+        }
+        return events
+    }
+
     onHandleSelectEvent = (event) => {
         this.setState({
             showReservationDrawer: true,
             selectedReservation: event.id
         })
+    }
+
+    handleCalendarControl = (control, C) => {
+        switch(control){
+            case 'Reservations':
+                this.setState({showReservations:C})
+                break
+            case 'Cleanings':
+                this.setState({showCleanings:C})
+        }
+    }
+
+    calendarControls = () => {
+        return(
+            <>
+                <CalendarSetting onSwitch={this.handleCalendarControl} switchState={this.state.showReservations} name="Reservations"/>
+                <CalendarSetting onSwitch={this.handleCalendarControl} switchState={this.state.showCleanings} name="Cleanings"/>
+            </>
+        )
     }
 
     componentDidMount(){
@@ -97,6 +184,7 @@ class BigReservationList extends React.Component{
     render() {
         return (
             <div>
+                <CalendarSettings controls={this.calendarControls}/>
                 <BigCalendar
                     style={{height: `${this.getHeight()}px`}}
                     localizer={localizer}
@@ -121,7 +209,8 @@ class BigReservationList extends React.Component{
 const mapStateToProps = (state) => {
     return {
         properties:state.properties,
-        reservations:state.reservations
+        reservations:state.reservations,
+        users:state.users
     }
 }
 
