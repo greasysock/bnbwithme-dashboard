@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import {Tag, Button} from 'antd'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
+import {MonthEvent} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
 import {fetchPropertiesAndReservations} from '../../actions'
@@ -12,47 +12,6 @@ import CalendarSettings, {CalendarSetting} from './CalendarSettings/CalendarSett
 import '../../styles/logofonts.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
-
-function getServiceIcon(service) {
-    switch(service){
-        case 'airbnb':
-        return "icon-airbnb"
-        case 'vrbo':
-        return "icon-vrbo"
-    }
-}
-
-function CleanerWarning(props){
-    if(!props.cleanerId){
-        return <Tag color="red">No Cleaner</Tag>
-    }
-    return null
-}
-
-function CleanerName(props){
-    if(props.cleaner){
-        return <b>{`${props.cleaner.firstName} ${props.cleaner.lastName}`}</b>
-    }
-    return <CleanerWarning/>
-}
-
-function MonthEvent(target){
-    if (!target.event.cleaning){
-        return (
-            <div>
-                <i className={getServiceIcon(target.event.service)}/>
-                {target.event.title} - <b>{target.event.guest}</b> <CleanerWarning cleanerId={target.event.cleanerId}/>
-            </div>
-        )
-    }
-    return (
-        <div>
-                <i className={getServiceIcon(target.event.service)}/>
-                {target.event.title} - <CleanerName cleaner={target.event.cleaner}/>
-        </div>
-    )
-
-}
 
 class BigReservationList extends React.Component{
 
