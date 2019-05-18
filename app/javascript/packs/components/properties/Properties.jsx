@@ -2,6 +2,7 @@ import React from 'react'
 import {List, Card, Icon, Button} from 'antd'
 import {connect} from 'react-redux'
 
+import {fetchProperties} from '../../actions'
 import './Properties.less'
 import NormalLayout from '../layout/NormalLayout'
 
@@ -33,6 +34,10 @@ class Properties extends React.Component{
         )
     }
 
+    componentDidMount() {
+        this.props.fetchProperties()
+    }
+
     render(){
         return (
             <NormalLayout className="cardList" content>
@@ -55,4 +60,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Properties)
+export default connect(mapStateToProps, {fetchProperties})(Properties)

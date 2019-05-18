@@ -53,6 +53,14 @@ class ReservationDrawer extends React.Component{
         return null
     }
 
+    renderCleanerAdd(phrase) {
+        if (this.props.currentUser && this.props.currentUser.admin){
+            return (
+                <Button icon="plus" onClick={()=>this.setState({cleanerDrawer:true})}>{phrase}</Button>
+            )
+        }
+    }
+
     renderCleaner(){
         if(this.state.cleanerId){
             const cleaner = this.props.users[this.state.cleanerId]
@@ -61,13 +69,13 @@ class ReservationDrawer extends React.Component{
                     <Card style={{marginRight: 20, marginBottom:20}}>
                         <Card.Meta avatar={<Avatar/>} title={`${cleaner.firstName} ${cleaner.lastName}`} description="Cleaner"/>
                     </Card>
-                    <Button icon="plus" onClick={()=>this.setState({cleanerDrawer:true})}>Change Cleaner</Button>
+                    {this.renderCleanerAdd("Change Cleaner")}
                 </div>
 
             )
         }
         return (
-            <Button icon="plus" onClick={()=>this.setState({cleanerDrawer:true})}>Assign Cleaner</Button>
+            this.renderCleanerAdd("Assign Cleaner")
         )
     }
 
@@ -116,7 +124,8 @@ class ReservationDrawer extends React.Component{
 const mapStateToProps = (state, ownProps) => {
     return ({
         reservation: state.reservations[ownProps.reservationId],
-        users: state.users
+        users: state.users,
+        currentUser: state.currentUser
     })
 }
 
