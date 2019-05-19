@@ -16,13 +16,13 @@ Rails.application.routes.draw do
       resources(:properties,except: [:new, :edit] , concerns: [:contain_reservations, :contain_icals], :path=>'/', module: 'properties', defaults: { format: :json })
     end
 
-    scope 'user' do
-      resources :invitations, controller: 'rails_jwt_auth/invitations', only: [:create, :update], as: 'invitations'
-      resources :passwords, controller: 'rails_jwt_auth/passwords', only: [:create, :update], as: 'passwords'
-      resources :session, controller: 'rails_jwt_auth/sessions', only: [:create, :destroy], as: 'sessions'
+    devise_for :users, :skip => [:registrations], defaults: {format: :json}
+    as :user do
+      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration', defaults: {format: :json}
+      put 'users' => 'devise/registrations#update', :as => 'user_registration', defaults: {format: :json}
     end
 
-    resources :users, controller: 'site_users', except: [:new, :edit], defaults: { format: :json }, as: 'users'
+    resources :people, controller: 'site_users', except: [:new, :edit], defaults: { format: :json }
 
   end
 

@@ -2,7 +2,6 @@ module Properties
   class PropertiesController < ApplicationAuthController
     before_action :set_property, only: [:show, :edit, :update, :destroy]
     before_action :set_properties, only: [:index]
-    before_action :set_subtitle, only: [:index]
 
     # GET /properties
     # GET /properties.json
@@ -48,15 +47,10 @@ module Properties
       # Use callbacks to share common setup or constraints between actions.
       def set_property
         @property = Property.find(params[:id])
-        set_page_subtitle("Properties | #{@property.name}")
       end
 
       def set_properties
         @properties = (current_user.admin ? Property.all : current_user.properties )
-      end
-
-      def set_subtitle
-        set_page_subtitle("Properties")
       end
 
       # Never trust parameters from the scary internet, only allow the white list through.

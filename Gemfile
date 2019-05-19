@@ -53,7 +53,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'webpacker', '~> 4.x'
 
 #Authentication Authorization
-gem 'rails_jwt_auth', '~> 1.3'
+gem 'devise', '~> 4.6', '>= 4.6.2'
+gem 'devise-jwt', '~> 0.5.9'
 
 #Capistrano
 gem 'capistrano', '~> 3.11'

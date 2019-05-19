@@ -21,7 +21,7 @@ import {
 } from './types'
 
 const _userHeaders = (getState) => {
-    return { headers:  { 'Authorization': `Bearer ${getState().currentUser.jwt}` } }
+    return { headers:  { 'Authorization': getState().currentUser.jwt } }
 }
 
 export const fetchPropertiesAndReservations = () => async (dispatch, getState) => {
@@ -74,19 +74,19 @@ const _fetchPropertyReservations = _.memoize( async (propertyId, dispatch, getSt
 })
 
 export const signIn = formProps => async dispatch => {
-    const response = await bnbwithme.post('/user/session', formProps)
+    const response = await bnbwithme.post('/users/sign_in', {user:formProps}) 
     // Decode User Data and combine with original response
-    const userData = {...response.data.session, ...jwt.decode(response.data.session.jwt)}
+    const userData = {...humps(response.data), jwt: response.headers.authorization}
     dispatch({type: SIGN_IN, payload: humps(userData)})
 }
 
 export const signOut = () => async (dispatch, getState) => {
-    const response = await bnbwithme.delete('/user/session/a', _userHeaders(getState))
+    const response = await bnbwithme.delete('/users/sign_out', _userHeaders(getState))
     dispatch({type: SIGN_OUT, payload: response.data})
 }
 
 export const fetchUsers = () => async (dispatch, getState) => {
-    const response = await bnbwithme.get('/users', _userHeaders(getState))
+    const response = await bnbwithme.get('/people', _userHeaders(getState))
     dispatch({type: FETCH_USERS, payload: humps(response.data)})
 }
 
