@@ -7,11 +7,13 @@ module Properties
     # GET /properties
     # GET /properties.json
     def index
+      render json: @properties
     end
 
     # GET /properties/1
     # GET /properties/1.json
     def show
+      render json: @property
     end
 
     # POST /properties
@@ -19,24 +21,20 @@ module Properties
     def create
       @property = Property.new(property_params)
 
-      respond_to do |format|
-        if @property.save
-          format.json { render :show, status: :created, location: @property }
-        else
-          format.json { render json: @property.errors, status: :unprocessable_entity }
-        end
+      if @property.save
+        render json: @property, status: :created, location: @property
+      else
+        render json: @property.errors, status: :unprocessable_entity
       end
     end
 
     # PATCH/PUT /properties/1
     # PATCH/PUT /properties/1.json
     def update
-      respond_to do |format|
-        if @property.update(property_params)
-          format.json { render :show, status: :ok, location: @property }
-        else
-          format.json { render json: @property.errors, status: :unprocessable_entity }
-        end
+      if @property.update(property_params)
+        render json: @property, status: :created, location: @property
+      else
+        render json: @property.errors, status: :unprocessable_entity
       end
     end
 
@@ -44,9 +42,6 @@ module Properties
     # DELETE /properties/1.json
     def destroy
       @property.destroy
-      respond_to do |format|
-        format.json { head :no_content }
-      end
     end
 
     private
@@ -66,7 +61,7 @@ module Properties
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def property_params
-        params.require(:property).permit(:name, :color, :owner)
+        params.require(:property).permit(:name, :color, :owner_id)
       end
   end
 end

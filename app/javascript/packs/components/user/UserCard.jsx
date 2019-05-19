@@ -1,17 +1,25 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {fetchUsers} from '../../actions'
 import {Card, Avatar} from 'antd'
 
-const UserCard = (props) => {
-    const user = props.user
-    return (
-        <div>
-            <Card style={{...props.style, marginRight: 20, marginBottom:20}}>
-                <Card.Meta avatar={<Avatar/>} title={`${user.firstName} ${user.lastName}`} description={props.description}/>
-            </Card>
-            {props.components}
-        </div>
-    )
+class UserCard extends React.Component {
+    componentDidMount(){
+        this.props.fetchUsers()
+    }
+    render(){
+        if(!this.props.user){
+            return <div>Loading...</div>
+        }
+        const user = this.props.user
+        return (
+            <div>
+                <Card style={{...this.props.style, marginRight: 20, marginBottom:20}}>
+                    <Card.Meta avatar={<Avatar/>} title={`${user.firstName} ${user.lastName}`} description={this.props.description}/>
+                </Card>
+                {this.props.components}
+            </div>
+    )}
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,4 +28,4 @@ const mapStateToProps = (state, ownProps) => {
     })
 }
 
-export default connect(mapStateToProps)(UserCard)
+export default connect(mapStateToProps, {fetchUsers})(UserCard)

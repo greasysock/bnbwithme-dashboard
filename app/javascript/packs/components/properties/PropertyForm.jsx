@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Button, Form, Row, Col, Input } from 'antd'
 import { ChromePicker } from 'react-color'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, reset } from 'redux-form'
 import { connect } from 'react-redux'
 import {ServiceIcon} from '../../helpers/calendarHelpers'
 import UserDrawer from '../user/UserDrawer'
@@ -36,14 +36,20 @@ class PropertyForm extends React.Component{
         showUserDrawer: false
     }
 
-    renderInput = ({input, meta, type}) => {
+    renderInput = ({input, meta, type, initialValues}) => {
+        if(!input.value && initialValues && initialValues.name){
+            input.onChange(initialValues.name)
+        }
         return (
             <Form.Item label="Property Name">
                 <Input {...input} type={type}/>
             </Form.Item>
             )
     }
-    renderOwnerSelect = ({input, visible}) => {
+    renderOwnerSelect = ({input, visible, initialValues}) => {
+        if(!input.value && initialValues && initialValues.ownerId){
+            input.onChange(initialValues.ownerId)
+        }
         return (
                 <UserDrawer 
                     onClose={()=>{this.setState({showUserDrawer: false})}} 
@@ -56,9 +62,12 @@ class PropertyForm extends React.Component{
             )
     }
 
-    renderColor = ({input}) => {
+    renderColor = ({input, initialValues}) => {
+        if(!input.value && initialValues && initialValues.color){
+            input.onChange(initialValues.color)
+        }
         return(
-            < ChromePicker color={input.value} width={COLOR_WIDTH} disableAlpha onChange={({hex})=>input.onChange(hex)}/>
+            < ChromePicker color={input.value} width={COLOR_WIDTH} disableAlpha onChange={({hex})=>input.onChange(hex.substr(1))}/>
         )
     }
 
@@ -84,13 +93,22 @@ class PropertyForm extends React.Component{
         )
     }
 
+    onSubmit = (formValues) => {
+        this.props.onFormSubmit (formValues)
+    }
+
+    onModalClose = () => {
+        this.props.dispatch(reset("PropertyForm"))
+        this.props.onClose()
+    }
+
     render(){
         let selectedColor = "#8A0829"
-        let propertyName = "Some Property"
+        let name = "Some Property"
         if (this.props.formValues){
             const {formValues} = this.props
-            if (formValues.propertyName){
-                propertyName = formValues.propertyName
+            if (formValues.name){
+                name = formValues.name
             }
             if (formValues.color){
                 selectedColor = formValues.color
@@ -107,17 +125,17 @@ class PropertyForm extends React.Component{
             },
           };
         return (
-            <Modal as={Form} closable={false} onCancel={()=>this.props.onClose()} title="Create a New Property" width={860} visible={this.props.show}>
+            <Modal as={Form} onOk={this.props.handleSubmit(this.onSubmit)} closable={false} onCancel={this.onModalClose} title={this.props.title} width={860} visible={this.props.show}>
                 <Row gutter={20}>
                     <Form {...formItemLayout}>
                         <Col span={12} style={{textAlign:'left'}}>
-                            <Field name="propertyName" component={this.renderInput}/>
+                            <Field initialValues={this.props.initialValues} name="name" component={this.renderInput}/>
                             {this.renderOwner()}
-                            <Field visible={this.state.showUserDrawer} name="ownerId" component={this.renderOwnerSelect}/>
+                            <Field initialValues={this.props.initialValues} visible={this.state.showUserDrawer} name="ownerId" component={this.renderOwnerSelect}/>
                         </Col>
                         <Col span={12}>
-                            <Field name="color" component={this.renderColor}/>
-                            <Event width={COLOR_WIDTH} name={propertyName} color={selectedColor}/>
+                            <Field initialValues={this.props.initialValues} name="color" component={this.renderColor}/>
+                            <Event width={COLOR_WIDTH} name={name} color={selectedColor}/>
                         </Col>
                     </Form>
                 </Row>
@@ -130,7 +148,7 @@ const wrapped = reduxForm({
     form: 'PropertyForm',
 })(PropertyForm)
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     if (state.form.PropertyForm){
         return {
             formValues: state.form.PropertyForm.values

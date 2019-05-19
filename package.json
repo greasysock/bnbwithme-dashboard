@@ -28,6 +28,7 @@
     "redux-form": "^8.2.0",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
+    "snakecase-keys": "^2.1.0",
     "style-loader": "^0.23.1"
   },
   "devDependencies": {
