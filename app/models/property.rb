@@ -8,7 +8,11 @@ class Property < ApplicationRecord
     validates_presence_of :owner
 
     def current_reservation
-        reservations.where("\"end\" > ?", Date.today).where("start <= ?", Date.today).order(:end).last
+        reservation = reservations.where("\"end\" > ?", Date.today).where("start <= ?", Date.today).order(:end).last
+    end
+
+    def current_reservation_id
+        current_reservation.id if current_reservation
     end
 
     def duration

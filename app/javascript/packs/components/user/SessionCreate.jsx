@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { Card, Button, Icon, Form, Input } from 'antd'
 
-import {signIn} from '../../actions'
+import {signIn, saveUserSession} from '../../actions'
 import './default.less'
 import bnbwithmeLogo from 'images/stickyheader.png'
 
@@ -17,7 +17,7 @@ class SessionCreate extends React.Component {
     }
 
     onSubmit = (formValues) => {
-        this.props.signIn(formValues)
+        this.props.signIn(formValues).then(()=>this.props.saveUserSession())
     }
 
     userForm() {
@@ -65,4 +65,4 @@ const formWrapped = reduxForm({
     validate
 })(SessionCreate)
 
-export default connect(null, {signIn})(formWrapped)
+export default connect(null, {signIn, saveUserSession})(formWrapped)

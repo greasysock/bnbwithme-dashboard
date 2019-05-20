@@ -6,13 +6,13 @@ module Properties
     # GET /properties
     # GET /properties.json
     def index
-      render json: @properties
+      render json: @properties, :methods => :current_reservation_id
     end
 
     # GET /properties/1
     # GET /properties/1.json
     def show
-      render json: @property
+      render json: @property, :methods => :current_reservation_id
     end
 
     # POST /properties
@@ -21,7 +21,7 @@ module Properties
       @property = Property.new(property_params)
 
       if @property.save
-        render json: @property, status: :created, location: @property
+        render json: @property, status: :created, location: @property, :methods => :current_reservation_id
       else
         render json: @property.errors, status: :unprocessable_entity
       end
@@ -31,7 +31,7 @@ module Properties
     # PATCH/PUT /properties/1.json
     def update
       if @property.update(property_params)
-        render json: @property, status: :created, location: @property
+        render json: @property, status: :created, location: @property, :methods => :current_reservation_id
       else
         render json: @property.errors, status: :unprocessable_entity
       end
@@ -57,5 +57,6 @@ module Properties
       def property_params
         params.require(:property).permit(:name, :color, :owner_id)
       end
+
   end
 end

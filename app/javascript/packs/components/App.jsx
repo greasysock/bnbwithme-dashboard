@@ -2,6 +2,8 @@ import React from 'react'
 import {BrowserRouter, Route} from 'react-router-dom'
 import { connect } from 'react-redux'
 import 'antd/dist/antd.less'
+
+import {signInFromLocalStorage} from '../actions'
 import SessionCreate from './user/SessionCreate'
 import Wrapper from './layout/Wrapper'
 import Properties from './properties/Properties'
@@ -27,6 +29,10 @@ class App extends React.Component{
         }
     }
 
+    componentDidMount(){
+        this.props.signInFromLocalStorage()
+    }
+
     render(){
         return this.authenticateUser()
     }
@@ -36,4 +42,4 @@ const mapStateToProps = (state) => {
     return {currentUser: state.currentUser}
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, {signInFromLocalStorage})(App)

@@ -14,10 +14,12 @@ import {
     FETCH_RESERVATION,
     SIGN_IN, 
     SIGN_OUT,
+    SAVE_USER_SESSION,
     ASSIGN_CLEANER_TO_RESERVATION,
     REMOVE_CLEANER_FROM_RESERVATION,
     FETCH_USERS,
-    FETCH_USER
+    FETCH_USER,
+    SIGN_IN_LOCAL_STORAGE
 } from './types'
 
 const _userHeaders = (getState) => {
@@ -80,9 +82,29 @@ export const signIn = formProps => async dispatch => {
     dispatch({type: SIGN_IN, payload: humps(userData)})
 }
 
+export const saveUserSession = () => (dispatch, getState) => {
+    localStorage.setItem('userSession', JSON.stringify(getState().currentUser))
+    dispatch({type: SAVE_USER_SESSION})
+}
+
+export const signInFromLocalStorage = () => {
+    const userSession = JSON.parse(localStorage.getItem('userSession'))
+    // Ensures that there is actual data there. Eventually will check if data and jwt are valid.
+    if(userSession){
+        return {type: SIGN_IN_LOCAL_STORAGE, payload: userSession}
+    }
+    return {type: null}
+}
+
+export const signOutFromLocalStorage = () => {
+    localStorage.removeItem('userSession')
+    return {type: 'SIGN_OUT_LOCAL_STORAGE'}
+}
+
 export const signOut = () => async (dispatch, getState) => {
     const response = await bnbwithme.delete('/users/sign_out', _userHeaders(getState))
     dispatch({type: SIGN_OUT, payload: response.data})
+    signOutFromLocalStorage()
 }
 
 export const fetchUsers = () => async (dispatch, getState) => {
