@@ -6,10 +6,11 @@ module Properties
             render json: @reservations, :methods => :service
         end
         def show
+            authorize @reservation
             render json: @reservation, :methods => :service
-
         end
         def update
+            authorize @reservation
             if @reservation.update(reservation_params)
                 render json: @reservation, :methods => :service
             else
@@ -35,5 +36,6 @@ module Properties
         def reservation_params
             params.require(:reservation).permit(:cleaner_id)
         end
+
     end
 end

@@ -103,7 +103,7 @@ class PropertyForm extends React.Component{
     }
 
     render(){
-        let selectedColor = "#8A0829"
+        let selectedColor = "8A0829"
         let name = "Some Property"
         if (this.props.formValues){
             const {formValues} = this.props
@@ -135,7 +135,7 @@ class PropertyForm extends React.Component{
                         </Col>
                         <Col span={12}>
                             <Field initialValues={this.props.initialValues} name="color" component={this.renderColor}/>
-                            <Event width={COLOR_WIDTH} name={name} color={selectedColor}/>
+                            <Event width={COLOR_WIDTH} name={name} color={`#${selectedColor}`}/>
                         </Col>
                     </Form>
                 </Row>

@@ -1,4 +1,4 @@
-class MainController < ReactApplicationController
+class MainController < ApplicationController
   def index
   end
 end

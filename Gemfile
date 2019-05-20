@@ -55,6 +55,7 @@ gem 'webpacker', '~> 4.x'
 #Authentication Authorization
 gem 'devise', '~> 4.6', '>= 4.6.2'
 gem 'devise-jwt', '~> 0.5.9'
+gem 'pundit', '~> 2.0', '>= 2.0.1'
 
 #Capistrano
 gem 'capistrano', '~> 3.11'
