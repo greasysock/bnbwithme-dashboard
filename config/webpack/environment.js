@@ -1,6 +1,6 @@
 const { environment } = require('@rails/webpacker')
-const webpackConfig = require('./antdConfig')
+const antdConfig = require('./antdConfig')
 
-environment.config.merge(webpackConfig)
+//environment.config.merge(antdConfig)
 
 module.exports = environment
