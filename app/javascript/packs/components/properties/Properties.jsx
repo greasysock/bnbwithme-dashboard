@@ -107,8 +107,8 @@ class Properties extends React.Component{
             <>
             <PropertyForm initialValues={this.state.targetEditPropertyValues} onFormSubmit={this.state.formSubmitCallback} title={this.state.propertyFormTitle} onClose={this.handleModalClose} show={this.state.showPropertyForm}/>
             <NormalLayout className="cardList" content>
+                {this.renderAddProperty()}
                 <Card className="listCard" bordered={false} style={{ marginTop: 24 }} bodyStyle={{ padding: '0 32px 40px 32px' }} title="Properties List">
-                    {this.renderAddProperty()}
                     <List size="large" rowKey="id">
                         {this.renderProperties()}
                     </List>

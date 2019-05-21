@@ -1,6 +1,6 @@
 module Properties
   class PropertiesController < ApplicationAuthController
-    before_action :set_property, only: [:show, :edit, :update, :destroy]
+    before_action :set_property, only: [:show, :update, :destroy]
 
     def index
       @properties = policy_scope(Property)

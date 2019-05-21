@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Table, Divider, Tag, Button, Card } from 'antd'
+import { Table, Divider, Tag, Button, Card, message } from 'antd'
 
-import {fetchUsers} from '../../../actions'
+import UserForm, {EDIT_FORM, NEW_FORM} from '../../user/UserForm'
+import {fetchUsers, createUser, updateUser, destroyUser} from '../../../actions'
 import NormalLayout from '../../layout/NormalLayout'
 const { Column, ColumnGroup} = Table
 
@@ -18,12 +19,34 @@ const USER_ROLE = {
 }
 
 class Users extends React.Component{
+
+    state={
+        userFormVisible: false,
+        formTitle: NEW_FORM,
+        formCallback: this.newSubmitCallback,
+        targetUserId: null,
+        targetUser: null
+    }
+
+    editSubmitCallback = (formValues) => {
+        this.props.updateUser(this.state.targetUserId, formValues, this.successCallback)
+    }
+    newSubmitCallback = (formValues) => {
+        this.props.createUser(formValues, this.successCallback)
+    }
+
+    successCallback = () => {
+        message.success("User saved")
+        this.handleFormClose()
+    }
+
     renderAddUser(){
         return (
             <Button
             type="dashed"
             style={{ width: '100%', marginBottom: 8 }}
             icon="plus"
+            onClick={()=>this.setState({userFormVisible:true, formTitle: NEW_FORM, formCallback: this.newSubmitCallback})}
           >New User</Button>
         )
     }
@@ -51,6 +74,10 @@ class Users extends React.Component{
         }
     }
 
+    handleUserEditClick = (user) => {
+        this.setState({formTitle: EDIT_FORM, formCallback: this.editSubmitCallback, targetUserId: user.id, targetUser: user, userFormVisible: true})
+    }
+
     renderTable() {
         return (
             <Table style={{padding:0}} pagination={false} dataSource={this.mapUsersToData()}>
@@ -67,7 +94,7 @@ class Users extends React.Component{
             <Column title="Action" key="action" render={(text, user) =>
                 (
                 <span>
-                    <a>Edit</a>
+                    <a onClick={()=>this.handleUserEditClick(user)}>Edit</a>
                     <Divider type="vertical"/>
                     <a>Delete</a>
                 </span>
@@ -77,6 +104,10 @@ class Users extends React.Component{
         )
     }
 
+    handleFormClose = () => {
+        this.setState({userFormVisible:false, targetUser: null, targetUserId: null})
+    }
+
     componentDidMount() {
         this.props.fetchUsers()
     }
@@ -84,6 +115,7 @@ class Users extends React.Component{
     render(){
         return(
             <NormalLayout>
+                <UserForm enableReinitialize initialValues={this.state.targetUser} visible={this.state.userFormVisible} onClose={this.handleFormClose} title={this.state.formTitle} onFormSubmit={this.state.formCallback}/>
                 {this.renderAddUser()}
                 <div style={{ background: '#fff', padding: 0, minHeight: 280}}>
                     {this.renderTable()}
@@ -99,4 +131,4 @@ const mapStateToProps = (state) => {
     })
 }
 
-export default connect(mapStateToProps, {fetchUsers})(Users)
+export default connect(mapStateToProps, {fetchUsers, createUser, updateUser, destroyUser})(Users)

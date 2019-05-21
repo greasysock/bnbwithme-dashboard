@@ -17,3 +17,6 @@ export const SIGN_OUT = "SIGN_OUT"
 
 export const FETCH_USERS = "FETCH_USERS"
 export const FETCH_USER = "FETCH_USER"
+export const UPDATE_USER = "UPDATE_USER"
+export const CREATE_USER = "CREATE_USER"
+export const DESTROY_USER = "DESTROY_USER"
