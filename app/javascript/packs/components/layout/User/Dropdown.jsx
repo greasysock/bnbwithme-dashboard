@@ -1,17 +1,27 @@
 import React from 'react'
 import {Menu, Avatar, Dropdown, Icon} from 'antd'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {signOut} from '../../../actions'
+import history from '../../../history'
 import './Menu.less'
 
 class UserDropdown extends React.Component {
+    manageUsersRender() {
+      if(!this.props.currentUser.admin){
+        return
+      }
+      return (
+        <Menu.Item onClick={()=>history.push('/admin/users')} key="manageusers">
+          <Icon type="user" />
+          Manage Users
+        </Menu.Item>
+        )
+    }
     menuRender() {
       return (
         <Menu className="menu" selectedKeys={[]}>
-          <Menu.Item key="userCenter">
-            <Icon type="user" />
-            Account Center
-          </Menu.Item>
+          {this.manageUsersRender()}
           <Menu.Item key="userinfo">
             <Icon type="setting" />
             Account Settings
