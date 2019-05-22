@@ -3,7 +3,7 @@ import {Menu, Avatar, Dropdown, Icon} from 'antd'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {signOut} from '../../../actions'
-import history from '../../../history'
+import history from '../../history'
 import './Menu.less'
 
 class UserDropdown extends React.Component {

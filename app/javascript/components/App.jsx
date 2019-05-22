@@ -3,7 +3,7 @@ import {Route, Router} from 'react-router-dom'
 import { connect } from 'react-redux'
 import 'antd/dist/antd.less'
 
-import history from '../history'
+import history from './history'
 import {signInFromLocalStorage} from '../actions'
 import SessionCreate from './user/SessionCreate'
 import Wrapper from './layout/Wrapper'
