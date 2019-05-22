@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import jwt from 'jsonwebtoken'
+import moment from 'moment'
 import humps from 'lodash-humps'
 import dehumps from 'snakecase-keys'
 
@@ -90,13 +91,26 @@ export const saveUserSession = () => (dispatch, getState) => {
     dispatch({type: SAVE_USER_SESSION})
 }
 
-export const signInFromLocalStorage = () => {
+export const fetchNewJwt = () => async (dispatch, getState) => {
+    const response = await bnbwithme.post('/users/sign_in', _userHeaders(getState))
+    console.log(response)
+}
+
+export const signInFromLocalStorage = () => (dispatch, getState) => {
     const userSession = JSON.parse(localStorage.getItem('userSession'))
     // Ensures that there is actual data there. Eventually will check if data and jwt are valid.
     if(userSession){
-        return {type: SIGN_IN_LOCAL_STORAGE, payload: userSession}
+        // Get expiration time from jwt
+        const expiration = moment.unix( jwt.decode(userSession.jwt.substr(7)).exp )
+        
+        // If token expired, sign out. If not, get a new one
+        if(expiration < moment()){
+            signOut()(dispatch, getState)
+        }else{
+            //fetchNewJwt()(dispatch, getState)
+        }
+        dispatch( {type: SIGN_IN_LOCAL_STORAGE, payload: userSession} )
     }
-    return {type: null}
 }
 
 export const signOutFromLocalStorage = () => {
