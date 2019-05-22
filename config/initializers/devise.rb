@@ -22,6 +22,7 @@ Devise.setup do |config|
 
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials[:devise_jwt_scret_key]
+    jwt.expiration_time = 604800
   end
 
   # Configure the class responsible to send e-mails.
