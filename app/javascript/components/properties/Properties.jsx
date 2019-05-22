@@ -67,7 +67,7 @@ class Properties extends React.Component{
             icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
             onConfirm={()=>this.handleDestroyProperty(property.id)}
           >
-            <a href="#">Delete</a>
+            <a href="#">delete</a>
           </Popconfirm>
         )
         if(this.props.currentUser.admin){

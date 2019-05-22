@@ -94,9 +94,9 @@ class Users extends React.Component{
             <Column title="Action" key="action" render={(text, user) =>
                 (
                 <span>
-                    <a onClick={()=>this.handleUserEditClick(user)}>Edit</a>
+                    <a onClick={()=>this.handleUserEditClick(user)}>edit</a>
                     <Divider type="vertical"/>
-                    <a>Delete</a>
+                    <a>delete</a>
                 </span>
                 )
             }/>

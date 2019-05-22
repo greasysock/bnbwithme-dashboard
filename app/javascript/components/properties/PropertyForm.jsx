@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import {ServiceIcon} from '../../helpers/calendarHelpers'
 import UserDrawer from '../user/UserDrawer'
 import UserCard from '../user/UserCard'
+import {randomPerson} from '../../helpers/propertiesHelpers'
 
 export const EDIT_FORM = "Edit this Property"
 export const NEW_FORM = "Create a New Property"
@@ -25,7 +26,7 @@ const Event = (props) => {
     }
     return (
         <div className="rbc-row-segment" style={style}>
-            <ServiceIcon style={{paddingLeft:4}} service="airbnb"/> {props.name} - <b>Michael Scott</b>
+            <ServiceIcon style={{paddingLeft:4}} service="airbnb"/> {props.name} - <b>{props.person}</b>
         </div>
     )
 }
@@ -100,11 +101,16 @@ class PropertyForm extends React.Component{
     onModalClose = () => {
         this.props.dispatch(reset("PropertyForm"))
         this.props.onClose()
+        this.setState({random: randomPerson()})
+    }
+
+    componentDidMount(){
+        this.setState({random: randomPerson()})
     }
 
     render(){
         let selectedColor = "8A0829"
-        let name = "Some Property"
+        let name = "Schrute Farms"
         if (this.props.formValues){
             const {formValues} = this.props
             if (formValues.name){
@@ -135,7 +141,7 @@ class PropertyForm extends React.Component{
                         </Col>
                         <Col span={12}>
                             <Field initialValues={this.props.initialValues} name="color" component={this.renderColor}/>
-                            <Event width={COLOR_WIDTH} name={name} color={`#${selectedColor}`}/>
+                            <Event person={this.state.random} width={COLOR_WIDTH} name={name} color={`#${selectedColor}`}/>
                         </Col>
                     </Form>
                 </Row>
