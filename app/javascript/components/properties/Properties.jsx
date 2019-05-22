@@ -1,5 +1,5 @@
 import React from 'react'
-import {List, Card, Icon, Button,message} from 'antd'
+import {List, Card, Icon, Button,message, Popconfirm} from 'antd'
 import {connect} from 'react-redux'
 
 import PropertyForm, {NEW_FORM, EDIT_FORM} from './PropertyForm'
@@ -14,7 +14,7 @@ class Properties extends React.Component{
         propertyFormTitle: NEW_FORM,
         formSubmitCallback: this.handleCreateProperty,
         targetEditPropertyValues: {},
-        targetEditPropertyId: null
+        targetEditPropertyId: null,
     }
 
     formSuccess = () => {
@@ -61,9 +61,15 @@ class Properties extends React.Component{
             })
         }}>edit</a>
 
-        const remove = <a onClick={()=>{
-            this.handleDestroyProperty(property.id)
-        }}>delete</a>
+        const remove = (
+            <Popconfirm
+            title="Are you sure？"
+            icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+            onConfirm={()=>this.handleDestroyProperty(property.id)}
+          >
+            <a href="#">Delete</a>
+          </Popconfirm>
+        )
         if(this.props.currentUser.admin){
             return (
                 [edit, remove]
