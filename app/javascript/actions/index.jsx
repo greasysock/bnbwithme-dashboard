@@ -26,7 +26,10 @@ import {
     SIGN_IN_LOCAL_STORAGE
 } from './types'
 
-const _userHeaders = (getState) => {
+const _userHeaders = (getState, jwt=null) => {
+    if(jwt){
+        return {headers: {'Authorization' : jwt} }
+    }
     return { headers:  { 'Authorization': getState().currentUser.jwt } }
 }
 
@@ -86,14 +89,33 @@ export const signIn = formProps => async dispatch => {
     dispatch({type: SIGN_IN, payload: humps(userData)})
 }
 
-export const saveUserSession = () => (dispatch, getState) => {
-    localStorage.setItem('userSession', JSON.stringify(getState().currentUser))
+export const saveUserSession = () => (dispatch, getState, userSession=null) => {
+    let currentUser = null
+    if (userSession){
+        currentUser = userSession
+    }else{
+        currentUser = getState().currentUser
+    }
+    localStorage.setItem('userSession', JSON.stringify( currentUser ) )
     dispatch({type: SAVE_USER_SESSION})
 }
 
-export const fetchNewJwt = () => async (dispatch, getState) => {
-    const response = await bnbwithme.post('/users/sign_in', _userHeaders(getState))
-    console.log(response)
+const revokeJwt = (jwt) => {
+    bnbwithme.delete('/users/sign_out', _userHeaders(null, jwt))
+} 
+
+export const fetchNewJwt = () => async (dispatch, getState, jwt=null) => {
+    let headers = null
+    if(jwt){
+        headers = _userHeaders(null, jwt)
+    }else{
+        headers = _userHeaders(getState)
+    }
+    const response = await bnbwithme.post('/users/sign_in', null, headers)
+    const userData = {...humps(response.data), jwt: response.headers.authorization}
+    revokeJwt(jwt)
+    saveUserSession()(dispatch, getState, userData)
+    dispatch({type: SIGN_IN, payload: humps(userData)})
 }
 
 export const signInFromLocalStorage = () => (dispatch, getState) => {
@@ -107,7 +129,7 @@ export const signInFromLocalStorage = () => (dispatch, getState) => {
         if(expiration < moment()){
             signOut()(dispatch, getState)
         }else{
-            //fetchNewJwt()(dispatch, getState)
+            fetchNewJwt()(dispatch, getState, userSession.jwt)
         }
         dispatch( {type: SIGN_IN_LOCAL_STORAGE, payload: userSession} )
     }
