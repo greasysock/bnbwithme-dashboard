@@ -11,13 +11,23 @@ import {
     CREATE_PROPERTY,
     DESTROY_PROPERTY,
     FETCH_PROPERTY,
+
+    FETCH_PROPERTY_ICALS,
+    FETCH_PROPERTY_ICAL,
+    UPDATE_PROPERTY_ICAL,
+    CREATE_PROPERTY_ICAL,
+    DESTROY_PROPERTY_ICAL,
+
     FETCH_PROPERTY_RESERVATIONS,
     FETCH_RESERVATION,
+
     SIGN_IN, 
     SIGN_OUT,
     SAVE_USER_SESSION,
+
     ASSIGN_CLEANER_TO_RESERVATION,
     REMOVE_CLEANER_FROM_RESERVATION,
+
     FETCH_USERS,
     FETCH_USER,
     CREATE_USER,
@@ -194,3 +204,39 @@ export const assignCleanerToReservation = (id, cleanerId, callback = null) => as
     }
 
 }
+
+// Ical resource
+
+export const fetchPropertyIcals = (propertyId) => async (dispatch, getState) => {
+    const response = await bnbwithme.get(`/properties/${propertyId}/icals`, _userHeaders(getState))
+    dispatch({type:FETCH_PROPERTY_ICALS, payload: humps(response.data)})
+} 
+
+export const fetchPropertyIcal = (propertyId, id) => async (dispatch, getState) => {
+    const response = await bnbwithme.get(`/properties/${propertyId}/icals/${id}`, _userHeaders(getState))
+    dispatch({type:FETCH_PROPERTY_ICAL, payload: humps(response.data)})
+}
+
+export const updatePropertyIcal = (propertyId, id, formValues, callback = null) => async (dispatch, getState) => {
+    const response = await bnbwithme.put(`/properties/${propertyId}/icals/${id}`, dehumps({ical: formValues}), _userHeaders(getState))
+    dispatch({type:UPDATE_PROPERTY_ICAL, payload: humps(response.data)})
+    if(callback){
+        callback()
+    }
+} 
+
+export const destroyPropertyIcal = (propertyId, id, callback = null) => async (dispatch, getState) => {
+    await bnbwithme.delete(`/properties/${propertyId}/icals/${id}`, _userHeaders(getState))
+    dispatch({type:DESTROY_PROPERTY_ICAL, payload: {id, propertyId}})
+    if(callback){
+        callback()
+    }
+} 
+
+export const createPropertyIcal = (propertyId, formValues, callback = null) => async (dispatch, getState) => {
+    await bnbwithme.post(`/properties/${propertyId}/icals`, dehumps({ical: formValues}), _userHeaders(getState))
+    dispatch({type:CREATE_PROPERTY_ICAL, payload: id})
+    if(callback){
+        callback()
+    }
+} 

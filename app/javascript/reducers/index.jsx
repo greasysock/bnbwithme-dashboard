@@ -4,9 +4,11 @@ import PropertiesReducer from './PropertiesReducer'
 import ReservationsReducer from './ReservationsReducer'
 import CurrentUserReducer from './CurrentUserReducer'
 import UsersReducer from './UsersReducer'
+import PropertyIcalsReducer from './PropertyIcalsReducer'
 
 export default combineReducers({
     properties: PropertiesReducer,
+    propertyIcals: PropertyIcalsReducer,
     reservations: ReservationsReducer,
     form: formReducer,
     currentUser: CurrentUserReducer,
