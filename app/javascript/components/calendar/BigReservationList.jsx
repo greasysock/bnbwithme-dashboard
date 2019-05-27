@@ -8,7 +8,6 @@ import {MonthEvent} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
 import {fetchPropertiesAndReservations} from '../../actions'
-import CalendarSettings, {CalendarSetting} from './CalendarSettings/CalendarSettings'
 import '../../styles/logofonts.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
@@ -18,8 +17,6 @@ class BigReservationList extends React.Component{
     state = {
         selectedReservation: null,
         showReservationDrawer: false,
-        showReservations: true,
-        showCleanings: false
     }
 
     eventPropGetter(event, start, end, isSelected){
@@ -50,8 +47,9 @@ class BigReservationList extends React.Component{
     getHeight = () => {
         let finalHeight = 0
         const propsHeight = Object.keys(this.props.properties).length * 150
-        if (this.state.showReservations){finalHeight += propsHeight}
-        if (this.state.showCleanings){finalHeight += propsHeight}
+        const {showReservations, showCleanings} = this.props.calendarSettings
+        if (showReservations){finalHeight += propsHeight}
+        if (showCleanings){finalHeight += propsHeight}
         return finalHeight + 450
     }
 
@@ -101,10 +99,11 @@ class BigReservationList extends React.Component{
 
     getEvents = () => {
         const events = []
-        if(this.state.showReservations){
+        const {showReservations, showCleanings} = this.props.calendarSettings
+        if(showReservations){
             this.getReservations().forEach((reservation)=>events.push(reservation))
         }
-        if(this.state.showCleanings){
+        if(showCleanings){
             this.getCleanings().forEach((cleaning)=>{events.push(cleaning)})
         }
         return events
@@ -127,15 +126,6 @@ class BigReservationList extends React.Component{
         }
     }
 
-    calendarControls = () => {
-        return(
-            <>
-                <CalendarSetting onSwitch={this.handleCalendarControl} switchState={this.state.showReservations} name="Reservations"/>
-                <CalendarSetting onSwitch={this.handleCalendarControl} switchState={this.state.showCleanings} name="Cleanings"/>
-            </>
-        )
-    }
-
     componentDidMount(){
         this.props.fetchPropertiesAndReservations()
         }
@@ -143,7 +133,6 @@ class BigReservationList extends React.Component{
     render() {
         return (
             <div>
-                <CalendarSettings controls={this.calendarControls}/>
                 <BigCalendar
                     style={{height: `${this.getHeight()}px`}}
                     localizer={localizer}
@@ -169,7 +158,8 @@ const mapStateToProps = (state) => {
     return {
         properties:state.properties,
         reservations:state.reservations,
-        users:state.users
+        users:state.users,
+        calendarSettings: state.calendarSettings
     }
 }
 

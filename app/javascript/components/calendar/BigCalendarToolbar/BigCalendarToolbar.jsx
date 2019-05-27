@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import cn from 'classnames'
+import {connect} from 'react-redux'
 import {Button, Icon} from 'antd'
 import { navigate } from '../../../utils/bigCalendarConstants'
 import './BigCalendarToolbar.less'
+import CalendarSettings,{CalendarSetting} from '../CalendarSettings/CalendarSettings'
+import {toggleReservations, toggleCleanings} from '../../../actions'
 
 class Toolbar extends React.Component {
   render() {
@@ -39,10 +42,19 @@ class Toolbar extends React.Component {
 
         <span className="rbc-toolbar-label">{label}</span>
 
-        <span className="rbc-btn-group">{this.viewNamesGroup(messages)}</span>
+        <span style={{paddingLeft:200}} className="rbc-btn-group"><CalendarSettings controls={this.calendarControls}/></span>
       </div>
     )
   }
+
+  calendarControls = () => {
+    return(
+        <>
+            <CalendarSetting onSwitch={()=>{this.props.toggleReservations()}} switchState={this.props.calendarSettings.showReservations} name="Reservations"/>
+            <CalendarSetting onSwitch={()=>{this.props.toggleCleanings()}} switchState={this.props.calendarSettings.showCleanings} name="Cleanings"/>
+        </>
+    )
+}
 
   navigate = action => {
     this.props.onNavigate(action)
@@ -80,4 +92,10 @@ Toolbar.propTypes = {
   onView: PropTypes.func.isRequired,
 }
 
-export default Toolbar
+const mapStateToProps = (state) => {
+  return({
+    calendarSettings: state.calendarSettings
+  })
+}
+
+export default connect(mapStateToProps, {toggleCleanings, toggleReservations})(Toolbar)
