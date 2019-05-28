@@ -13,7 +13,7 @@ const columns = [
 
 const StatusTag = (props) => {
     const lastChecked = moment(props.updatedAt)
-    if ((moment()-lastChecked) < moment().hours(2)){
+    if ((moment()-lastChecked) > moment(0).add(2, 'hours')){
         return <Tag color="red">Error</Tag>
     }
     return <Tag color="green">Okay</Tag>
