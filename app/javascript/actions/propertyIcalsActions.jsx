@@ -12,7 +12,7 @@ import {_userHeaders} from '.'
 
 export const fetchPropertyIcals = (propertyId) => async (dispatch, getState) => {
     const response = await bnbwithme.get(`/properties/${propertyId}/icals`, _userHeaders(getState))
-    dispatch({type:FETCH_PROPERTY_ICALS, payload: humps(response.data)})
+    dispatch({type:FETCH_PROPERTY_ICALS, payload: {icals:humps(response.data), propertyId} })
 } 
 
 export const fetchPropertyIcal = (propertyId, id) => async (dispatch, getState) => {

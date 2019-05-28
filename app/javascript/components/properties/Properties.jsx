@@ -1,6 +1,7 @@
 import React from 'react'
 import {List, Card, Icon, Button,message, Popconfirm} from 'antd'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import PropertyForm, {NEW_FORM, EDIT_FORM} from './PropertyForm'
 import {fetchProperties, createProperty, updateProperty, destroyProperty} from '../../actions'
@@ -81,7 +82,7 @@ class Properties extends React.Component{
     renderProperty(property){
         return (
             <List.Item key={property.id} style={{borderLeft:`#${property.color} solid 3px`}} actions={this.renderPropertyActions(property)}>
-                <List.Item.Meta avatar={<Icon type="home" size="large"/>} title={property.name}/>
+                <List.Item.Meta avatar={<Icon type="home" size="large"/>} title={ <Link to={`properties/${property.id}`}>{property.name}</Link>}/>
             </List.Item>
         )
     }

@@ -8,6 +8,7 @@ import {signInFromLocalStorage} from '../actions'
 import SessionCreate from './user/SessionCreate'
 import Wrapper from './layout/Wrapper'
 import Properties from './properties/Properties'
+import Property from './properties/Property'
 import Calendar from './calendar/Calendar'
 import Home from './pages/Home'
 import AdminUsers from './admin/users/Users'
@@ -29,7 +30,8 @@ class App extends React.Component{
         <Router history={history}>
             <Wrapper>
                 <Route path="/" exact component={Home}/>
-                <Route path="/properties" component={Properties}/>
+                <Route path="/properties" exact component={Properties}/>
+                <Route path="/properties/:id" exact component={Property} />
                 <Route path="/calendar" component={Calendar}/>
                 {this.renderAdmin()}
             </Wrapper>

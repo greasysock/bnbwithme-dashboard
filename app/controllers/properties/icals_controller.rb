@@ -4,6 +4,8 @@ module Properties
         before_action :set_property
         
         def index
+          @icals = @property.icals
+          render json: @icals
         end
         def show
         end

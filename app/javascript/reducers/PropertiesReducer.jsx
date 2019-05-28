@@ -1,4 +1,4 @@
-import {SIGN_OUT, FETCH_PROPERTIES, CREATE_PROPERTY, UPDATE_PROPERTY, DESTROY_PROPERTY} from '../actions/types'
+import {SIGN_OUT, FETCH_PROPERTIES, CREATE_PROPERTY, UPDATE_PROPERTY, DESTROY_PROPERTY, FETCH_PROPERTY} from '../actions/types'
 
 export default (properties={}, action) => {
     switch(action.type){
@@ -13,6 +13,9 @@ export default (properties={}, action) => {
             return {...properties}
         case DESTROY_PROPERTY:
             delete properties[action.payload]
+            return {...properties}
+        case FETCH_PROPERTY:
+            properties[action.payload.id] = action.payload
             return {...properties}
         case SIGN_OUT:
             return {}

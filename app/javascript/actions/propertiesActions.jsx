@@ -10,6 +10,10 @@ import {
 } from './types'
 import {_userHeaders} from '.'
 
+export const fetchProperty = id => async (dispatch, getState) => {
+    const response = await bnbwithme.get(`/properties/${id}`, _userHeaders(getState))
+    dispatch({type: FETCH_PROPERTY, payload: humps(response.data)})
+}
 
 export const fetchProperties = () => async (dispatch, getState) => {
     const response = await bnbwithme.get('/properties', _userHeaders(getState))
