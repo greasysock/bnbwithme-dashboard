@@ -48,7 +48,7 @@ class BigReservationList extends React.Component{
             padding: '0px 4px',
             position: 'relative',
             fontSize: 13,
-            borderRadius: 0,
+            borderRadius: 3,
             backgroundColor: event.color,
 
         }
@@ -56,13 +56,13 @@ class BigReservationList extends React.Component{
             style.color = 'white'
         }else{
             if(event.cleanerId){
-                style.background = `linear-gradient(45deg, #5e5e5e 18.18%, #4d4d4d 18.18%, #4d4d4d 50%, #5e5e5e 50%, #5e5e5e 68.18%, #4d4d4d 68.18%, #4d4d4d 100%)` 
-                style.backgroundSize = '15.56px 15.56px'
+                style.backgroundColor = 'black'
                 style.color = "white"
             }else{
-                style.background = `linear-gradient(45deg, #94917c 18.18%, #b37a6f 18.18%, #b37a6f 50%, #94917c 50%, #94917c 68.18%, #b37a6f 68.18%, #b37a6f 100%)` 
-                style.backgroundSize = '15.56px 15.56px'
-                style.color = "white"
+                style.backgroundColor = 'white'
+                style.color = "black"
+                style.boxSizing = "border-box"
+                style.border = "1px solid #CCC"
         }
 
         }
