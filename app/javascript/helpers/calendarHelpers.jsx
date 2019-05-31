@@ -16,7 +16,7 @@ export const ServiceIcon = (props) => {
 
 export function CleanerWarning(props){
     if(!props.cleanerId){
-        return <Tag color="red">No Cleaner</Tag>
+        return <span className="cleaner-warning">No Cleaner</span>
     }
     return null
 }

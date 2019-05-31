@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cn from 'classnames'
 import {connect} from 'react-redux'
-import {Button, Icon} from 'antd'
+import {Button, Icon, Typography} from 'antd'
 import { navigate } from '../../../utils/bigCalendarConstants'
 import './BigCalendarToolbar.less'
 import CalendarSettings,{CalendarSetting} from '../CalendarSettings/CalendarSettings'
@@ -39,8 +39,8 @@ class Toolbar extends React.Component {
             <Icon type="right"/>
           </Button>
         </Button.Group>
-
-        <span className="rbc-toolbar-label">{label}</span>
+      
+        <span className="rbc-toolbar-label"><Typography.Title level={4}>{label}</Typography.Title></span>
 
         <span style={{paddingLeft:200}} className="rbc-btn-group"><CalendarSettings controls={this.calendarControls}/></span>
       </div>

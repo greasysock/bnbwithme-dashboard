@@ -9,8 +9,32 @@ import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
 import {fetchPropertiesAndReservations} from '../../actions'
 import '../../styles/logofonts.css'
+import './styles/month.less'
 
 const localizer = BigCalendar.momentLocalizer(moment)
+
+const colToInt = (value) =>{
+    return parseInt( "0x" + value )
+}
+
+const floatToCol = (value) => {
+    if(value>255){
+        return "FF"
+    }else if(value<0){
+        return "00"
+    }
+    return Math.round(value).toString(16)
+}
+
+const darken = (color, amount) => {
+    let r = color.slice(1,3)
+    let g = color.slice(3,5)
+    let b = color.slice(5,7)
+    const darkenIndividual = (channel) => {
+        return floatToCol( colToInt(channel) - amount )
+    }
+    return `#${darkenIndividual(r)}${darkenIndividual(g)}${darkenIndividual(b)}`
+}
 
 class BigReservationList extends React.Component{
 
@@ -21,20 +45,24 @@ class BigReservationList extends React.Component{
 
     eventPropGetter(event, start, end, isSelected){
         var style = {
-            borderRadius: '5px',
-            color: 'white',
-            border: '0px',
-            display: 'block'
+            padding: '0px 4px',
+            position: 'relative',
+            fontSize: 13,
+            borderRadius: 0,
+            backgroundColor: event.color,
+
         }
         if(!event.cleaning){
-            style.backgroundColor = event.color
+            style.color = 'white'
         }else{
             if(event.cleanerId){
-                style.backgroundColor = "black"
+                style.background = `linear-gradient(45deg, #5e5e5e 18.18%, #4d4d4d 18.18%, #4d4d4d 50%, #5e5e5e 50%, #5e5e5e 68.18%, #4d4d4d 68.18%, #4d4d4d 100%)` 
+                style.backgroundSize = '15.56px 15.56px'
+                style.color = "white"
             }else{
-                style.backgroundColor = "white"
-                style.border = "2px solid black"
-                style.color = "black"
+                style.background = `linear-gradient(45deg, #94917c 18.18%, #b37a6f 18.18%, #b37a6f 50%, #94917c 50%, #94917c 68.18%, #b37a6f 68.18%, #b37a6f 100%)` 
+                style.backgroundSize = '15.56px 15.56px'
+                style.color = "white"
         }
 
         }
@@ -46,7 +74,7 @@ class BigReservationList extends React.Component{
 
     getHeight = () => {
         let finalHeight = 0
-        const propsHeight = Object.keys(this.props.properties).length * 150
+        const propsHeight = Object.keys(this.props.properties).length * 140
         const {showReservations, showCleanings} = this.props.calendarSettings
         if (showReservations){finalHeight += propsHeight}
         if (showCleanings){finalHeight += propsHeight}
