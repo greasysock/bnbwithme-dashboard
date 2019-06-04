@@ -183,11 +183,37 @@ class BigReservationList extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    return {
-        properties:state.properties,
-        reservations:state.reservations,
+    const props = {
         users:state.users,
         calendarSettings: state.calendarSettings
+    }
+    if(state.calendarSettings.propertyFilters.length === 0){
+        return {
+            ...props,
+            properties:state.properties,
+            reservations:state.reservations,
+           
+        }
+    }else {
+        const {propertyFilters} = state.calendarSettings
+        const properties = {}
+        const reservations = {}
+        const propertyFilterMap = {}
+        propertyFilters.forEach((propertyFilter)=>{
+            properties[propertyFilter] = state.properties[propertyFilter]
+            propertyFilterMap[propertyFilter] = true
+        })
+        Object.values(state.reservations).forEach((r)=>{
+            if(propertyFilterMap[r.propertyId]){
+                reservations[r.id] = r
+            }
+        })
+        return {
+            ...props,
+            properties,
+            reservations,
+           
+        }
     }
 }
 
