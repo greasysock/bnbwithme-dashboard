@@ -48,8 +48,9 @@ class BigReservationList extends React.Component{
             padding: '0px 4px',
             position: 'relative',
             fontSize: 13,
-            borderRadius: 3,
+            borderRadius: 4,
             backgroundColor: event.color,
+            fontFamily: 'Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif'
 
         }
         if(!event.cleaning){

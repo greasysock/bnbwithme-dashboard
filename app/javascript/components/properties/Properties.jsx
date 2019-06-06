@@ -81,8 +81,8 @@ class Properties extends React.Component{
 
     renderProperty(property){
         return (
-            <List.Item key={property.id} style={{borderLeft:`#${property.color} solid 3px`}} actions={this.renderPropertyActions(property)}>
-                <List.Item.Meta avatar={<Icon type="home" size="large"/>} title={ <Link to={`properties/${property.id}`}>{property.name}</Link>}/>
+            <List.Item key={property.id} style={{borderLeft:`#${property.color} solid 5px`, borderRadius: '5px'}} actions={this.renderPropertyActions(property)}>
+                <List.Item.Meta avatar={<Icon type="home" size="large"/>} title={ <Link to={`properties/${property.id}`}>{property.name}</Link>} />    
             </List.Item>
         )
     }
@@ -115,7 +115,7 @@ class Properties extends React.Component{
             <PropertyForm initialValues={this.state.targetEditPropertyValues} onFormSubmit={this.state.formSubmitCallback} title={this.state.propertyFormTitle} onClose={this.handleModalClose} show={this.state.showPropertyForm}/>
             <NormalLayout className="cardList" content>
                 {this.renderAddProperty()}
-                <Card className="listCard" bordered={false} style={{ marginTop: 24 }} bodyStyle={{ padding: '0 32px 40px 32px' }} title="Properties List">
+                <Card className="listCard" bordered={false} style={{ marginTop: 0 }} bodyStyle={{ padding: '0 32px 40px 32px' }} title="Properties List" headStyle={{borderBottom:'0'}}>
                     <List size="large" rowKey="id">
                         {this.renderProperties()}
                     </List>
