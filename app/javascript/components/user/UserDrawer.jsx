@@ -20,12 +20,13 @@ class UserDrawer extends React.Component{
 
     render(){
         return(
-            <Drawer 
+            <Drawer
+                closable={false}
                 title={this.props.title}
                 visible={this.props.visible}
                 onClose={()=>this.props.onClose()}
                 >
-                <Radio.Group onChange={this.props.onUserClick}>
+                <Radio.Group onChange={this.props.onUserClick} value={this.props.defaultUserId}>
                     {this.renderUsers()}
                 </Radio.Group>
             </Drawer>
@@ -33,7 +34,12 @@ class UserDrawer extends React.Component{
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+    if(ownProps.cleaners){
+        return {
+            users: Object.values(state.users).filter((u)=> u.cleaner)
+        }
+    }
     return {
         users: Object.values(state.users)
     }

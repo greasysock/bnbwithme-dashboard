@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Drawer, Button, Row, Col, Icon, Card, Avatar, message } from 'antd'
 
 import {assignCleanerToReservation, fetchUsers} from '../../../actions'
-import CleanerDrawer from './CleanerDrawer'
+import UserDrawer from '../../user/UserDrawer'
 
 class ReservationDrawer extends React.Component{
 
@@ -101,7 +101,7 @@ class ReservationDrawer extends React.Component{
                 onClose={this.onClose}
                 title="Manage Reservation"
                 >
-                <CleanerDrawer visible={this.state.cleanerDrawer} onCleanerClick={this.handleCleanerSelect} onClose={()=>{this.setState({cleanerDrawer:false})}}/>
+                <UserDrawer title="Select a Cleaner" defaultUserId={this.state.cleanerId} cleaners visible={this.state.cleanerDrawer} onUserClick={this.handleCleanerSelect} onClose={()=>{this.setState({cleanerDrawer:false})}}/>
                 <Row>
                     <Col span={12}>
                         <p style={pStyle}>Cleaner</p>
