@@ -11,13 +11,14 @@ bnbwithme Dashboard is a way to synchronize all your airbnb and vrbo listings fo
 
 ## Goals
 
-* Add new properties
-* Add new users
-* Create user classes (Admin, Cleaner, None)
-* Assign cleaners to reservations
+* ~~Add new properties
+* ~~Add new users
+* ~~Create user classes (Admin, Cleaner, None)
+* ~~Assign cleaners to reservations
 * Add .ical to properties
-* Assign unique color to each property
+* ~~Assign unique color to each property
 * Create a mobile app for cleaners to easily see schedule
+* Add recurring maintenance events
 
 ## Client
 
