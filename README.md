@@ -1,24 +1,30 @@
-# README
+# bnbwithme Dashboard
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+bnbwithme Dashboard is a way to synchronize all your airbnb and vrbo listings for easy cleaner managment. It requires a bit of setup and is still under development. It is not ready for use.
 
-Things you may want to cover:
+## Technologies
 
-* Ruby version
+* Postgresql
+* Ruby on Rails
+* React
+* Redux
 
-* System dependencies
+## Goals
 
-* Configuration
+* Add new properties
+* Add new users
+* Create user classes (Admin, Cleaner, None)
+* Assign cleaners to reservations
+* Add .ical to properties
+* Assign unique color to each property
+* Create a mobile app for cleaners to easily see schedule
 
-* Database creation
+## Client
 
-* Database initialization
+The client is built with react, redux, and antd as the component library. Big react calendar is what runs the main calendar component.
 
-* How to run the test suite
+## Related Projects
 
-* Services (job queues, cache servers, search engines, etc.)
+[bnbwithme calendar](https://github.com/greasysock/bnbwithme-calendar) *stable* - Simple cron service to synchronize airbnb and vrbo icalendars to database.
 
-* Deployment instructions
-
-* ...
+[bnbwithme mobile](https://github.com/greasysock/bnbwithme-mobile) *in-progress* - React native project to create a mobile application for admins and cleaners.
