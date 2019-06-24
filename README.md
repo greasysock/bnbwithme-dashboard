@@ -29,3 +29,25 @@ The client is built with react, redux, and antd as the component library. Big re
 [bnbwithme calendar](https://github.com/greasysock/bnbwithme-calendar) *stable* - Simple cron service to synchronize airbnb and vrbo icalendars to database.
 
 [bnbwithme mobile](https://github.com/greasysock/bnbwithme-mobile) *in-progress* - React native project to create a mobile application for admins and cleaners.
+
+## Screenshots
+
+### Login
+
+![login view](screenshots/login.png) Main login screen
+
+### Calendar
+
+![calendar view](screenshots/calendar/calendarview.png) This is the default calendar view displaying all properties
+![calendar settings](screenshots/calendar/calendarsettings.png) Settings drawer
+![calendar filters](screenshots/calendar/calendarpropertyfilters.png) Property filter feature in calendar settings
+![calendar reservation view](screenshots/calendar/reservationdrawer.png) Reservation drawer for each reservation on calendar
+
+### Properties
+
+![properties view](screenshots/properties/propertyview.png)
+![new property](screenshots/properties/newproperty.png)
+![edit property](screenshots/properties/editproperty.png)
+### Admin
+
+![admin user view](screenshots/adminusers.png)
