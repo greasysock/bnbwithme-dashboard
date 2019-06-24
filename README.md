@@ -34,14 +34,14 @@ The client is built with react, redux, and antd as the component library. Big re
 
 ### Login
 
-![login view](screenshots/login.png) Main login screen
+![login view](screenshots/login.png)
 
 ### Calendar
 
-![calendar view](screenshots/calendar/calendarview.png) This is the default calendar view displaying all properties
-![calendar settings](screenshots/calendar/calendarsettings.png) Settings drawer
-![calendar filters](screenshots/calendar/calendarpropertyfilters.png) Property filter feature in calendar settings
-![calendar reservation view](screenshots/calendar/reservationdrawer.png) Reservation drawer for each reservation on calendar
+![calendar view](screenshots/calendar/calendarview.png)
+![calendar settings](screenshots/calendar/calendarsettings.png)
+![calendar filters](screenshots/calendar/calendarpropertyfilters.png)
+![calendar reservation view](screenshots/calendar/reservationdrawer.png)
 
 ### Properties
 
