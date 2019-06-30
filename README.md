@@ -1,6 +1,6 @@
 # bnbwithme Dashboard
 
-bnbwithme Dashboard is a way to synchronize all your airbnb and vrbo listings for easy cleaner managment. It requires a bit of setup and is still under development. It is not ready for use.
+bnbwithme Dashboard is a way to synchronize all your airbnb and vrbo listings for easy cleaner management. It requires a bit of setup and is still under development. It is not ready for use.
 
 ## Technologies
 
