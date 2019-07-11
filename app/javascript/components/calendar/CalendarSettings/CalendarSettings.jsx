@@ -1,15 +1,17 @@
 import React from 'react'
-import {Icon, Drawer, List, Switch, Divider, Select, Badge} from 'antd'
+import {Icon, Drawer, List, Switch, Divider, Select, Badge, Typography} from 'antd'
 import { connect } from 'react-redux' 
 
 import {addPropertyToFilter} from '../../../actions'
 import './CalendarSettings.less'
 
+const { Text } = Typography
+
 export const CalendarSetting = (props) => {
     return (
         <List.Item>
-            <List.Item.Meta title={props.name}/> 
-             <Switch onChange={(C)=>{props.onSwitch(props.name, C)}} defaultChecked={props.switchState}/> 
+            <List.Item.Meta title={<Text disabled={props.disabled}>{props.name}</Text>}/> 
+             <Switch disabled={props.disabled} onChange={(C)=>{props.onSwitch(props.name, C)}} defaultChecked={props.switchState}/> 
         </List.Item>
     )
 }

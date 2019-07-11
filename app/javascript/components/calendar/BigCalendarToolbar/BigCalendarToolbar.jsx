@@ -52,6 +52,7 @@ class Toolbar extends React.Component {
         <>
             <CalendarSetting onSwitch={()=>{this.props.toggleReservations()}} switchState={this.props.calendarSettings.showReservations} name="Reservations"/>
             <CalendarSetting onSwitch={()=>{this.props.toggleCleanings()}} switchState={this.props.calendarSettings.showCleanings} name="Cleanings"/>
+            <CalendarSetting onSwitch={()=>{}} switchState={()=>{}} disabled name="Reminders"/>
         </>
     )
 }
