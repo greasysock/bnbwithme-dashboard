@@ -1,6 +1,6 @@
 # bnbwithme Dashboard
 
-bnbwithme Dashboard is a way to synchronize all your airbnb and vrbo listings for easy cleaner managment. It requires a bit of setup and is still under development. It is not ready for use.
+bnbwithme Dashboard is a way to synchronize all your airbnb and vrbo listings for easy cleaner management. It requires a bit of setup and is still under development. It is not ready for use.
 
 ## Technologies
 
@@ -29,3 +29,25 @@ The client is built with react, redux, and antd as the component library. Big re
 [bnbwithme calendar](https://github.com/greasysock/bnbwithme-calendar) *stable* - Simple cron service to synchronize airbnb and vrbo icalendars to database.
 
 [bnbwithme mobile](https://github.com/greasysock/bnbwithme-mobile) *in-progress* - React native project to create a mobile application for admins and cleaners.
+
+## Screenshots
+
+### Login
+
+![login view](screenshots/login.png)
+
+### Calendar
+
+![calendar view](screenshots/calendar/calendarview.png)
+![calendar settings](screenshots/calendar/calendarsettings.png)
+![calendar filters](screenshots/calendar/calendarpropertyfilters.png)
+![calendar reservation view](screenshots/calendar/reservationdrawer.png)
+
+### Properties
+
+![properties view](screenshots/properties/propertyview.png)
+![new property](screenshots/properties/newproperty.png)
+![edit property](screenshots/properties/editproperty.png)
+### Admin
+
+![admin user view](screenshots/adminusers.png)
