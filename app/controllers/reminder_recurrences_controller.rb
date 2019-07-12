@@ -1,2 +1,0 @@
-class ReminderRecurrencesController < ApplicationController
-end

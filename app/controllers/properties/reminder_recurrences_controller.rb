@@ -1,0 +1,2 @@
+class ReminderRecurrencesController < ApplicationAuthController
+end

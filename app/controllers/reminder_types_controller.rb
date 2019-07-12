@@ -1,2 +1,2 @@
-class ReminderTypesController < ApplicationController
+class ReminderTypesController < ApplicationAuthController
 end
