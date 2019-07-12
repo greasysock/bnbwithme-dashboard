@@ -1,0 +1,2 @@
+class ReminderType < ApplicationRecord
+end

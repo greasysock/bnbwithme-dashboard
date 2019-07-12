@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :reminders
+  resources :reminder_types
   concern :contain_reservations do
     resources(:reservations , only: [:show, :index, :update], defaults: { format: :json }) do
       member do
