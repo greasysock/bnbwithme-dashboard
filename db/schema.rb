@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_12_165940) do
+ActiveRecord::Schema.define(version: 2019_07_12_170536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,18 @@ ActiveRecord::Schema.define(version: 2019_07_12_165940) do
     t.string "color"
     t.bigint "owner_id"
     t.index ["owner_id"], name: "index_properties_on_owner_id"
+  end
+
+  create_table "reminder_recurrences", force: :cascade do |t|
+    t.bigint "reminder_id"
+    t.integer "day_of_week"
+    t.integer "week_of_month"
+    t.integer "month_of_year"
+    t.integer "type"
+    t.integer "separation_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reminder_id"], name: "index_reminder_recurrences_on_reminder_id"
   end
 
   create_table "reminder_types", force: :cascade do |t|
@@ -91,5 +103,6 @@ ActiveRecord::Schema.define(version: 2019_07_12_165940) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "reminder_recurrences", "reminders"
   add_foreign_key "reservations", "icals"
 end
