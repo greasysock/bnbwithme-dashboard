@@ -1,6 +1,6 @@
 import React from 'react'
 
-class ManageEventTypes extends React.Component{
+class ManageReminderTypes extends React.Component{
     render(){
         return (
             <div>
@@ -10,4 +10,4 @@ class ManageEventTypes extends React.Component{
     }
 }
 
-export default ManageEventTypes
+export default ManageReminderTypes

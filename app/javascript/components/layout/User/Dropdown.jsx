@@ -15,11 +15,11 @@ class UserDropdown extends React.Component {
         </Menu.Item>
         )
     }
-    manageEventsRender() {
+    manageRemindersRender() {
       return (
-        <Menu.Item disabled onClick={()=>history.push('/admin/event_types')} key="manageevents">
+        <Menu.Item disabled onClick={()=>history.push('/admin/reminder_types')} key="managereminders">
           <Icon type="form" />
-          Manage Event Types
+          Manage Reminder Types
         </Menu.Item>
         )
     }
@@ -29,7 +29,7 @@ class UserDropdown extends React.Component {
       }
       return [
         this.manageUsersRender(),
-        this.manageEventsRender()
+        this.manageRemindersRender()
       ]
         
     }

@@ -12,7 +12,7 @@ import Property from './properties/Property'
 import Calendar from './calendar/Calendar'
 import Home from './pages/Home'
 import AdminUsers from './admin/users/Users'
-import AdminManageEventTypes from './admin/events/ManageEventTypes'
+import AdminManageReminderTypes from './admin/reminders/ManageReminderTypes'
 
 class App extends React.Component{
     renderAdmin(){
@@ -21,7 +21,7 @@ class App extends React.Component{
             return (
                 <>
                 <Route path="/admin/users" exact component={AdminUsers}/>
-                <Route path="/admin/event_types" exact component={AdminManageEventTypes}/>
+                <Route path="/admin/reminder_types" exact component={AdminManageReminderTypes}/>
                 </> 
             )
         }
