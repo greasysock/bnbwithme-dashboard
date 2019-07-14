@@ -17,7 +17,7 @@ class UserDropdown extends React.Component {
     }
     manageEventsRender() {
       return (
-        <Menu.Item onClick={()=>history.push('/admin/event_types')} key="manageevents">
+        <Menu.Item disabled onClick={()=>history.push('/admin/event_types')} key="manageevents">
           <Icon type="form" />
           Manage Event Types
         </Menu.Item>
