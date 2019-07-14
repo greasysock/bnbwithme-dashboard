@@ -8,9 +8,6 @@ import './Menu.less'
 
 class UserDropdown extends React.Component {
     manageUsersRender() {
-      if(!this.props.currentUser.admin){
-        return
-      }
       return (
         <Menu.Item onClick={()=>history.push('/admin/users')} key="manageusers">
           <Icon type="user" />
@@ -18,11 +15,29 @@ class UserDropdown extends React.Component {
         </Menu.Item>
         )
     }
+    manageEventsRender() {
+      return (
+        <Menu.Item onClick={()=>history.push('/admin/event_types')} key="manageevents">
+          <Icon type="form" />
+          Manage Event Types
+        </Menu.Item>
+        )
+    }
+    adminRender(){
+      if(!this.props.currentUser.admin){
+        return
+      }
+      return [
+        this.manageUsersRender(),
+        this.manageEventsRender()
+      ]
+        
+    }
     menuRender() {
       return (
         <Menu className="menu" selectedKeys={[]}>
-          {this.manageUsersRender()}
-          <Menu.Item key="userinfo">
+          {this.adminRender()}
+          <Menu.Item disabled key="userinfo">
             <Icon type="setting" />
             Account Settings
           </Menu.Item>
