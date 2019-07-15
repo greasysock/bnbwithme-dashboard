@@ -17,7 +17,7 @@ class UserDropdown extends React.Component {
     }
     manageRemindersRender() {
       return (
-        <Menu.Item disabled onClick={()=>history.push('/admin/reminder_types')} key="managereminders">
+        <Menu.Item onClick={()=>history.push('/admin/reminder_types')} key="managereminders">
           <Icon type="form" />
           Manage Reminder Types
         </Menu.Item>
