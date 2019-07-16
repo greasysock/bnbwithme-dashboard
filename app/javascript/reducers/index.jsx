@@ -6,6 +6,7 @@ import CurrentUserReducer from './CurrentUserReducer'
 import UsersReducer from './UsersReducer'
 import PropertyIcalsReducer from './PropertyIcalsReducer'
 import CalendarSettingsReducer from './CalendarSettingsReducer'
+import ReminderTypesReducer from './ReminderTypesReducer'
 
 export default combineReducers({
     properties: PropertiesReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     form: formReducer,
     currentUser: CurrentUserReducer,
     users: UsersReducer,
-    calendarSettings: CalendarSettingsReducer
+    calendarSettings: CalendarSettingsReducer,
+    reminderTypes: ReminderTypesReducer
 })

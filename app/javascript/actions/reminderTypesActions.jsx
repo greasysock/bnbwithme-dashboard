@@ -34,5 +34,5 @@ export const createReminderType = (formValues) => async (dispatch, getState) => 
 
 export const destroyReminderType = (id) => async(dispatch, getState) => {
     const response = await bnbwithme.delete(`/reminder_types/${id}`, _userHeaders(getState))
-    dispatch({type: DESTROY_REMINDER_TYPE})
+    dispatch({type: DESTROY_REMINDER_TYPE, payload:{id}})
 }
