@@ -1015,6 +1015,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+Font-Awesome@FortAwesome/Font-Awesome:
+  version "0.0.0"
+  resolved "https://codeload.github.com/FortAwesome/Font-Awesome/tar.gz/fcbfba1f7e445f3e135b311cb92cefdaa2634fb9"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
