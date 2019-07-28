@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   concern :contain_reminders do
     resources(:reminders,except: [:new, :edit], defaults: { format: :json }) do
       resources :reminder_recurrences,except: [:new, :edit] ,defaults: { format: :json }
+      get 'emit', to: 'reminders#emit'
     end
   end
   concern :contain_reservations do
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
       put 'users' => 'devise/registrations#update', :as => 'user_registration', defaults: {format: :json}
     end
     resources :reminder_types, except: [:new, :edit], defaults: {format: :json}
+    concerns :contain_reminders
     resources :people, controller: 'site_users', except: [:new, :edit], defaults: { format: :json }
 
   end

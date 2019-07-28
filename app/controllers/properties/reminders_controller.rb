@@ -6,6 +6,10 @@ class RemindersController < ApplicationAuthController
       render json: @reminders
     end
 
+    # /emit emits reminders starting from start month to end month. s=032019 e=032019
+    def emit
+    end
+
     def show
       authorize @reminder
       render json: @reminder
