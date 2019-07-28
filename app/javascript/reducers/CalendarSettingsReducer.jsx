@@ -1,13 +1,14 @@
 import {
     TOGGLE_RESERVATIONS,
     TOGGLE_CLEANINGS,
-    ADD_PROPERTY_TO_FILTER
+    ADD_PROPERTY_TO_FILTER,
+    TOGGLE_REMINDERS
 } from '../actions/types'
-import { Select } from 'antd';
 
 const DEFAULT_STATE = {
     showReservations: true,
     showCleanings: false,
+    showReminders: true,
     propertyFilters: []
 }
 
@@ -18,6 +19,9 @@ export default (calendarSettings = DEFAULT_STATE, action) => {
             return {...calendarSettings}
         case TOGGLE_CLEANINGS:
             calendarSettings.showCleanings = !calendarSettings.showCleanings
+            return {...calendarSettings}
+        case TOGGLE_REMINDERS:
+            calendarSettings.showReminders = !calendarSettings.showReminders
             return {...calendarSettings}
         case ADD_PROPERTY_TO_FILTER:
             calendarSettings.propertyFilters = action.payload

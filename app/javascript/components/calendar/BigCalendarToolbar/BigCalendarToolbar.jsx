@@ -6,7 +6,7 @@ import {Button, Icon, Typography} from 'antd'
 import { navigate } from '../../../utils/bigCalendarConstants'
 import './BigCalendarToolbar.less'
 import CalendarSettings,{CalendarSetting} from '../CalendarSettings/CalendarSettings'
-import {toggleReservations, toggleCleanings} from '../../../actions'
+import {toggleReservations, toggleCleanings, toggleReminders} from '../../../actions'
 
 class Toolbar extends React.Component {
   render() {
@@ -52,7 +52,7 @@ class Toolbar extends React.Component {
         <>
             <CalendarSetting onSwitch={()=>{this.props.toggleReservations()}} switchState={this.props.calendarSettings.showReservations} name="Reservations"/>
             <CalendarSetting onSwitch={()=>{this.props.toggleCleanings()}} switchState={this.props.calendarSettings.showCleanings} name="Cleanings"/>
-            <CalendarSetting onSwitch={()=>{}} switchState={()=>{}} disabled name="Reminders"/>
+            <CalendarSetting onSwitch={()=>{this.props.toggleReminders()}} switchState={this.props.calendarSettings.showReminders} name="Reminders"/>
         </>
     )
 }
@@ -99,4 +99,4 @@ const mapStateToProps = (state) => {
   })
 }
 
-export default connect(mapStateToProps, {toggleCleanings, toggleReservations})(Toolbar)
+export default connect(mapStateToProps, {toggleCleanings, toggleReservations, toggleReminders})(Toolbar)
