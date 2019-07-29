@@ -7,7 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {MonthEvent} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
-import {fetchPropertiesAndReservations} from '../../actions'
+import {fetchPropertiesAndReservations, setSelectedMonth} from '../../actions'
 import '../../styles/logofonts.css'
 import './styles/month.less'
 
@@ -156,8 +156,44 @@ class BigReservationList extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchPropertiesAndReservations()
+        this.prepareReservationsAndCleanings()
+        this.prepareReminders()
         }
+
+    // Populate entire stores without regard to active properties
+    prepareReservationsAndCleanings() {
+        const {showReservations, showCleanings} = this.props.calendarSettings
+
+        if(showReservations || showCleanings){
+            this.props.fetchPropertiesAndReservations()
+        }
+    }
+    // Grab all reminders and their recurrences for active properties
+    prepareReminders() {
+        const {showReminders} = this.props.calendarSettings
+        if(showReminders){
+            Object.values(this.props.properties).forEach((p)=>{
+
+            })
+        }
+    }
+    componentDidUpdate(prevProps){
+        const {showReservations, showCleanings, showReminders} = this.props.calendarSettings
+        const {calendarSettings} = prevProps
+        if((showReservations !== calendarSettings.showReservations) || (showCleanings !== calendarSettings.showCleanings)){
+            this.prepareReservationsAndCleanings()
+        }
+        if(showReminders !== calendarSettings.showReminders){
+            this.prepareReminders()
+        }
+    }
+    getCurrentView = () => {
+        const {selectedMonth} = this.props.calendarSettings
+        return selectedMonth
+    }
+    getNavigate = (date) => {
+        this.props.setSelectedMonth(date)
+    }
 
     render() {
         return (
@@ -172,10 +208,12 @@ class BigReservationList extends React.Component{
                     events={this.getEvents()}
                     eventPropGetter={this.eventPropGetter}
                     onSelectEvent={this.onHandleSelectEvent}
+                    date={this.getCurrentView()}
                     components={{
                         month: {event:MonthEvent},
                         toolbar: Toolbar
                     }}
+                    onNavigate={this.getNavigate}
                 />
                 <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false, selectedReservation: null})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>
             </div>
@@ -183,25 +221,39 @@ class BigReservationList extends React.Component{
     }
 }
 
+const decodeDate = (d) => {
+    const month = Number(d.slice(0,2))-1
+    const year = Number(d.slice(2,6))
+    const dd = new Date()
+    dd.setDate(13)
+    dd.setMonth(month)
+    dd.setYear(year)
+    return dd
+}
+
 const mapStateToProps = (state) => {
     const props = {
         users:state.users,
-        calendarSettings: state.calendarSettings
+        calendarSettings: {...state.calendarSettings}
     }
+    props.calendarSettings.selectedMonth = decodeDate(props.calendarSettings.selectedMonth)
     if(state.calendarSettings.propertyFilters.length === 0){
         return {
             ...props,
             properties:state.properties,
             reservations:state.reservations,
+            reminderOccurences:state.reminderOccurences
            
         }
     }else {
         const {propertyFilters} = state.calendarSettings
         const properties = {}
         const reservations = {}
+        const reminderOccurences = {}
         const propertyFilterMap = {}
         propertyFilters.forEach((propertyFilter)=>{
             properties[propertyFilter] = state.properties[propertyFilter]
+            reminderOccurences[propertyFilter] = state.reminderOccurences[propertyFilter]
             propertyFilterMap[propertyFilter] = true
         })
         Object.values(state.reservations).forEach((r)=>{
@@ -212,10 +264,10 @@ const mapStateToProps = (state) => {
         return {
             ...props,
             properties,
-            reservations,
-           
+            reminderOccurences,
+            reservations
         }
     }
 }
 
-export default connect(mapStateToProps, {fetchPropertiesAndReservations})(BigReservationList)
+export default connect(mapStateToProps, {fetchPropertiesAndReservations, setSelectedMonth})(BigReservationList)

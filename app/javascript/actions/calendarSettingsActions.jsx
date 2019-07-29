@@ -2,7 +2,8 @@ import {
     TOGGLE_CLEANINGS,
     TOGGLE_RESERVATIONS,
     ADD_PROPERTY_TO_FILTER,
-    TOGGLE_REMINDERS
+    TOGGLE_REMINDERS,
+    SET_SELECTED_MONTH
 } from './types'
 
 export const toggleReservations = () => {
@@ -16,4 +17,7 @@ export const toggleReminders = () => {
 }
 export const addPropertyToFilter = (properties) => {
     return {type: ADD_PROPERTY_TO_FILTER, payload: properties}
+}
+export const setSelectedMonth = (date) => {
+    return {type: SET_SELECTED_MONTH, payload: date}
 }
