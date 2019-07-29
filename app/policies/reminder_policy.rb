@@ -15,6 +15,10 @@ class ReminderPolicy < ApplicationAuthPolicy
         user.admin
     end
 
+    def emit?
+        user.admin || @property.owner == user || user.cleaner
+    end
+
     class Scope < Scope
         def resolve
             user.cleaner || user.admin ? scope.all : user.properties

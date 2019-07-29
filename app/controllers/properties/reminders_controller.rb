@@ -1,5 +1,7 @@
-class RemindersController < ApplicationAuthController
+module Properties
+  class RemindersController < ApplicationAuthController
     before_action :set_reminder, only: [:show, :update, :destroy]
+    before_action :set_property
 
     def index
       @reminders = policy_scope(Reminder)
@@ -8,6 +10,8 @@ class RemindersController < ApplicationAuthController
 
     # /emit emits reminders starting from start month to end month. s=032019 e=032019
     def emit
+      authorize @property
+      render json: @reminders
     end
 
     def show
@@ -45,10 +49,14 @@ class RemindersController < ApplicationAuthController
       def set_reminder
         @reminder = Reminder.find(params[:id])
       end
+      def set_property
+        @property = Property.find(params[:property_id])
+      end
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def reminder_params
         params.require(:reminder).permit(:property, :reminder_type, :start, :end, :all_day)
       end
 
+  end
 end

@@ -7,7 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {MonthEvent} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
-import {fetchPropertiesAndReservations, setSelectedMonth} from '../../actions'
+import {fetchPropertiesAndReservations, setSelectedMonth, fetchProperties, fetchReminderOccurences} from '../../actions'
 import '../../styles/logofonts.css'
 import './styles/month.less'
 
@@ -172,8 +172,10 @@ class BigReservationList extends React.Component{
     prepareReminders() {
         const {showReminders} = this.props.calendarSettings
         if(showReminders){
-            Object.values(this.props.properties).forEach((p)=>{
-
+            this.props.fetchProperties().then(()=>{
+                Object.values(this.props.properties).forEach((p)=>{
+                    this.props.fetchReminderOccurences(p.id)
+                })
             })
         }
     }
@@ -187,10 +189,7 @@ class BigReservationList extends React.Component{
             this.prepareReminders()
         }
     }
-    getCurrentView = () => {
-        const {selectedMonth} = this.props.calendarSettings
-        return selectedMonth
-    }
+
     getNavigate = (date) => {
         this.props.setSelectedMonth(date)
     }
@@ -208,7 +207,7 @@ class BigReservationList extends React.Component{
                     events={this.getEvents()}
                     eventPropGetter={this.eventPropGetter}
                     onSelectEvent={this.onHandleSelectEvent}
-                    date={this.getCurrentView()}
+                    date={this.props.calendarSettings.selectedMonth}
                     components={{
                         month: {event:MonthEvent},
                         toolbar: Toolbar
@@ -270,4 +269,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {fetchPropertiesAndReservations, setSelectedMonth})(BigReservationList)
+export default connect(mapStateToProps, {
+    fetchPropertiesAndReservations, 
+    setSelectedMonth, 
+    fetchProperties,
+    fetchReminderOccurences
+})(BigReservationList)

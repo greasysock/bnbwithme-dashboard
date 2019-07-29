@@ -13,7 +13,7 @@ import {_userHeaders} from '.'
 
 // /api/reminder
 
-export const fetchReminders = (propertyId) => async (dispatch, getState) => {
+export const fetchReminders = (propertyId, start, end) => async (dispatch, getState) => {
     const response = await bnbwithme.get(`/properties/${propertyId}/reminders`, _userHeaders(getState))
     dispatch({type:FETCH_REMINDERS, payload: humps(response.data) })
 } 
@@ -21,6 +21,11 @@ export const fetchReminders = (propertyId) => async (dispatch, getState) => {
 export const fetchReminder = (id, propertyId) => async (dispatch, getState) => {
     const response = await bnbwithme.get(`/properties/${propertyId}/reminders/${id}`, _userHeaders(getState))
     dispatch({type:FETCH_REMINDER, payload: humps(response.data)})
+}
+
+export const fetchReminderOccurences = (propertyId) => async (dispatch, getState) => {
+    const response = await bnbwithme.get(`/properties/${propertyId}/emit_reminders`, _userHeaders(getState))
+    dispatch({type:FETCH_REMINDER_OCCURENCES, payload: humps(response.data)})
 }
 
 export const updateReminder = (id, propertyId, formValues) => async (dispatch, getState) => {
