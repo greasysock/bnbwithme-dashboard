@@ -9,7 +9,7 @@ import {
     DESTROY_REMINDER,
     FETCH_REMINDER_OCCURENCES
 } from './types'
-import {_userHeaders} from '.'
+import {_userHeaders, _encodeDate} from '.'
 
 // /api/reminder
 
@@ -23,8 +23,11 @@ export const fetchReminder = (id, propertyId) => async (dispatch, getState) => {
     dispatch({type:FETCH_REMINDER, payload: humps(response.data)})
 }
 
-export const fetchReminderOccurences = (propertyId) => async (dispatch, getState) => {
-    const response = await bnbwithme.get(`/properties/${propertyId}/emit_reminders`, _userHeaders(getState))
+export const fetchReminderOccurences = (propertyId, jStart, jEnd) => async (dispatch, getState) => {
+
+    const start = _encodeDate(jStart)
+    const end = _encodeDate(jEnd)
+    const response = await bnbwithme.get(`/properties/${propertyId}/emit_reminders`, {..._userHeaders(getState),params:{start, end}})
     dispatch({type:FETCH_REMINDER_OCCURENCES, payload: humps(response.data)})
 }
 

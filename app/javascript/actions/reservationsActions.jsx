@@ -9,7 +9,7 @@ import {
     REMOVE_CLEANER_FROM_RESERVATION,
 } from './types'
 
-import {_userHeaders} from '.'
+import {_userHeaders, _encodeDate} from '.'
 import {fetchProperties} from './propertiesActions'
 
 export const fetchPropertiesAndReservations = () => async (dispatch, getState) => {
@@ -20,8 +20,13 @@ export const fetchPropertiesAndReservations = () => async (dispatch, getState) =
     await Promise.all(promises)
 }
 
-export const fetchPropertyReservations = propertyId => async (dispatch, getState) => {
-    const response = await bnbwithme.get(`/properties/${propertyId}/reservations`, _userHeaders(getState))
+export const fetchPropertyReservations = (propertyId, start, end) => async (dispatch, getState) => {
+    const params = {}
+    if(start && end){
+        params.start = _encodeDate(start)
+        params.end = _encodeDate(end)
+    }
+    const response = await bnbwithme.get(`/properties/${propertyId}/reservations`, {..._userHeaders(getState), params:params})
     dispatch({type:FETCH_PROPERTY_RESERVATIONS, payload: humps(response.data)})
 }
 

@@ -5,6 +5,10 @@ export const _userHeaders = (getState, jwt=null) => {
     return { headers:  { 'Authorization': getState().currentUser.jwt } }
 }
 
+export const _encodeDate = (d) => {
+    return d.format("DDMMYYYY")
+}
+
 export * from './propertiesActions'
 export * from './reservationsActions'
 export * from './propertyIcalsActions'

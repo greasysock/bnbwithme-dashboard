@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources(:reminders,except: [:new, :edit], defaults: { format: :json }) do
       resources :reminder_recurrences,except: [:new, :edit] ,defaults: { format: :json }
     end
-    get 'emit_reminders', to: 'reminders#emit'
+    get 'emit_reminders', to: 'reminder_occurrences#index'
   end
   concern :contain_reservations do
     resources(:reservations , only: [:show, :index, :update], defaults: { format: :json }) do

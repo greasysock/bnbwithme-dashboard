@@ -1,4 +1,9 @@
 class ReminderPolicy < ApplicationAuthPolicy
+
+    def emit?
+        user.admin
+    end
+    
     def show?
         user.admin || @property.owner == user || user.cleaner
     end
@@ -13,10 +18,6 @@ class ReminderPolicy < ApplicationAuthPolicy
 
     def destroy?
         user.admin
-    end
-
-    def emit?
-        user.admin || @property.owner == user || user.cleaner
     end
 
     class Scope < Scope

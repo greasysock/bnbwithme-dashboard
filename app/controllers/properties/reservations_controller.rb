@@ -20,10 +20,14 @@ module Properties
 
         private
 
+        def decode_date d
+            Date.strptime(d, '%d%m%Y')
+        end
+
         def set_reservations
             if params[:property_id]
                 @property = Property.find(params[:property_id])
-                @reservations = @property.reservations
+                @reservations = @property.reservations.where(:end => decode_date(params[:start])...decode_date(params[:end]))
                 return
             end
             @reservations = Reservation.all

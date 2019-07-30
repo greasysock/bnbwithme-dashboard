@@ -7,7 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {MonthEvent} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
-import {fetchPropertiesAndReservations, setSelectedMonth, fetchProperties, fetchReminderOccurences} from '../../actions'
+import {fetchPropertiesAndReservations, setSelectedMonth, fetchProperties, fetchReminderOccurences, fetchPropertyReservations} from '../../actions'
 import '../../styles/logofonts.css'
 import './styles/month.less'
 
@@ -156,36 +156,55 @@ class BigReservationList extends React.Component{
     }
 
     componentDidMount(){
-        this.prepareReservationsAndCleanings()
-        this.prepareReminders()
-        }
+        this.props.fetchProperties().then(()=>{
+            this.prepareReservationsAndCleanings()
+            this.prepareReminders()
+        })
+    }
+
+    getStartEnd(){
+        const start = moment(this.props.calendarSettings.selectedMonth)
+        const end = moment(this.props.calendarSettings.selectedMonth)
+        start.subtract(1, 'month')
+        end.add(1, 'month')
+        return {start, end}
+    }
 
     // Populate entire stores without regard to active properties
     prepareReservationsAndCleanings() {
         const {showReservations, showCleanings} = this.props.calendarSettings
 
         if(showReservations || showCleanings){
-            this.props.fetchPropertiesAndReservations()
+            const {start, end} = this.getStartEnd()
+            Object.values(this.props.properties).forEach((p)=>{
+                this.props.fetchPropertyReservations(p.id, start, end)
+            })
         }
     }
     // Grab all reminders and their recurrences for active properties
     prepareReminders() {
         const {showReminders} = this.props.calendarSettings
         if(showReminders){
-            this.props.fetchProperties().then(()=>{
-                Object.values(this.props.properties).forEach((p)=>{
-                    this.props.fetchReminderOccurences(p.id)
-                })
+            const {start,end} = this.getStartEnd()
+            Object.values(this.props.properties).forEach((p)=>{
+                this.props.fetchReminderOccurences(p.id, start, end)
             })
+    
         }
     }
+
     componentDidUpdate(prevProps){
-        const {showReservations, showCleanings, showReminders} = this.props.calendarSettings
+        const {showReservations, showCleanings, showReminders, selectedMonth} = this.props.calendarSettings
         const {calendarSettings} = prevProps
-        if((showReservations !== calendarSettings.showReservations) || (showCleanings !== calendarSettings.showCleanings)){
-            this.prepareReservationsAndCleanings()
+        const dateUpdated = () => {
+            return selectedMonth.getSeconds() !== calendarSettings.selectedMonth.getSeconds()
         }
-        if(showReminders !== calendarSettings.showReminders){
+        if((showReservations !== calendarSettings.showReservations) || (showCleanings !== calendarSettings.showCleanings) || dateUpdated()){
+            if(this.props.properties){
+                this.prepareReservationsAndCleanings()
+            }
+        }
+        if((showReminders !== calendarSettings.showReminders) || dateUpdated()){
             this.prepareReminders()
         }
     }
@@ -273,5 +292,6 @@ export default connect(mapStateToProps, {
     fetchPropertiesAndReservations, 
     setSelectedMonth, 
     fetchProperties,
-    fetchReminderOccurences
+    fetchReminderOccurences,
+    fetchPropertyReservations
 })(BigReservationList)
