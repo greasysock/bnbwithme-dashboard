@@ -75,7 +75,7 @@ class BigReservationList extends React.Component{
 
     getHeight = () => {
         let finalHeight = 0
-        const propsHeight = Object.keys(this.props.properties).length * 140
+        const propsHeight = Object.keys(this.props.properties).length * 160
         const {showReservations, showCleanings} = this.props.calendarSettings
         if (showReservations){finalHeight += propsHeight}
         if (showCleanings){finalHeight += propsHeight}
@@ -174,7 +174,7 @@ class BigReservationList extends React.Component{
     prepareReservationsAndCleanings() {
         const {showReservations, showCleanings} = this.props.calendarSettings
 
-        if(showReservations || showCleanings){
+        if((showReservations || showCleanings)&&this.props.properties){
             const {start, end} = this.getStartEnd()
             Object.values(this.props.properties).forEach((p)=>{
                 this.props.fetchPropertyReservations(p.id, start, end)
@@ -197,12 +197,10 @@ class BigReservationList extends React.Component{
         const {showReservations, showCleanings, showReminders, selectedMonth} = this.props.calendarSettings
         const {calendarSettings} = prevProps
         const dateUpdated = () => {
-            return selectedMonth.getSeconds() !== calendarSettings.selectedMonth.getSeconds()
+            return selectedMonth.format('X') !== calendarSettings.selectedMonth.format('X')
         }
         if((showReservations !== calendarSettings.showReservations) || (showCleanings !== calendarSettings.showCleanings) || dateUpdated()){
-            if(this.props.properties){
-                this.prepareReservationsAndCleanings()
-            }
+            this.prepareReservationsAndCleanings()
         }
         if((showReminders !== calendarSettings.showReminders) || dateUpdated()){
             this.prepareReminders()
@@ -226,7 +224,7 @@ class BigReservationList extends React.Component{
                     events={this.getEvents()}
                     eventPropGetter={this.eventPropGetter}
                     onSelectEvent={this.onHandleSelectEvent}
-                    date={this.props.calendarSettings.selectedMonth}
+                    date={this.props.calendarSettings.selectedMonth.toDate()}
                     components={{
                         month: {event:MonthEvent},
                         toolbar: Toolbar
@@ -246,7 +244,7 @@ const decodeDate = (d) => {
     dd.setDate(13)
     dd.setMonth(month)
     dd.setYear(year)
-    return dd
+    return moment(`13${d}`, "DDMMYYYY")
 }
 
 const mapStateToProps = (state) => {
