@@ -41,6 +41,8 @@ class BigReservationList extends React.Component{
     state = {
         selectedReservation: null,
         showReservationDrawer: false,
+        height: 400,
+        randoHeight: 6
     }
 
     eventPropGetter(event, start, end, isSelected){
@@ -79,7 +81,23 @@ class BigReservationList extends React.Component{
         const {showReservations, showCleanings} = this.props.calendarSettings
         if (showReservations){finalHeight += propsHeight}
         if (showCleanings){finalHeight += propsHeight}
-        return finalHeight + 450
+        this.genRandoHeight()
+        this.setState({height:finalHeight + 450 })
+    }
+
+    genRandoHeight = () => {
+        // Generate array of numbers between 1-10 excluding current number
+        const numArr = []
+        var j = 0
+        for(var i = 1; i < 10; i++){
+            if(i!==this.state.randoHeight){
+                numArr[j] = i
+                j++
+            }
+        }
+        const randIndex = Math.floor(Math.random() * 8)
+        this.setState({randoHeight:numArr[randIndex]})
+
     }
 
     getReservations = () => {
@@ -145,16 +163,6 @@ class BigReservationList extends React.Component{
         })
     }
 
-    handleCalendarControl = (control, C) => {
-        switch(control){
-            case 'Reservations':
-                this.setState({showReservations:C})
-                break
-            case 'Cleanings':
-                this.setState({showCleanings:C})
-        }
-    }
-
     componentDidMount(){
         this.props.fetchProperties().then(()=>{
             this.prepareReservationsAndCleanings()
@@ -176,9 +184,9 @@ class BigReservationList extends React.Component{
 
         if((showReservations || showCleanings)&&this.props.properties){
             const {start, end} = this.getStartEnd()
-            Object.values(this.props.properties).forEach((p)=>{
-                this.props.fetchPropertyReservations(p.id, start, end)
-            })
+            Promise.all(Object.values(this.props.properties).map((p)=>{
+                return this.props.fetchPropertyReservations(p.id, start, end)
+            })).then(()=>{this.getHeight()})
         }
     }
     // Grab all reminders and their recurrences for active properties
@@ -189,6 +197,7 @@ class BigReservationList extends React.Component{
             Object.values(this.props.properties).forEach((p)=>{
                 this.props.fetchReminderOccurences(p.id, start, end)
             })
+            this.getHeight()
     
         }
     }
@@ -215,7 +224,7 @@ class BigReservationList extends React.Component{
         return (
             <div>
                 <BigCalendar
-                    style={{height: `${this.getHeight()}px`}}
+                    style={{height: this.state.height}}
                     localizer={localizer}
                     startAccessor="start"
                     endAccessor="end"
@@ -238,12 +247,6 @@ class BigReservationList extends React.Component{
 }
 
 const decodeDate = (d) => {
-    const month = Number(d.slice(0,2))-1
-    const year = Number(d.slice(2,6))
-    const dd = new Date()
-    dd.setDate(13)
-    dd.setMonth(month)
-    dd.setYear(year)
     return moment(`13${d}`, "DDMMYYYY")
 }
 
