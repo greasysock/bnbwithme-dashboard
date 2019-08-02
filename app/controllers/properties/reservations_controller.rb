@@ -1,5 +1,6 @@
 module Properties
     class ReservationsController < ApplicationAuthController
+        include DateFormat
         before_action :set_reservation, only: [:show, :update]
         before_action :set_reservations, only: [:index]
         def index
@@ -19,10 +20,6 @@ module Properties
         end
 
         private
-
-        def decode_date d
-            Date.strptime(d, '%d%m%Y')
-        end
 
         def set_reservations
             if params[:property_id]

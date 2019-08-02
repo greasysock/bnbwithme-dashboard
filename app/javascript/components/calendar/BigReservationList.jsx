@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import BigCalendar from 'react-big-calendar'
+import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
@@ -11,7 +11,7 @@ import {fetchPropertiesAndReservations, setSelectedMonth, fetchProperties, fetch
 import '../../styles/logofonts.css'
 import './styles/month.less'
 
-const localizer = BigCalendar.momentLocalizer(moment)
+const localizer = momentLocalizer(moment)
 
 const colToInt = (value) =>{
     return parseInt( "0x" + value )
@@ -223,7 +223,7 @@ class BigReservationList extends React.Component{
     render() {
         return (
             <div>
-                <BigCalendar
+                <Calendar
                     style={{height: this.state.height}}
                     localizer={localizer}
                     startAccessor="start"
