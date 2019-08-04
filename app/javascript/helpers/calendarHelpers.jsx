@@ -5,6 +5,12 @@ const ServiceIconWrap = (props) => {
     return <i style={props.style} className={props.name}/>
 }
 
+export var EventTypeEnum = {
+    RESERVATION: 1,
+    CLEANING: 2,
+    REMINDER: 3
+}
+
 export const ServiceIcon = (props) => {
     switch(props.service){
         case 'airbnb':
@@ -29,6 +35,15 @@ export function CleanerName(props){
 }
 
 export function MonthEvent(target){
+    console.log(target)
+    switch(target.event.eventType){
+        case EventTypeEnum.REMINDER:
+            console.log("REMINDER TYPE")
+            break
+        case EventTypeEnum.RESERVATION:
+            console.log("RESERVATION TYPE")
+            break
+    }
     if (!target.event.cleaning){
         return (
             <div>

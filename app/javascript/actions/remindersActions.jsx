@@ -24,11 +24,10 @@ export const fetchReminder = (id, propertyId) => async (dispatch, getState) => {
 }
 
 export const fetchReminderOccurences = (propertyId, jStart, jEnd) => async (dispatch, getState) => {
-
     const start = _encodeDate(jStart)
     const end = _encodeDate(jEnd)
     const response = await bnbwithme.get(`/properties/${propertyId}/emit_reminders`, {..._userHeaders(getState),params:{start, end}})
-    dispatch({type:FETCH_REMINDER_OCCURENCES, payload: humps(response.data)})
+    dispatch({type:FETCH_REMINDER_OCCURENCES, payload: {data: humps(response.data), propertyId}})
 }
 
 export const updateReminder = (id, propertyId, formValues) => async (dispatch, getState) => {

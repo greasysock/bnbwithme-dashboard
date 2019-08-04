@@ -4,7 +4,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-import {MonthEvent} from '../../helpers/calendarHelpers'
+import {MonthEvent, EventTypeEnum} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
 import {fetchPropertiesAndReservations, setSelectedMonth, fetchProperties, fetchReminderOccurences, fetchPropertyReservations} from '../../actions'
@@ -46,6 +46,7 @@ class BigReservationList extends React.Component{
     }
 
     eventPropGetter(event, start, end, isSelected){
+        console.log(event)
         var style = {
             padding: '0px 4px',
             position: 'relative',
@@ -115,7 +116,8 @@ class BigReservationList extends React.Component{
                 phone : reservation.phone,
                 id : reservation.id,
                 propertyId : house.id,
-                cleanerId : reservation.cleanerId
+                cleanerId : reservation.cleanerId,
+                eventType: EventTypeEnum.RESERVATION
             }
         })
         return events
@@ -138,7 +140,33 @@ class BigReservationList extends React.Component{
                 propertyId : house.id,
                 cleanerId : reservation.cleanerId,
                 cleaning : true,
-                cleaner
+                cleaner,
+                eventType: EventTypeEnum.CLEANING
+            }
+        })
+        return events
+    }
+
+    getReminders = () => {
+        const events = []
+        Object.values(this.props.properties).forEach((property)=>{
+            if(this.props.reminderOccurences[property.id]){
+                this.props.reminderOccurences[property.id].forEach((reminderOccurence)=> {
+                    events.push({
+                        eventType: EventTypeEnum.REMINDER,
+                        propertyId: property.id,
+                        reminderTypeId: reminderOccurence.reminderTypeId,
+                        start: moment(reminderOccurence.start),
+                        end: moment(reminderOccurence.end),
+                        title: 'reminder',
+                        allDay: true,
+                        color: '#000',
+                        cleaning: true,
+                        service: 'vrbo',
+                        guest: 'test',
+                        id: 1
+                    })
+                })
             }
         })
         return events
@@ -146,13 +174,18 @@ class BigReservationList extends React.Component{
 
     getEvents = () => {
         const events = []
-        const {showReservations, showCleanings} = this.props.calendarSettings
+        const {showReservations, showCleanings, showReminders} = this.props.calendarSettings
         if(showReservations){
             this.getReservations().forEach((reservation)=>events.push(reservation))
         }
         if(showCleanings){
             this.getCleanings().forEach((cleaning)=>{events.push(cleaning)})
         }
+        if(showReminders){
+            this.getReminders().forEach((reminder)=>{events.push(reminder)})
+        }
+        console.log(events)
+
         return events
     }
 
@@ -271,8 +304,12 @@ const mapStateToProps = (state) => {
         const reminderOccurences = {}
         const propertyFilterMap = {}
         propertyFilters.forEach((propertyFilter)=>{
-            properties[propertyFilter] = state.properties[propertyFilter]
-            reminderOccurences[propertyFilter] = state.reminderOccurences[propertyFilter]
+            if(state.properties[propertyFilter]){
+                properties[propertyFilter] = state.properties[propertyFilter]
+            }
+            if(state.reminderOccurences[propertyFilter]){
+                reminderOccurences[propertyFilter] = state.reminderOccurences[propertyFilter]
+            }
             propertyFilterMap[propertyFilter] = true
         })
         Object.values(state.reservations).forEach((r)=>{

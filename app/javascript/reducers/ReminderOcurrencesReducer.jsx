@@ -4,8 +4,8 @@ export default (ReminderOccurences = {}, action) => {
 switch(action.type){
     case FETCH_REMINDER_OCCURENCES:
         const reminderOccurences = {}
-        //action.payload.forEach((reminderOccurence)=>{reminderOccurences[reminderType.id]=reminderType})
-        return {...reminderOccurences}
+        reminderOccurences[action.payload.propertyId] = action.payload.data
+        return {...ReminderOccurences, ...reminderOccurences}
     default:
         return ReminderOccurences
 }
