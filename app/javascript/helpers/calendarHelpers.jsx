@@ -1,5 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import {Tag} from 'antd'
+
+import {fetchReminderType} from '../actions'
 
 const ServiceIconWrap = (props) => {
     return <i style={props.style} className={props.name}/>
@@ -20,6 +23,10 @@ export const ServiceIcon = (props) => {
     }
 }
 
+export const ReminderIcon = (props) => {
+    return <i className={`fa ${props.symbol}`}/>
+}
+
 export function CleanerWarning(props){
     if(!props.cleanerId){
         return <span className="cleaner-warning">No Cleaner</span>
@@ -34,14 +41,32 @@ export function CleanerName(props){
     return <CleanerWarning/>
 }
 
+const ReminderEvent = (props) => {
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch( fetchReminderType(props.reminderTypeId) )
+    }, [])
+    const reminderType = useSelector(state => state.reminderTypes[props.reminderTypeId])
+    const property = useSelector(state => state.properties[props.propertyId])
+
+    if(!reminderType){
+        return <b>Loading...</b>
+    }
+
+    return (
+        <div>
+            <ReminderIcon symbol={reminderType.symbol}/> {property.name} - <b>{reminderType.name}</b>
+        </div>
+    )
+}
+
 export function MonthEvent(target){
-    console.log(target)
     switch(target.event.eventType){
         case EventTypeEnum.REMINDER:
-            console.log("REMINDER TYPE")
-            break
+            return (
+                <ReminderEvent {...target.event}/>
+            )
         case EventTypeEnum.RESERVATION:
-            console.log("RESERVATION TYPE")
             break
     }
     if (!target.event.cleaning){

@@ -45,14 +45,13 @@ class BigReservationList extends React.Component{
         randoHeight: 6
     }
 
-    eventPropGetter(event, start, end, isSelected){
-        console.log(event)
+    eventPropGetter=  (event, start, end, isSelected) => {
         var style = {
             padding: '0px 4px',
             position: 'relative',
             fontSize: 13,
             borderRadius: 4,
-            backgroundColor: event.color,
+            backgroundColor: `#${this.props.properties[event.propertyId].color}`,
             fontFamily: 'Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif'
 
         }
@@ -157,14 +156,7 @@ class BigReservationList extends React.Component{
                         propertyId: property.id,
                         reminderTypeId: reminderOccurence.reminderTypeId,
                         start: moment(reminderOccurence.start),
-                        end: moment(reminderOccurence.end),
-                        title: 'reminder',
-                        allDay: true,
-                        color: '#000',
-                        cleaning: true,
-                        service: 'vrbo',
-                        guest: 'test',
-                        id: 1
+                        end: moment(reminderOccurence.end)
                     })
                 })
             }
@@ -184,7 +176,6 @@ class BigReservationList extends React.Component{
         if(showReminders){
             this.getReminders().forEach((reminder)=>{events.push(reminder)})
         }
-        console.log(events)
 
         return events
     }
