@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_12_170536) do
+ActiveRecord::Schema.define(version: 2019_08_06_144934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2019_07_12_170536) do
     t.integer "day_of_week"
     t.integer "week_of_month"
     t.integer "month_of_year"
-    t.integer "type"
+    t.integer "recurrence_type"
     t.integer "separation_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,4 +1,4 @@
 class ReminderRecurrence < ApplicationRecord
   belongs_to :reminder
-  enum type: [:daily, :weekly, :monthly, :yearly]
+  enum recurrence_type: [:daily, :weekly, :monthly, :yearly]
 end
