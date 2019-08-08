@@ -23,7 +23,7 @@ export const ServiceIcon = (props) => {
     }
 }
 
-export const ReminderIcon = (props) => {
+export const FontAwesomeIcon = (props) => {
     return <i className={`fa ${props.symbol}`}/>
 }
 
@@ -55,7 +55,7 @@ const ReminderEvent = (props) => {
 
     return (
         <div>
-            <ReminderIcon symbol={reminderType.symbol}/> <b>{reminderType.name}</b> - {property.name}
+            <FontAwesomeIcon symbol={reminderType.symbol}/> <b>{reminderType.name}</b> - {property.name}
         </div>
     )
 }
@@ -77,8 +77,8 @@ const CleaningEvent = (props) => {
     const cleaner = useSelector(state => state.users[reservation.cleanerId])
     return (
         <div>
-            <ServiceIcon service={reservation.service}/>
-            {property.name} - <CleanerName cleaner={cleaner}/>
+            <FontAwesomeIcon symbol="fa-broom"/>
+            {" "}{property.name} - <CleanerName cleaner={cleaner}/>
         </div>
     )
 }
