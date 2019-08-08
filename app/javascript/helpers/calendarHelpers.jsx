@@ -55,7 +55,30 @@ const ReminderEvent = (props) => {
 
     return (
         <div>
-            <ReminderIcon symbol={reminderType.symbol}/> {property.name} - <b>{reminderType.name}</b>
+            <ReminderIcon symbol={reminderType.symbol}/> <b>{reminderType.name}</b> - {property.name}
+        </div>
+    )
+}
+
+const ReservationEvent = (props) => {
+    const property = useSelector(state => state.properties[props.propertyId])
+    const reservation = useSelector(state => state.reservations[props.id])
+    return (
+        <div>
+            <ServiceIcon service={reservation.service}/>
+            {property.name} - <b>{reservation.guest}</b> <CleanerWarning cleanerId={reservation.cleanerId}/>
+        </div>
+    )
+}
+
+const CleaningEvent = (props) => {
+    const property = useSelector(state => state.properties[props.propertyId])
+    const reservation = useSelector(state => state.reservations[props.id])
+    const cleaner = useSelector(state => state.users[reservation.cleanerId])
+    return (
+        <div>
+            <ServiceIcon service={reservation.service}/>
+            {property.name} - <CleanerName cleaner={cleaner}/>
         </div>
     )
 }
@@ -66,22 +89,13 @@ export function MonthEvent(target){
             return (
                 <ReminderEvent {...target.event}/>
             )
+        case EventTypeEnum.CLEANING:
+            return (
+                <CleaningEvent {...target.event}/>
+            )
         case EventTypeEnum.RESERVATION:
-            break
+            return (
+                <ReservationEvent {...target.event}/>
+            )
     }
-    if (!target.event.cleaning){
-        return (
-            <div>
-                <ServiceIcon service={target.event.service}/>
-                {target.event.title} - <b>{target.event.guest}</b> <CleanerWarning cleanerId={target.event.cleanerId}/>
-            </div>
-        )
-    }
-    return (
-        <div>
-                <ServiceIcon service ={target.event.service}/>
-                {target.event.title} - <CleanerName cleaner={target.event.cleaner}/>
-        </div>
-    )
-
 }
