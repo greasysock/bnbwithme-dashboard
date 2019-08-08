@@ -52,22 +52,24 @@ class BigReservationList extends React.Component{
             fontSize: 13,
             borderRadius: 4,
             backgroundColor: `#${this.props.properties[event.propertyId].color}`,
-            fontFamily: 'Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif'
+            fontFamily: 'Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif',
+            color: 'white'
 
         }
-        if(!event.cleaning){
-            style.color = 'white'
-        }else{
-            if(event.cleanerId){
-                style.backgroundColor = 'black'
-                style.color = "white"
-            }else{
-                style.backgroundColor = 'white'
-                style.color = "black"
-                style.boxSizing = "border-box"
-                style.border = "1px solid #CCC"
-        }
-
+        switch(event.eventType){
+            case EventTypeEnum.RESERVATION:
+                break
+            case EventTypeEnum.CLEANING:
+                if(event.cleanerId){
+                    style.backgroundColor = 'black'
+                }else{
+                    style.backgroundColor = 'white'
+                    style.color = "black"
+                    style.boxSizing = "border-box"
+                    style.border = "1px solid #CCC"
+                }
+            case EventTypeEnum.REMINDER:
+                break
         }
 
         return {
@@ -105,14 +107,9 @@ class BigReservationList extends React.Component{
             const house = this.props.properties[reservation.propertyId]
 
             return {
-                title : `  ${house.name}`,
                 start : moment(reservation.start),
                 end : moment(reservation.end),
                 allDay: true,
-                color : `#${house.color}`,
-                service : reservation.service,
-                guest : reservation.guest,
-                phone : reservation.phone,
                 id : reservation.id,
                 propertyId : house.id,
                 cleanerId : reservation.cleanerId,
@@ -127,19 +124,13 @@ class BigReservationList extends React.Component{
             const house = this.props.properties[reservation.propertyId]
             const cleaner = this.props.users[reservation.cleanerId]
             return {
-                title : `  ${house.name}`,
                 start : moment(reservation.end).subtract(1, "days"),
                 end : moment(reservation.end).subtract(1, "days"),
                 allDay: true,
-                color : `#000`,
-                service : reservation.service,
-                guest : reservation.guest,
-                phone : reservation.phone,
                 id : reservation.id,
                 propertyId : house.id,
                 cleanerId : reservation.cleanerId,
                 cleaning : true,
-                cleaner,
                 eventType: EventTypeEnum.CLEANING
             }
         })
