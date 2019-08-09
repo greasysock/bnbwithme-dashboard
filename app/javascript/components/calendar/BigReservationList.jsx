@@ -114,6 +114,8 @@ class BigReservationList extends React.Component{
             }
         })
 
+        if(largest === 0){largest = 30}
+
         const finalHeight = largest * 5 * 20
 
 
