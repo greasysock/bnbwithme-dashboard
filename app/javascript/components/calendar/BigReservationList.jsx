@@ -40,9 +40,7 @@ class BigReservationList extends React.Component{
 
     state = {
         selectedReservation: null,
-        showReservationDrawer: false,
-        height: 400,
-        randoHeight: 6
+        showReservationDrawer: false
     }
 
     eventPropGetter=  (event, start, end, isSelected) => {
@@ -77,29 +75,48 @@ class BigReservationList extends React.Component{
         }
     }
 
-    getHeight = () => {
+    getHeightOld = () => {
         let finalHeight = 0
-        const propsHeight = Object.keys(this.props.properties).length * 160
+        const propsHeight = Object.keys(this.props.properties).length * 80
         const {showReservations, showCleanings} = this.props.calendarSettings
         if (showReservations){finalHeight += propsHeight}
         if (showCleanings){finalHeight += propsHeight}
-        this.genRandoHeight()
         this.setState({height:finalHeight + 450 })
     }
 
-    genRandoHeight = () => {
-        // Generate array of numbers between 1-10 excluding current number
-        const numArr = []
-        var j = 0
-        for(var i = 1; i < 10; i++){
-            if(i!==this.state.randoHeight){
-                numArr[j] = i
-                j++
+    getHeight = (events = []) => { 
+        // Create date map for date range and finds largest amount of events occuring in one day
+
+        const dateMap = {}
+        let largest = 0
+
+        const findLargest = (value) => {
+            if(value > largest){
+                largest = value
             }
         }
-        const randIndex = Math.floor(Math.random() * 8)
-        this.setState({randoHeight:numArr[randIndex]})
 
+        const addToDateMap = (d) => {
+            if(dateMap[d.format('X')]){
+                dateMap[d.format('X')] = dateMap[d.format('X')] + 1
+            }else{
+                dateMap[d.format('X')] = 1
+            }
+            findLargest(dateMap[d.format('X')])
+        }
+        events.forEach((event)=>{
+            const start = moment(event.start)
+            const end = moment(event.end)
+            addToDateMap(start)
+            while (start.format('X') !== end.format('X')){
+                start.add(1, 'day')
+                addToDateMap(start)
+            }
+        })
+
+        const finalHeight = largest * 130
+
+        return finalHeight
     }
 
     getReservations = () => {
@@ -122,7 +139,6 @@ class BigReservationList extends React.Component{
     getCleanings = () => {
         const events = Object.values(this.props.reservations).map((reservation) => {
             const house = this.props.properties[reservation.propertyId]
-            const cleaner = this.props.users[reservation.cleanerId]
             return {
                 start : moment(reservation.end).subtract(1, "days"),
                 end : moment(reservation.end).subtract(1, "days"),
@@ -168,7 +184,9 @@ class BigReservationList extends React.Component{
             this.getReminders().forEach((reminder)=>{events.push(reminder)})
         }
 
-        return events
+        const height = this.getHeight(events)
+
+        return {events,height} 
     }
 
     onHandleSelectEvent = (event) => {
@@ -201,7 +219,7 @@ class BigReservationList extends React.Component{
             const {start, end} = this.getStartEnd()
             Promise.all(Object.values(this.props.properties).map((p)=>{
                 return this.props.fetchPropertyReservations(p.id, start, end)
-            })).then(()=>{this.getHeight()})
+            }))
         }
     }
     // Grab all reminders and their recurrences for active properties
@@ -211,9 +229,7 @@ class BigReservationList extends React.Component{
             const {start,end} = this.getStartEnd()
             Object.values(this.props.properties).forEach((p)=>{
                 this.props.fetchReminderOccurences(p.id, start, end)
-            })
-            this.getHeight()
-    
+            })    
         }
     }
 
@@ -236,16 +252,17 @@ class BigReservationList extends React.Component{
     }
 
     render() {
+        const {events, height} = this.getEvents()
         return (
             <div>
                 <Calendar
-                    style={{height: this.state.height}}
+                    style={{height}}
                     localizer={localizer}
                     startAccessor="start"
                     endAccessor="end"
                     tooltipAccessor={null}
                     views={['month']}
-                    events={this.getEvents()}
+                    events={events}
                     eventPropGetter={this.eventPropGetter}
                     onSelectEvent={this.onHandleSelectEvent}
                     date={this.props.calendarSettings.selectedMonth.toDate()}
