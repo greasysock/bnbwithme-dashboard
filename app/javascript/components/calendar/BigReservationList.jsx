@@ -114,10 +114,10 @@ class BigReservationList extends React.Component{
             }
         })
 
-        const finalHeight = largest * 95
+        const finalHeight = largest * 5 * 22
 
 
-        return `${finalHeight + 300}px`
+        return `${finalHeight + 250}px`
     }
 
     getReservations = () => {
