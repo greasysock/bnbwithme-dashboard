@@ -1,8 +1,9 @@
 import React from 'react'
+import './CleaningSchedule.css'
 
 const CleaningSchedule = () => {
     return (
-        <div style={{color: 'pink'}}>
+        <div className="test" >
             Hello World
         </div>
     )
