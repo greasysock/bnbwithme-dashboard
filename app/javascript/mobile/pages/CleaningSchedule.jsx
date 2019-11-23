@@ -2,7 +2,7 @@ import React from 'react'
 
 const CleaningSchedule = () => {
     return (
-        <div>
+        <div style={{color: 'pink'}}>
             Hello World
         </div>
     )
