@@ -36,7 +36,11 @@ Rails.application.routes.draw do
 
   get '/api/*path', to: 'errors#not_found'
 
-  #devise_for :users
+  # mobile pack scope
+  scope 'm' do
+    get '/', to: 'main#mobile'
+    get '*path', to: 'main#mobile'
+  end
 
   # root 'main#index' for react router
   root 'main#index'
