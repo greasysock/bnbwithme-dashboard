@@ -84,6 +84,8 @@ const ReminderFormActions = () => {
 }
 
 const ReminderPopupForm = () => {
+  const currentUser = useSelector(s=>s.currentUser)
+  if(!currentUser.admin){return null}
   const {left, top, active} = useContext(CalendarReminderFormContext)
   const formRef = useRef()
 
