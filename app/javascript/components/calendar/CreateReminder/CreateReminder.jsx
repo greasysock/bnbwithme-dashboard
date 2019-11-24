@@ -1,33 +1,24 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useRef} from 'react'
 import {useSelector} from 'react-redux'
-import {Drawer} from 'antd'
 import ToolbarButton from '../BigCalendarToolbar/ToolbarButton'
-
-const CreateReminderButton = ({onClick = ()=>{}}) => {
-  return (
-    <div onClick={onClick}>
-      <ToolbarButton style={{marginRight:10}} icon="plus-square" />
-    </div>
-  )
-}
+import {CalendarReminderFormContext} from '../../../context'
 
 const CreateReminder = () => {
   const currentUser = useSelector(s=>s.currentUser)
   if(!currentUser.admin){return null}
-  const [active, setActive] = useState(false)
 
+  const {active, open, close} = useContext(CalendarReminderFormContext)
+  const buttonRef = useRef()
+
+  const handleOpen = () => {
+    const top = buttonRef.current? buttonRef.current.offsetTop : 0
+    const left = buttonRef.current? buttonRef.current.offsetLeft : 0
+    open(left, top)
+  }
   return (
-    <>
-    <CreateReminderButton onClick={()=>setActive(true)}/>
-    <Drawer
-      title="Add Reminder"
-      visible={active}
-      onClose={()=>setActive(false)}
-      closable={false}
-    >
-      todo...
-    </Drawer>
-    </>
+    <div ref={buttonRef} onClick={()=>active ? close() : handleOpen()}>
+      <ToolbarButton style={{marginRight:10}} icon="plus-square" />
+    </div>
   )
 }
 

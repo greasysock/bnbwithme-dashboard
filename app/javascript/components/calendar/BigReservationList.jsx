@@ -8,6 +8,7 @@ import {MonthEvent, EventTypeEnum} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
 import ReminderPopupForm from './CreateReminder/ReminderPopupForm'
+import {CalendarReminderFormProvider, CalendarReminderFormConsumer} from '../../context'
 import {fetchPropertiesAndReservations, setSelectedMonth, fetchProperties, fetchReminderOccurences, fetchPropertyReservations} from '../../actions'
 import '../../styles/logofonts.css'
 import './styles/month.less'
@@ -41,10 +42,7 @@ class BigReservationList extends React.Component{
 
     state = {
         selectedReservation: null,
-        showReservationDrawer: false,
-        showReminderPopupForm: false,
-        ReminderPopupFormTop: 0,
-        ReminderPopupFormLeft: 0
+        showReservationDrawer: false
     }
 
     eventPropGetter=  (event, start, end, isSelected) => {
@@ -261,36 +259,41 @@ class BigReservationList extends React.Component{
         this.props.setSelectedMonth(date)
     }
 
-    render() {
+    renderCalendar = (props) => {
         const {events, height} = this.getEvents()
         return (
-            <div>
-                <Calendar
-                    onSelectSlot={(e)=>{this.setState((s) => {
-                        return {showReminderPopupForm: s.showReminderPopupForm ? false : true,
-                        ReminderPopupFormTop: e.box ? e.box.y : e.bounds.y,
-                        ReminderPopupFormLeft: e.box ? e.box.x : e.bounds.x}
-                    })}}
-                    selectable
-                    style={{height}}
-                    localizer={localizer}
-                    startAccessor="start"
-                    endAccessor="end"
-                    tooltipAccessor={null}
-                    views={['month']}
-                    events={events}
-                    eventPropGetter={this.eventPropGetter}
-                    onSelectEvent={this.onHandleSelectEvent}
-                    date={this.props.calendarSettings.selectedMonth.toDate()}
-                    components={{
-                        month: {event:MonthEvent},
-                        toolbar: Toolbar
-                    }}
-                    onNavigate={this.getNavigate}
+            <>
+            <Calendar
+                onSelectSlot={(e)=>{
+                    props.active ? props.close() : props.open( e.box ? e.box.x : e.bounds.x, e.box ? e.box.y : e.bounds.y )
+                }}
+                selectable
+                style={{height}}
+                localizer={localizer}
+                startAccessor="start"
+                endAccessor="end"
+                tooltipAccessor={null}
+                views={['month']}
+                events={events}
+                eventPropGetter={this.eventPropGetter}
+                onSelectEvent={this.onHandleSelectEvent}
+                date={this.props.calendarSettings.selectedMonth.toDate()}
+                components={{
+                    month: {event:MonthEvent},
+                    toolbar: Toolbar
+                }}
+                onNavigate={this.getNavigate}
                 />
-                <ReminderPopupForm left={this.state.ReminderPopupFormLeft} top={this.state.ReminderPopupFormTop} active={this.state.showReminderPopupForm}/>
-                <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false, selectedReservation: null})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>
-            </div>
+            <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false, selectedReservation: null})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>
+            </>
+        )
+    } 
+
+    render() {
+        return (
+            <CalendarReminderFormConsumer>
+                {this.renderCalendar}
+            </CalendarReminderFormConsumer>
         )
     }
 }
