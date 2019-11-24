@@ -7,6 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {MonthEvent, EventTypeEnum} from '../../helpers/calendarHelpers'
 import Toolbar from './BigCalendarToolbar/BigCalendarToolbar'
 import ReservationDrawer from './Drawers/ReservationDrawer'
+import ReminderPopupForm from './CreateReminder/ReminderPopupForm'
 import {fetchPropertiesAndReservations, setSelectedMonth, fetchProperties, fetchReminderOccurences, fetchPropertyReservations} from '../../actions'
 import '../../styles/logofonts.css'
 import './styles/month.less'
@@ -40,7 +41,10 @@ class BigReservationList extends React.Component{
 
     state = {
         selectedReservation: null,
-        showReservationDrawer: false
+        showReservationDrawer: false,
+        showReminderPopupForm: false,
+        ReminderPopupFormTop: 0,
+        ReminderPopupFormLeft: 0
     }
 
     eventPropGetter=  (event, start, end, isSelected) => {
@@ -262,6 +266,12 @@ class BigReservationList extends React.Component{
         return (
             <div>
                 <Calendar
+                    onSelectSlot={(e)=>{this.setState((s) => {
+                        return {showReminderPopupForm: s.showReminderPopupForm ? false : true,
+                        ReminderPopupFormTop: e.box ? e.box.y : e.bounds.y,
+                        ReminderPopupFormLeft: e.box ? e.box.x : e.bounds.x}
+                    })}}
+                    selectable
                     style={{height}}
                     localizer={localizer}
                     startAccessor="start"
@@ -278,6 +288,7 @@ class BigReservationList extends React.Component{
                     }}
                     onNavigate={this.getNavigate}
                 />
+                <ReminderPopupForm left={this.state.ReminderPopupFormLeft} top={this.state.ReminderPopupFormTop} active={this.state.showReminderPopupForm}/>
                 <ReservationDrawer onDrawerClose={()=>this.setState({showReservationDrawer:false, selectedReservation: null})} visible={this.state.showReservationDrawer} reservationId={this.state.selectedReservation}/>
             </div>
         )
