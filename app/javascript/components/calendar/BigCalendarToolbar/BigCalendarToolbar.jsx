@@ -7,6 +7,7 @@ import { navigate } from '../../../utils/bigCalendarConstants'
 import './BigCalendarToolbar.less'
 import CalendarSettings,{CalendarSetting} from '../CalendarSettings/CalendarSettings'
 import {toggleReservations, toggleCleanings, toggleReminders} from '../../../actions'
+import CreateReminder from '../CreateReminder/CreateReminder'
 
 class Toolbar extends React.Component {
   render() {
@@ -42,7 +43,10 @@ class Toolbar extends React.Component {
       
         <span className="rbc-toolbar-label"><Typography.Title level={4}>{label}</Typography.Title></span>
 
-        <span style={{paddingLeft:200}} className="rbc-btn-group"><CalendarSettings controls={this.calendarControls}/></span>
+        <span style={{paddingLeft:150}} className="rbc-btn-group cal-btn-group">
+          <CreateReminder/>
+          <CalendarSettings controls={this.calendarControls}/>
+        </span>
       </div>
     )
   }

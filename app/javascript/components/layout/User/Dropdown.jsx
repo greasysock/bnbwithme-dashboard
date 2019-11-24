@@ -6,11 +6,15 @@ import {signOut} from '../../../actions'
 import history from '../../history'
 import './Menu.less'
 
+const itemStyle = {
+  marginRight: 10
+}
+
 class UserDropdown extends React.Component {
     manageUsersRender() {
       return (
         <Menu.Item onClick={()=>history.push('/admin/users')} key="manageusers">
-          <Icon type="user" />
+          <Icon style={itemStyle} type="user" />
           Manage Users
         </Menu.Item>
         )
@@ -18,7 +22,7 @@ class UserDropdown extends React.Component {
     manageRemindersRender() {
       return (
         <Menu.Item onClick={()=>history.push('/admin/reminder_types')} key="managereminders">
-          <Icon type="form" />
+          <Icon style={itemStyle} type="form" />
           Manage Reminder Types
         </Menu.Item>
         )
@@ -38,12 +42,12 @@ class UserDropdown extends React.Component {
         <Menu className="menu" selectedKeys={[]}>
           {this.adminRender()}
           <Menu.Item disabled key="userinfo">
-            <Icon type="setting" />
+            <Icon style={itemStyle} type="setting" />
             Account Settings
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item key="logout" onClick={()=>{this.props.signOut()}}>
-            <Icon type="logout" />
+            <Icon style={itemStyle} type="logout" />
             Logout
           </Menu.Item>
         </Menu>
