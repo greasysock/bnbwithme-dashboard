@@ -6,7 +6,7 @@ import Footer from './Footer'
 export default class Wrapper extends React.Component{
     render(){
         return (
-            <Layout>
+            <Layout style={{minHeight:'100%'}}>
                 <Header/>
                 <Layout.Content style={{ padding: '10px 10px' }}>
                     {this.props.children}

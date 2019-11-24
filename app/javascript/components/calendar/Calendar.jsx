@@ -1,12 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import BigReservationList from './BigReservationList'
 
-export default class Calendar extends React.Component{
-    render(){
-        return (
-            <div style={{ background: '#fff', padding: 12, minHeight: 280}}>
-                <BigReservationList/>
-            </div>
-        )
-    }
+const Calendar = () => {
+  const [height, setHeight] = useState(280)
+  return (
+    <div style={{ background: '#fff', padding: 12, minHeight: height}}>
+      <BigReservationList setContainerHeight={(h)=>setHeight(h+90)}/>
+    </div>
+  )
 }
+
+export default Calendar

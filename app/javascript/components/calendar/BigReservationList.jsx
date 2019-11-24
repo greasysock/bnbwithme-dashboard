@@ -118,10 +118,11 @@ class BigReservationList extends React.Component{
 
         // Row length is 5, event height is 20 including 1px for spacing
 
-        const finalHeight = largest * 5 * 21 + ( 5 * 25)
+        const finalHeight = (largest * 5 * 21 + ( 5 * 25)) + 90
 
+        this.props.setContainerHeight(finalHeight)
 
-        return `${finalHeight + 90}px`
+        return `${finalHeight}px`
     }
 
     getReservations = () => {
