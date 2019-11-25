@@ -44,7 +44,7 @@ class ReminderTypesController < ApplicationAuthController
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def reminder_type_params
-        params.require(:reminder_type).permit(:name, :symbol)
+        params.require(:reminder_type).permit(:name, :symbol, reminders_attributes: [:property_id, :start, :end, :indefinite, :full_day, recurrences_attributes: [:day_of_week, :week_of_month, :month_of_year, :recurrence_type, :separation_count]])
       end
 
 end

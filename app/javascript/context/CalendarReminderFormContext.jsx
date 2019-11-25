@@ -9,15 +9,23 @@ export const CalendarReminderFormProvider = ({children}) => {
   const [left, setLeft] = useState(0)
   const [top, setTop] = useState(0)
   const [active, setActive] = useState(false)
+  const [dateRange, setDateRange] = useState()
 
-  const open = (l,t) => {
+  const open = (l,t, config={}) => {
+    const {start, end} = config
     setLeft(l)
     setTop(t)
     setActive(true)
+    if(start&&end){
+      setDateRange({
+        start,end
+      })
+    }
   }
 
   const close = () => {
     setActive(false)
+    setDateRange()
   }
 
   return (
@@ -26,7 +34,9 @@ export const CalendarReminderFormProvider = ({children}) => {
       close,
       left,
       top,
-      active
+      active,
+      dateRange,
+      setDateRange
     }}>
       <ReminderPopupForm/>
       {children}

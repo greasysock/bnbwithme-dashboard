@@ -265,7 +265,9 @@ class BigReservationList extends React.Component{
             <>
             <Calendar
                 onSelectSlot={(e)=>{
-                    props.active ? props.close() : props.open( e.box ? e.box.x : e.bounds.x, e.box ? e.box.y : e.bounds.y )
+                    const start = moment(e.start)
+                    const end = moment(e.end)
+                    props.active ? props.close() : props.open( e.box ? e.box.x : e.bounds.x, e.box ? e.box.y : e.bounds.y, {start,end} )
                 }}
                 selectable
                 style={{height}}

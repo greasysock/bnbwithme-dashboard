@@ -1,7 +1,11 @@
-import React, {useContext, useRef} from 'react'
+import React, {useContext, useRef, useState} from 'react'
 import {useSelector} from 'react-redux'
-import {Input, Select, DatePicker, Checkbox, Button, Badge} from 'antd'
+import {Input, Select, Checkbox, Button, Badge} from 'antd'
+import {DateRangePicker} from 'react-dates'
 import {CalendarReminderFormContext} from '../../../context'
+import moment from 'moment'
+import 'react-dates/lib/css/_datepicker.css'
+import 'react-dates/initialize'
 import './ReminderPopupForm.less'
 
 const {Option} = Select
@@ -41,7 +45,8 @@ const ReminderRecurrenceSelector = () => {
     <div
       style={{
         display: 'flex',
-        width:'100%'
+        width:'100%',
+        paddingTop: 10
       }}
     >
       <Select style={{flex:1}} defaultValue="22">
@@ -53,8 +58,36 @@ const ReminderRecurrenceSelector = () => {
 }
  
 const ReminderDateSelector = () => {
+  const [focused, setFocused] = useState()
+  const {dateRange, setDateRange} = useContext(CalendarReminderFormContext)
+  let start = moment()
+  let end = moment()
+  if(dateRange && dateRange.start && dateRange.end){
+    start = dateRange.start
+    end = dateRange.end
+  }
+
   return (
-    <DatePicker.RangePicker/>
+    <div className="react-datepicker-wrapper">
+      <DateRangePicker
+        startDate={start}
+        startDateId={`start-id${start.seconds()}`}
+        endDate={end}
+        endDateId='end-id'
+        onDatesChange={({ startDate, endDate }) => {
+          if(startDate > endDate){
+            setDateRange({start:startDate, end:startDate})
+            return
+          }
+          setDateRange({start:startDate, end:endDate})
+        }
+        }
+        onFocusChange={focusedInput => setFocused(focusedInput)}
+        focusedInput={focused}
+        onClose={()=>setFocused(null)}
+      />
+    </div>
+    
   )
 }
  
