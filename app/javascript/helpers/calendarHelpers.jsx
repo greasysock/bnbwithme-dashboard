@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {Tag} from 'antd'
-
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faBroom} from '@fortawesome/free-solid-svg-icons'
 import {fetchReminderType} from '../actions'
+import {useFontAwesome, useReminderType} from '../hooks'
 
 const ServiceIconWrap = (props) => {
     return <i style={props.style} className={props.name}/>
@@ -23,10 +24,6 @@ export const ServiceIcon = (props) => {
     }
 }
 
-export const FontAwesomeIcon = (props) => {
-    return <i className={`fa ${props.symbol}`}/>
-}
-
 export function CleanerWarning(props){
     if(!props.cleanerId){
         return <span className="cleaner-warning">No Cleaner</span>
@@ -42,11 +39,7 @@ export function CleanerName(props){
 }
 
 const ReminderEvent = (props) => {
-    const dispatch = useDispatch()
-    useEffect(()=>{
-        dispatch( fetchReminderType(props.reminderTypeId) )
-    }, [])
-    const reminderType = useSelector(state => state.reminderTypes[props.reminderTypeId])
+    const reminderType = useReminderType(props.reminderTypeId)
     const property = useSelector(state => state.properties[props.propertyId])
 
     if(!reminderType){
@@ -55,7 +48,7 @@ const ReminderEvent = (props) => {
 
     return (
         <div>
-            <FontAwesomeIcon symbol={reminderType.symbol}/> <b>{reminderType.name}</b> - {property.name}
+            <FontAwesomeIcon icon={reminderType.icon}/> <b>{reminderType.name}</b> - {property.name}
         </div>
     )
 }
@@ -77,7 +70,7 @@ const CleaningEvent = (props) => {
     const cleaner = useSelector(state => state.users[reservation.cleanerId])
     return (
         <div>
-            <FontAwesomeIcon symbol="fa-broom"/>
+            <FontAwesomeIcon icon={faBroom}/>
             {" "}{property.name} - <CleanerName cleaner={cleaner}/>
         </div>
     )

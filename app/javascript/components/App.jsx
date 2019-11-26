@@ -2,8 +2,6 @@ import React from 'react'
 import {Route, Router} from 'react-router-dom'
 import { connect } from 'react-redux'
 import 'antd/dist/antd.less'
-import 'Font-Awesome/css/all.min.css'
-
 import history from './history'
 import {signInFromLocalStorage} from '../actions'
 import SessionCreate from './user/SessionCreate'
