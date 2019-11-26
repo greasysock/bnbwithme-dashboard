@@ -1,8 +1,10 @@
 import React, {useContext, useRef, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {Input, Select, Checkbox, Button, Badge} from 'antd'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {DateRangePicker} from 'react-dates'
 import {CalendarReminderFormContext} from '../../../context'
+import {useFontAwesomeIcons} from '../../../hooks'
 import moment from 'moment'
 import 'react-dates/lib/css/_datepicker.css'
 import 'react-dates/initialize'
@@ -11,12 +13,22 @@ import './ReminderPopupForm.less'
 const {Option} = Select
 
 const ReminderNameIconInput = () => {
+  const icons = useFontAwesomeIcons()
+  const {name, setName, icon, setIcon} = useContext(CalendarReminderFormContext)
+
+  const renderIcons = () => {
+    return icons.map((faIcon)=>(
+      <Option value={faIcon.iconName} key={faIcon.iconName}>
+        <FontAwesomeIcon icon={faIcon}/>
+      </Option>
+    ))
+  }
   return (
     <Input.Group compact style={{display: 'flex', padding: 5}}>
-      <Select>
-        <Option value="1">An Option</Option>
+      <Select value={icon} onChange={(val)=>setIcon(val)} showArrow={false} show style={{width:45}}>
+        {renderIcons()}
       </Select>
-      <Input title="Reminder Title" placeholder="Reminder Title"/>
+      <Input value={name} onChange={(e)=>setName(e.target.value)} title="Reminder Title" placeholder="Reminder Title"/>
     </Input.Group>
   )
 }
@@ -29,12 +41,13 @@ const renderPropertyItem = (property) => {
 
 const ReminderPropertySelection = () => {
   const properties = useSelector(s=>Object.values(s.properties))
+  const {propertyId, setPropertyId} = useContext(CalendarReminderFormContext)
   const renderProperties = () => {
     return properties.map((property)=>renderPropertyItem(property))
   }
 
   return (
-    <Select style={{padding: 5}} placeholder='Select Property'>
+    <Select value={propertyId} onChange={(val)=>setPropertyId(val)} style={{padding: 5}} placeholder='Select Property'>
       {renderProperties()}
     </Select>
   )
@@ -105,13 +118,14 @@ const ReminderDateAndRecurrenceSelector = () => {
 }
 
 const ReminderFormActions = () => {
+  const {submit} = useContext(CalendarReminderFormContext)
   return (
     <div
       style={{
         paddingTop: 20,
       }}
     >
-      <Button disabled style={{float:'right'}} type="primary" icon="plus-square">Save Reminder</Button>
+      <Button onClick={submit} style={{float:'right'}} type="primary" icon="plus-square">Save Reminder</Button>
     </div>
   )
 }
