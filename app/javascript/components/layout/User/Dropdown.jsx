@@ -32,8 +32,7 @@ class UserDropdown extends React.Component {
         return
       }
       return [
-        this.manageUsersRender(),
-        this.manageRemindersRender()
+        this.manageUsersRender()
       ]
         
     }

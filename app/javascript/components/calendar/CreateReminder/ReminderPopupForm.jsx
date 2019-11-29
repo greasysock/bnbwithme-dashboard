@@ -1,10 +1,10 @@
 import React, {useContext, useRef, useState} from 'react'
 import {useSelector} from 'react-redux'
-import {Input, Select, Checkbox, Button, Badge} from 'antd'
+import {Input, Select, Checkbox, Button, Badge, AutoComplete} from 'antd'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {DateRangePicker} from 'react-dates'
 import {CalendarReminderFormContext} from '../../../context'
-import {useFontAwesomeIcons} from '../../../hooks'
+import {useFontAwesomeIcons, useSearchReminderTypes} from '../../../hooks'
 import moment from 'moment'
 import 'react-dates/lib/css/_datepicker.css'
 import 'react-dates/initialize'
@@ -14,7 +14,9 @@ const {Option} = Select
 
 const ReminderNameIconInput = () => {
   const icons = useFontAwesomeIcons()
-  const {name, setName, icon, setIcon} = useContext(CalendarReminderFormContext)
+  const {name, setName} = useContext(CalendarReminderFormContext).nameProps
+  const {icon, setIcon} = useContext(CalendarReminderFormContext).iconProps
+  const reminderTypes = useSearchReminderTypes(name)
 
   const renderIcons = () => {
     return icons.map((faIcon)=>(
@@ -28,7 +30,7 @@ const ReminderNameIconInput = () => {
       <Select value={icon} onChange={(val)=>setIcon(val)} showArrow={false} show style={{width:45}}>
         {renderIcons()}
       </Select>
-      <Input value={name} onChange={(e)=>setName(e.target.value)} title="Reminder Title" placeholder="Reminder Title"/>
+      <AutoComplete style={{width:'100%'}} dataSource={reminderTypes.map(r=>r.name)} value={name} onChange={(val)=>setName(val)} title="Reminder Title" placeholder="Reminder Title"/>
     </Input.Group>
   )
 }
@@ -41,7 +43,7 @@ const renderPropertyItem = (property) => {
 
 const ReminderPropertySelection = () => {
   const properties = useSelector(s=>Object.values(s.properties))
-  const {propertyId, setPropertyId} = useContext(CalendarReminderFormContext)
+  const {propertyId, setPropertyId} = useContext(CalendarReminderFormContext).propertyIdProps
   const renderProperties = () => {
     return properties.map((property)=>renderPropertyItem(property))
   }
@@ -72,7 +74,7 @@ const ReminderRecurrenceSelector = () => {
  
 const ReminderDateSelector = () => {
   const [focused, setFocused] = useState()
-  const {dateRange, setDateRange} = useContext(CalendarReminderFormContext)
+  const {dateRange, setDateRange} = useContext(CalendarReminderFormContext).dateProps
   let start = moment()
   let end = moment()
   if(dateRange && dateRange.start && dateRange.end){
@@ -118,14 +120,14 @@ const ReminderDateAndRecurrenceSelector = () => {
 }
 
 const ReminderFormActions = () => {
-  const {submit} = useContext(CalendarReminderFormContext)
+  const {submit, valid} = useContext(CalendarReminderFormContext)
   return (
     <div
       style={{
         paddingTop: 20,
       }}
     >
-      <Button onClick={submit} style={{float:'right'}} type="primary" icon="plus-square">Save Reminder</Button>
+      <Button disabled={!valid} onClick={submit} style={{float:'right'}} type="primary" icon="plus-square">Save Reminder</Button>
     </div>
   )
 }

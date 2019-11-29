@@ -11,6 +11,12 @@ class ReminderTypesController < ApplicationAuthController
       render json: @reminder_type
     end
 
+    def search
+      search_params = params['q'].to_s.downcase
+      @reminder_types = ReminderType.where('lower(name) LIKE ?', "%#{search_params}%").limit(10)
+      render json: @reminder_types
+    end
+
     def create
       @reminder_type = ReminderType.new(reminder_type_params)
       authorize @reminder_type

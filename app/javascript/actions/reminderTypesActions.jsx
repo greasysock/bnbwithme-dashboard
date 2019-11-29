@@ -27,8 +27,9 @@ export const updateReminderType = (id, formValues) => async (dispatch, getState)
     dispatch({type:UPDATE_REMINDER_TYPE, payload: humps(response.data)})
 }
 
-export const createReminderType = (formValues) => async (dispatch, getState) => {
+export const createReminderType = (formValues, onSuccess=()=>null, onFailure=()=>null) => async (dispatch, getState) => {
     const response = await bnbwithme.post('/reminder_types', dehumps({reminder_type:formValues}), _userHeaders(getState))
+    onSuccess()
     dispatch({type:CREATE_REMINDER_TYPE, payload: humps(response.data)})
 }
 

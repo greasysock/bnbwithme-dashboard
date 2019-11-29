@@ -28,7 +28,9 @@ Rails.application.routes.draw do
       get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration', defaults: {format: :json}
       put 'users' => 'devise/registrations#update', :as => 'user_registration', defaults: {format: :json}
     end
-    resources :reminder_types, except: [:new, :edit], defaults: {format: :json}
+    resources :reminder_types, except: [:new, :edit], defaults: {format: :json} do
+      get :search, on: :collection
+    end
     concerns :contain_reminders
     resources :people, controller: 'site_users', except: [:new, :edit], defaults: { format: :json }
 
