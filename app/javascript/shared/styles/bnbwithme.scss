@@ -1,0 +1,9 @@
+$bnbwithme-blue: #54B6C5;
+$bnbwithme-blue-darker: rgb(0, 136, 136);
+$background: #f0f2f5;
+
+:export{
+  bnbwithmeBlue: $bnbwithme-blue;
+  bnbwithmeBlueDarker: $bnbwithme-blue-darker;
+  background: $background;
+}

@@ -1,12 +1,5 @@
 const { environment } = require('@rails/webpacker')
-const antdConfig = require('./antdConfig')
-const webpack = require('webpack')
+const typescript =  require('./loaders/typescript')
 
-environment.config.merge(antdConfig)
-
-environment.plugins.prepend(
-  'MomentIgnoreLocales',
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-)
-
+environment.loaders.prepend('typescript', typescript)
 module.exports = environment
