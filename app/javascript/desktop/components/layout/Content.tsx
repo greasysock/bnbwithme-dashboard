@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const Content = ({children}) => {
+const Content: React.FC = ({children}):JSX.Element => {
   return ( 
     <div>
       {children}

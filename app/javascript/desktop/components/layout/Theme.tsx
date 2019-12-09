@@ -10,7 +10,7 @@ const themePallete = createMuiTheme({
   }
 })
 
-const Theme = ({children}) => {
+const Theme = ({children}): JSX.Element => {
   return ( 
     <ThemeProvider theme={themePallete}>
       {children}
