@@ -3,9 +3,7 @@ import {Helmet} from 'react-helmet-async'
 import Topbar from './Topbar'
 import Content from './Content'
 import Theme from './Theme'
-import {DrawerContextProvider} from '../../contexts/DrawerContext'
 import layout from './layout.module.scss'
-import { Navigation } from './Navigation'
 
 const SiteHeader = ():JSX.Element => {
   return (
@@ -17,9 +15,7 @@ const SiteHeader = ():JSX.Element => {
 
 const Wrapper = ({children}) => {
   return (
-    <DrawerContextProvider>
     <Theme>
-    <Navigation/>
     <div className={layout.wrapper}>
       <SiteHeader/>
       <Topbar/>
@@ -28,7 +24,6 @@ const Wrapper = ({children}) => {
       </Content>
     </div>
     </Theme>
-    </DrawerContextProvider>
    );
 }
  

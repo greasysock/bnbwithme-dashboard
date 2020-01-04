@@ -1,5 +1,7 @@
 import * as React from 'react'
 import {Helmet} from 'react-helmet-async'
+import { Paper } from '@material-ui/core'
+import { FullFeatureCalendar } from '../components/calendar/FullFeatureCalendar'
 
 const CalednarHeader = () => {
   return (
@@ -13,7 +15,9 @@ const Calendar = () => {
   return (
     <>
     <CalednarHeader/>
-    <div>Hello</div>
+    <Paper>
+      <FullFeatureCalendar/>
+    </Paper>
     </>
    );
 }

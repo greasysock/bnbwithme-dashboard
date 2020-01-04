@@ -1,0 +1,112 @@
+@import './variables';
+
+.rbc-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.rbc-row-segment {
+  padding: 0 1px 1px 1px;
+
+  .rbc-event-content {
+    @extend .rbc-ellipsis;
+  }
+}
+
+.rbc-selected-cell {
+  background-color: $date-selection-bg-color;
+}
+
+
+.rbc-show-more {
+  @extend .rbc-ellipsis;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: $event-zindex;
+  font-weight: bold;
+  font-size: 85%;
+  height: auto;
+  line-height: normal;
+}
+
+.rbc-month-view {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.rbc-month-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.rbc-month-row {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  flex: 1 0 0; // postcss will remove the 0px here hence the duplication below
+  flex-basis: 0px;
+  overflow: hidden;
+
+  & + & {
+  }
+}
+
+.rbc-date-cell {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-right: 5px;
+  text-align: right;
+  a {
+    padding: 14px 20px;
+    color: #98a0a6;
+    font-size: 12px;
+  }
+  &.rbc-now {
+    font-weight: bold;
+  }
+
+  > a {
+    &, &:active, &:visited {
+      text-decoration: none;
+    }
+  }
+}
+
+.rbc-row-bg {
+  @extend .rbc-abs-full;
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 0;
+  overflow: hidden;
+}
+
+.rbc-day-bg {
+  flex: 1 0 0%;
+  border-right: 1px solid rgba(166, 168, 179, 0.12);
+  & + & {
+  }
+
+  .rbc-rtl & + & {
+  }
+}
+
+.rbc-overlay {
+  position: absolute;
+  z-index: $event-zindex + 1;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,.25);
+  padding: 10px;
+
+  > * + * {
+    margin-top: 1px;
+  }
+}
+
+.rbc-overlay-header {
+  margin: -10px -10px 5px -10px ;
+  padding: 2px 10px;
+}

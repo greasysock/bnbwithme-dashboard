@@ -1,27 +1,27 @@
 import * as React from 'react'
-import {useContext} from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import layout from './layout.module.scss'
-import {DrawerContext} from '../../contexts/DrawerContext'
+import bnbwithmeHead from '../../../shared/images/stickyheader.png'
+import { TabNavigation } from './TabNavigation'
+import { HistoryContext } from '../../contexts/HistoryContext'
+import { AuthRoutes } from '../../router/routes'
 
 const Topbar = (): JSX.Element => {
-  const {toggle} = useContext(DrawerContext)
+  const {history} = React.useContext(HistoryContext)
   return ( 
     <AppBar color="inherit" className={layout.topbar} position="static">
+      <div className={layout.topbarContainer}>
       <Toolbar>
-        <IconButton onClick={()=>{toggle()}} edge="start" color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
-        <Typography className={layout.title} variant="h6" >
-          bnbwithme
+        <Typography className={layout.title} >
+          <img onClick={()=>history.push(AuthRoutes.dashboard)} style={{cursor: 'pointer'}} className={layout.image} src={bnbwithmeHead}/>
         </Typography>
         <Button color="inherit">Login</Button>
       </Toolbar>
+      <TabNavigation/>
+      </div>
     </AppBar>
    )
 }

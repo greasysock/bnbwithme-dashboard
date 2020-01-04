@@ -1,0 +1,39 @@
+.Toolbar{
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  .leftActions{
+    flex: 1;
+    .buttonGroup{
+      padding-left: 20px;
+    }
+  }
+  .title{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .month{
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .year{
+      font-size: 13px;
+      color: rgba(81, 86, 93, 0.4);
+      font-weight: 600;
+    }
+  }
+  .rightActions{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    .content{
+      padding-right: 10px;
+    }
+  }
+}
+
+.actionSvg{
+  color: white;
+}

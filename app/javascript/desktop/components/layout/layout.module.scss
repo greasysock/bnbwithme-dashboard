@@ -1,11 +1,30 @@
 @import '../../../shared/styles/bnbwithme.scss';
 
 .topbar {
-  .title {
-    flex-grow: 1; 
+  .topbarContainer{
+    display: flex;
+    flex-direction: column;
+    .title {
+      flex-grow: 1;
+      .image {
+        margin-top: 10px;
+        height: 40px;
+      }
+    }
   }
 }
 
 .global {
   background-color: $background;
+}
+
+.tabLabel {
+  display: flex;
+  color: grey;
+  &.active {
+    color: $bnbwithme-blue;
+  }
+  .icon {
+    padding-right: 10px;
+  }
 }

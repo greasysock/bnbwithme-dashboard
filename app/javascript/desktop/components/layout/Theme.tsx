@@ -5,7 +5,7 @@ import bnbwithmeStyles from '../../../shared/styles/bnbwithme.scss'
 const themePallete = createMuiTheme({
   palette: {
     primary: {
-      main: bnbwithmeStyles.bnbwithmeBlueDarker
+      main: bnbwithmeStyles.bnbwithmeBlue
     }
   }
 })
