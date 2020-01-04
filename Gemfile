@@ -50,12 +50,16 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'webpacker', '~> 4.2.0'
 
-#Authentication Authorization
+# Authentication Authorization
 gem 'devise', '~> 4.7.1'
 gem 'devise-jwt', '~> 0.6.0'
 gem 'pundit', '~> 2.0', '>= 2.0.1'
 
-#Capistrano
+# API
+gem 'graphql', '~> 1.9', '>= 1.9.17'
+gem 'graphql-batch'
+
+# Capistrano
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'
 gem 'capistrano-passenger', '~> 0.2.0'
@@ -63,3 +67,5 @@ gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem 'capistrano-rails-console', require: false
 
 gem 'ice_cube', '~> 0.16.3'
+
+gem 'graphiql-rails', group: :development
