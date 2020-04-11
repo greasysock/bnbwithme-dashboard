@@ -4,16 +4,28 @@ import {HelmetProvider} from 'react-helmet-async'
 import Calendar from './pages/Calendar'
 import Dashboard from './pages/Dashboard'
 import Properties from './pages/Properties'
-import {HistoryContextProvider, HistoryContext} from './contexts/HistoryContext'
-import {AuthRoute} from './router/AuthRoute'
+import { HistoryContextProvider, HistoryContext } from './contexts/HistoryContext'
+import { AuthRoute } from './router/AuthRoute'
 import { AuthRoutes, NonAuthRoutes } from './router/routes'
 import { Login } from './pages/Login'
 import { Unauthorized } from './pages/Unauthorized'
 import { NotFound } from './pages/NotFound'
 import { UserRoles, userRoles } from '../shared/router/userRoles'
 
+// Apollo/Graphql
+import { ApolloProvider } from '@apollo/react-hooks'
+import ApolloClient, { InMemoryCache } from 'apollo-boost'
+
+const cache = new InMemoryCache()
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache
+})
+
 const App: React.FC = ():JSX.Element => {
   return (
+    <ApolloProvider client={client}>
     <HistoryContextProvider>
     <HelmetProvider>
     <HistoryContext.Consumer>
@@ -35,6 +47,7 @@ const App: React.FC = ():JSX.Element => {
     </HistoryContext.Consumer>
     </HelmetProvider>
     </HistoryContextProvider>
+    </ApolloProvider>
    );
 }
  

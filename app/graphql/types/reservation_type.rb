@@ -12,6 +12,7 @@ module Types
     field :email, String, null: true
     field :ical_id, ID, null: true
     field :ical, Types::IcalType, null: true
+    field :property, Types::PropertyType, null: false
 
     def ical
       RecordLoader.for(Ical).load(object.ical_id)
@@ -19,6 +20,10 @@ module Types
 
     def cleaner
       RecordLoader.for(User).load(object.cleaner_id)
+    end
+
+    def property
+      RecordLoader.for(Property).load(object.property_id)
     end
   end
 end

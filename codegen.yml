@@ -1,0 +1,8 @@
+overwrite: true
+schema: "http://localhost:3000/graphql"
+generates:
+  app/javascript/shared/types/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

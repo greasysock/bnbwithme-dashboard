@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet-async'
 import { Paper } from '@material-ui/core'
 import { FullFeatureCalendar } from '../components/calendar/FullFeatureCalendar'
 
-const CalednarHeader = () => {
+const CalendarHeader = () => {
   return (
     <Helmet>
       <title>Calendar</title>
@@ -14,7 +14,7 @@ const CalednarHeader = () => {
 const Calendar = () => {
   return (
     <>
-    <CalednarHeader/>
+    <CalendarHeader/>
     <Paper>
       <FullFeatureCalendar/>
     </Paper>

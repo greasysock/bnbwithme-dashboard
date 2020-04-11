@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Code:500,600&display=swap');
+
+.reservationEvent, .cleaningEvent{
+  border-radius: 3px;
+  font-family: 'Fira Code', monospace;
+  font-weight: 300;
+  padding: 2px;
+  font-size: 8pt;
+  text-transform: uppercase;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.reservationEvent {
+  color: white;
+  background-color: var(--color);
+  background: linear-gradient(90deg, var(--darker-color) 0%, var(--color) 75%); 
+}
+
+.cleaningEvent {
+  color: black;
+  background-color: white;
+  //background: linear-gradient(90deg, rgba(255,255,255,1) 43%, rgba(236,236,236,1) 77%); 
+  border-right: solid 1px #eeeeee;
+  border-top: solid 1px #eeeeee;
+  border-bottom: solid 1px #eeeeee;
+  border-left: solid 3px black;
+  padding: 1px;
+  .icon {
+    min-width: 22px;
+    padding-right: 2px;
+  }
+  &.assignedCleaner {
+    color: white;
+    background-color: black;
+    border: none;
+    padding: 2px;
+    .icon {
+      min-width: 25px;
+    }
+  }
+}
+
+.cleaningEventComponent{
+  display: flex;
+  .cleaner{}
+}
+
+.icon {
+  min-width: 25px;
+}
+
