@@ -14,7 +14,7 @@
     "classnames": "^2.2.6",
     "css-loader": "^2.1.1",
     "history": "^4.9.0",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
