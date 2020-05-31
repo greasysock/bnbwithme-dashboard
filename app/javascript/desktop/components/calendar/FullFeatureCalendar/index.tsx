@@ -36,6 +36,43 @@ interface dateRange {
   endDate: string
 }
 
+const getHeight = (events = []) => { 
+  // Create date map for date range and finds largest amount of events occuring in one day
+
+  const dateMap = {}
+  let largest = 0
+
+  const findLargest = (value) => {
+    if(value > largest){
+      largest = value
+    }
+  }
+
+  const addToDateMap = (d) => {
+    if(dateMap[d.format('X')]){
+      dateMap[d.format('X')] = dateMap[d.format('X')] + 1
+    }else{
+      dateMap[d.format('X')] = 1
+    }
+    findLargest(dateMap[d.format('X')])
+  }
+  events.forEach((event)=>{
+    const start = moment(event.start)
+    const end = moment(event.end)
+    addToDateMap(start)
+    while (start.format('X') !== end.format('X')){
+      start.add(1, 'day')
+      addToDateMap(start)
+    }
+  })
+
+  if(largest === 0){largest = 30}
+
+  // Row length is 5, event height is 20px including 1px for spacing
+
+  return (largest * 5 * 20 + ( 5 * 50)) + 180
+}
+
 const getDateRange = (date: moment.Moment):dateRange => {
   return {
     startDate: moment(date).startOf('month').subtract(7, 'days').toISOString(),
@@ -46,26 +83,30 @@ const getDateRange = (date: moment.Moment):dateRange => {
 
 export function FullFeatureCalendar () {
 
-  const [currentDate, setCurrentDate] = React.useState<moment.Moment>(moment())
+  const [ currentDate, setCurrentDate ] = React.useState<moment.Moment>(moment())
   const getReservations = useQuery(GET_RESERVATIONS, {variables: getDateRange(currentDate)})
-  
-  let reservations = []
-  if(!getReservations.loading){
-    reservations = getReservations.data.reservations
-  }
 
-  const renderEvents = ():MonthData[] => {
-    const outEvents:MonthData[] = []
+  const reservations = React.useMemo(() => {
+    if(getReservations.loading) return []
+    return getReservations.data.reservations
+  }, [getReservations])
+
+  const { reservationEvents, cleaningEvents } = React.useMemo(()=>{
+    const reservationEvents:MonthData[] = []
+    const cleaningEvents:MonthData[] = []
 
     // Create reservation events
-    reservations.forEach(r=>outEvents.push({type:EventType.reservation, data: r, start: r.start, end: r.end}))
+    reservations.forEach(r=>reservationEvents.push({type:EventType.reservation, data: r, start: r.start, end: r.end}))
     // Create cleaning events
-    reservations.forEach(r=>outEvents.push({type:EventType.cleaning, data: r, start: r.end, end: r.end}))
-    // Create reminder events TODO
-    return outEvents
-  }
+    reservations.forEach(r=>cleaningEvents.push({type:EventType.cleaning, data: r, start: r.end, end: r.end}))
 
-  console.log(getReservations.data)
+    return { reservationEvents, cleaningEvents }
+  }, [reservations])
+
+  const events = React.useMemo(():MonthData[] => [...reservationEvents, ...cleaningEvents], [reservationEvents, cleaningEvents])
+
+  const height = React.useMemo(() => getHeight(events), [ events ])
+
   return (
     <Calendar
       date={currentDate.toDate()}
@@ -73,9 +114,9 @@ export function FullFeatureCalendar () {
         setCurrentDate(moment(date))
       }}
       onSelectEvent={(e, i, o)=>console.log(i)}
-      style={{'--height':'1600px'}}
+      style={{'--height':`${height}px`}}
       localizer={localizer}
-      events={renderEvents()}
+      events={events}
       views={['month']}
       eventPropGetter={getMonthEventProps}
       components={{
