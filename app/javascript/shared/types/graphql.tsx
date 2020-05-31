@@ -7,6 +7,7 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  /** An ISO 8601-encoded date */
   ISO8601Date: any,
 };
 
@@ -21,6 +22,7 @@ export type Ical = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  /** An example field added by the generator */
   testField: Scalars['String'],
 };
 

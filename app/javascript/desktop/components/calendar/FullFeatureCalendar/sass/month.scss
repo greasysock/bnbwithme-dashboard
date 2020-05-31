@@ -1,4 +1,5 @@
 @import './variables';
+@import '../../../../../shared/styles/box-shadow';
 
 .rbc-row {
   display: flex;
@@ -39,8 +40,13 @@
 }
 
 .rbc-month-header {
+  @include BoxShadow(3);
   display: flex;
   flex-direction: row;
+  background-color: white;
+  position: sticky;
+  top: 70px;
+  z-index: 5;
 }
 
 .rbc-month-row {

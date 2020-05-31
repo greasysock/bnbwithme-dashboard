@@ -72,7 +72,7 @@ type userFetch = {user:User}
 const MonthCleaner = ({cleanerId, property}:Reservation) => {
   const getCleaner = useQuery<userFetch>(GET_CLEANER, {variables:{cleanerId}})
   if(!getCleaner.loading){
-    return <div className={styles.cleaner}>{getCleaner.data.user.firstName} => {property.name}</div>
+    return <div className={styles.cleaner}>{getCleaner.data.user.firstName} =&gt; {property.name}</div>
   }
   return null
 } 

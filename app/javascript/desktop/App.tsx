@@ -29,21 +29,20 @@ const App: React.FC = ():JSX.Element => {
     <HistoryContextProvider>
     <HelmetProvider>
     <HistoryContext.Consumer>
-      {value=> {
-        return (
-          <Router history={value.history}>
-          <Switch>
-            <AuthRoute path={AuthRoutes.dashboard} exact Component={Dashboard} requiredRoles={userRoles.all}/>
-            <AuthRoute path={AuthRoutes.calendar} exact Component={Calendar} requiredRoles={userRoles.all}/>
-            <AuthRoute path={AuthRoutes.properties} exact Component={Properties} requiredRoles={userRoles.all}/>
-    
-            <Route path={NonAuthRoutes.login} exact component={Login} />
-            <Route path={NonAuthRoutes.unauthorized} exact component={Unauthorized} />
-            <Route component={NotFound} />
-          </Switch>
-        </Router>
-        )
-      }}
+      { value=> (
+        <Router history={value.history}>
+        <Switch>
+          <AuthRoute path={AuthRoutes.dashboard} exact Component={Dashboard} requiredRoles={userRoles.all}/>
+          <AuthRoute path={AuthRoutes.calendar} exact Component={Calendar} requiredRoles={userRoles.all}/>
+          <AuthRoute path={AuthRoutes.properties} exact Component={Properties} requiredRoles={userRoles.all}/>
+  
+          <Route path={NonAuthRoutes.login} exact component={Login} />
+          <Route path={NonAuthRoutes.unauthorized} exact component={Unauthorized} />
+          <Route component={NotFound} />
+        </Switch>
+      </Router>
+      )
+      }
     </HistoryContext.Consumer>
     </HelmetProvider>
     </HistoryContextProvider>

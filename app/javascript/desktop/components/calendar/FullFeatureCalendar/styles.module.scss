@@ -1,8 +1,12 @@
 .Toolbar{
   display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   align-items: center;
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  z-index: 6;
   .leftActions{
     flex: 1;
     .buttonGroup{

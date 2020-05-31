@@ -72,6 +72,7 @@ export function FullFeatureCalendar () {
       onNavigate={(date)=>{
         setCurrentDate(moment(date))
       }}
+      onSelectEvent={(e, i, o)=>console.log(i)}
       style={{'--height':'1600px'}}
       localizer={localizer}
       events={renderEvents()}
